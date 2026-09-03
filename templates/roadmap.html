@@ -1,0 +1,609 @@
+{% extends "base.html" %}
+
+{% block title %}Roadmap — EmotionWeb{% endblock %}
+
+{% block meta_description %}
+Explore the proposed direction and future possibilities for EmotionWeb.
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .roadmap-page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 75px 24px 100px;
+    }
+
+    .roadmap-hero {
+        text-align: center;
+        margin-bottom: 75px;
+    }
+
+    .roadmap-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 13px;
+        border: 1px solid rgba(0,0,0,.10);
+        border-radius: 999px;
+        background: rgba(255,255,255,.7);
+        color: #666;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+
+    .roadmap-badge span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #111;
+    }
+
+    .roadmap-hero h1 {
+        margin: 22px auto 14px;
+        max-width: 850px;
+        font-size: clamp(45px, 7vw, 78px);
+        line-height: .98;
+        letter-spacing: -.06em;
+        font-weight: 800;
+    }
+
+    .roadmap-hero h1 em {
+        font-style: normal;
+        color: #777;
+    }
+
+    .roadmap-hero p {
+        max-width: 600px;
+        margin: auto;
+        color: #666;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    /* NOTICE */
+
+    .roadmap-notice {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 20px;
+        margin-bottom: 55px;
+        border: 1px solid rgba(0,0,0,.09);
+        border-radius: 17px;
+        background: rgba(255,255,255,.65);
+    }
+
+    .notice-icon {
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
+        display: grid;
+        place-items: center;
+        border-radius: 11px;
+        background: #f1f1f1;
+        font-size: 15px;
+        font-weight: 800;
+    }
+
+    .roadmap-notice strong {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 13px;
+    }
+
+    .roadmap-notice p {
+        margin: 0;
+        color: #777;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    /* ROADMAP */
+
+    .roadmap-list {
+        position: relative;
+        max-width: 920px;
+        margin: 0 auto 80px;
+    }
+
+    .roadmap-list::before {
+        content: "";
+        position: absolute;
+        left: 21px;
+        top: 24px;
+        bottom: 24px;
+        width: 1px;
+        background: rgba(0,0,0,.12);
+    }
+
+    .roadmap-item {
+        position: relative;
+        display: grid;
+        grid-template-columns: 44px 1fr;
+        gap: 24px;
+        margin-bottom: 22px;
+    }
+
+    .roadmap-number {
+        position: relative;
+        z-index: 2;
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(0,0,0,.12);
+        border-radius: 13px;
+        background: white;
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+    .roadmap-card {
+        padding: 25px 27px;
+        border: 1px solid rgba(0,0,0,.09);
+        border-radius: 20px;
+        background: rgba(255,255,255,.65);
+        transition: .25s ease;
+    }
+
+    .roadmap-card:hover {
+        transform: translateX(4px);
+        box-shadow: 0 18px 45px rgba(0,0,0,.06);
+    }
+
+    .roadmap-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 9px;
+    }
+
+    .roadmap-card h2 {
+        margin: 0;
+        font-size: 22px;
+        letter-spacing: -.03em;
+    }
+
+    .status {
+        flex-shrink: 0;
+        padding: 6px 9px;
+        border-radius: 8px;
+        background: #f1f1f1;
+        color: #666;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .roadmap-card p {
+        margin: 0;
+        color: #6b6b6b;
+        font-size: 13px;
+        line-height: 1.65;
+    }
+
+    .roadmap-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 16px;
+    }
+
+    .roadmap-tags span {
+        padding: 6px 9px;
+        border-radius: 7px;
+        background: #f5f5f5;
+        color: #555;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    /* CURRENT */
+
+    .current-section {
+        margin-bottom: 75px;
+    }
+
+    .section-heading {
+        margin-bottom: 24px;
+    }
+
+    .section-heading span {
+        display: block;
+        margin-bottom: 8px;
+        color: #888;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+        margin: 0;
+        font-size: clamp(30px, 4vw, 44px);
+        letter-spacing: -.045em;
+    }
+
+    .current-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+    }
+
+    .current-card {
+        padding: 23px;
+        min-height: 150px;
+        border: 1px solid rgba(0,0,0,.09);
+        border-radius: 18px;
+        background: rgba(255,255,255,.6);
+    }
+
+    .current-card .check {
+        display: inline-grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        margin-bottom: 17px;
+        border-radius: 9px;
+        background: #111;
+        color: white;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .current-card h3 {
+        margin: 0 0 6px;
+        font-size: 16px;
+    }
+
+    .current-card p {
+        margin: 0;
+        color: #777;
+        font-size: 12px;
+        line-height: 1.55;
+    }
+
+    /* CTA */
+
+    .roadmap-cta {
+        padding: 55px 25px;
+        text-align: center;
+        border: 1px solid rgba(0,0,0,.09);
+        border-radius: 27px;
+        background: linear-gradient(
+            135deg,
+            rgba(0,0,0,.035),
+            rgba(255,255,255,.75)
+        );
+    }
+
+    .roadmap-cta h2 {
+        margin: 0 0 10px;
+        font-size: clamp(30px, 4vw, 44px);
+        letter-spacing: -.045em;
+    }
+
+    .roadmap-cta p {
+        margin: 0 auto 23px;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .roadmap-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 18px;
+        border-radius: 11px;
+        background: #111;
+        color: white;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 800;
+        transition: .2s ease;
+    }
+
+    .roadmap-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0,0,0,.15);
+    }
+
+    @media (max-width: 800px) {
+        .roadmap-page {
+            padding: 55px 18px 75px;
+        }
+
+        .current-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .roadmap-list::before {
+            left: 18px;
+        }
+
+        .roadmap-item {
+            grid-template-columns: 36px 1fr;
+            gap: 17px;
+        }
+
+        .roadmap-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+        }
+
+        .roadmap-card {
+            padding: 21px;
+        }
+
+        .roadmap-top {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 9px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .roadmap-hero {
+            margin-bottom: 50px;
+        }
+
+        .roadmap-hero p {
+            font-size: 14px;
+        }
+
+        .roadmap-notice {
+            align-items: flex-start;
+        }
+
+        .roadmap-card h2 {
+            font-size: 19px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .roadmap-card,
+        .roadmap-button {
+            transition: none;
+        }
+    }
+</style>
+
+
+<main class="roadmap-page">
+
+    <!-- HERO -->
+    <section class="roadmap-hero">
+
+        <div class="roadmap-badge">
+            <span></span>
+            Future Direction
+        </div>
+
+        <h1>
+            What's next for
+            <em>EmotionWeb?</em>
+        </h1>
+
+        <p>
+            A growing project with more possibilities ahead.
+        </p>
+
+    </section>
+
+
+    <!-- NOTICE -->
+    <div class="roadmap-notice">
+
+        <div class="notice-icon">i</div>
+
+        <div>
+            <strong>Roadmap is proposed, not promised.</strong>
+            <p>
+                These are areas EmotionWeb may explore as the project evolves.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- ROADMAP -->
+    <section class="roadmap-list">
+
+        <article class="roadmap-item">
+
+            <div class="roadmap-number">01</div>
+
+            <div class="roadmap-card">
+
+                <div class="roadmap-top">
+                    <h2>More Themes</h2>
+                    <span class="status">Exploring</span>
+                </div>
+
+                <p>
+                    Expand the collection with more meaningful occasions
+                    and creative experiences.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>Templates</span>
+                    <span>Experiences</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article class="roadmap-item">
+
+            <div class="roadmap-number">02</div>
+
+            <div class="roadmap-card">
+
+                <div class="roadmap-top">
+                    <h2>More Customization</h2>
+                    <span class="status">Exploring</span>
+                </div>
+
+                <p>
+                    Give developers more control over how their
+                    personalized experiences look and feel.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>Design</span>
+                    <span>Content</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article class="roadmap-item">
+
+            <div class="roadmap-number">03</div>
+
+            <div class="roadmap-card">
+
+                <div class="roadmap-top">
+                    <h2>Developer Experience</h2>
+                    <span class="status">Exploring</span>
+                </div>
+
+                <p>
+                    Improve documentation, workflows and tools around
+                    building with EmotionWeb.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>Docs</span>
+                    <span>Tooling</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article class="roadmap-item">
+
+            <div class="roadmap-number">04</div>
+
+            <div class="roadmap-card">
+
+                <div class="roadmap-top">
+                    <h2>Community</h2>
+                    <span class="status">Exploring</span>
+                </div>
+
+                <p>
+                    Make it easier for developers and creators to
+                    contribute ideas, templates and improvements.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>Open Source</span>
+                    <span>Contributions</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article class="roadmap-item">
+
+            <div class="roadmap-number">05</div>
+
+            <div class="roadmap-card">
+
+                <div class="roadmap-top">
+                    <h2>Better Web Experiences</h2>
+                    <span class="status">Exploring</span>
+                </div>
+
+                <p>
+                    Continue pushing EmotionWeb toward richer,
+                    more expressive generated websites.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>Web</span>
+                    <span>Interaction</span>
+                </div>
+
+            </div>
+
+        </article>
+
+    </section>
+
+
+    <!-- CURRENT FOUNDATION -->
+    <section class="current-section">
+
+        <div class="section-heading">
+            <span>Already Here</span>
+            <h2>The foundation is live.</h2>
+        </div>
+
+        <div class="current-grid">
+
+            <article class="current-card">
+                <div class="check">✓</div>
+                <h3>Python Package</h3>
+                <p>
+                    Installable through PyPI.
+                </p>
+            </article>
+
+            <article class="current-card">
+                <div class="check">✓</div>
+                <h3>Django Engine</h3>
+                <p>
+                    Personalized websites powered by Django.
+                </p>
+            </article>
+
+            <article class="current-card">
+                <div class="check">✓</div>
+                <h3>Growing Templates</h3>
+                <p>
+                    A collection that continues to expand.
+                </p>
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+    <section class="roadmap-cta">
+
+        <h2>Want to build it?</h2>
+
+        <p>
+            Explore the project and contribute to its direction.
+        </p>
+
+        <a
+            class="roadmap-button"
+            href="{% url 'contribute' %}"
+        >
+            Contribute to EmotionWeb →
+        </a>
+
+    </section>
+
+</main>
+
+{% endblock %}

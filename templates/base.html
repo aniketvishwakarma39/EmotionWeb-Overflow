@@ -26,11 +26,24 @@
         content="light"
     >
 
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <meta
+        name="author"
+        content="Aniket Vishwakarma"
+    >
+
     <title>
         {% block title %}
             EmotionWeb — Engineering on the surface. Emotion at the core.
         {% endblock %}
     </title>
+
+
+    <!-- Favicon -->
 
     <link
         rel="icon"
@@ -38,9 +51,64 @@
         href="{% static 'images/emotionweb.png' %}"
     >
 
+
+    <!-- Open Graph -->
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:site_name"
+        content="EmotionWeb"
+    >
+
+    <meta
+        property="og:title"
+        content="{% block og_title %}EmotionWeb — Engineering on the surface. Emotion at the core.{% endblock %}"
+    >
+
+    <meta
+        property="og:description"
+        content="{% block og_description %}Create personalized and interactive surprise websites with Python and Django.{% endblock %}"
+    >
+
+    <meta
+        property="og:image"
+        content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/emotionweb.png' %}"
+    >
+
+    <meta
+        property="og:url"
+        content="{{ request.build_absolute_uri }}"
+    >
+
+
+    <!-- Twitter / X -->
+
+    <meta
+        name="twitter:card"
+        content="summary"
+    >
+
+    <meta
+        name="twitter:title"
+        content="{% block twitter_title %}EmotionWeb — Engineering on the surface. Emotion at the core.{% endblock %}"
+    >
+
+    <meta
+        name="twitter:description"
+        content="{% block twitter_description %}Create personalized and interactive surprise websites with Python and Django.{% endblock %}"
+    >
+
+    <meta
+        name="twitter:image"
+        content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/emotionweb.png' %}"
+    >
+
+
     {% block extra_head %}{% endblock %}
-
-
     <style>
 
         /* =====================================================
@@ -1024,12 +1092,11 @@
                         About
                     </a>
 
-                    <a
-                        href="{% url 'documentation' %}"
-                        class="nav-action"
-                    >
-                        Get Started
-                    </a>
+                    
+                    <a href="{% url 'roadmap' %}"
+   class="{% if request.path == '/roadmap/' %}active{% endif %}">
+    Roadmap
+</a>
 
                 </nav>
 
@@ -1124,13 +1191,10 @@
                     >
                         About
                     </a>
-
-                    <a
-                        href="{% url 'documentation' %}"
-                        class="mobile-action"
-                    >
-                        Get Started
-                    </a>
+<a href="{% url 'roadmap' %}"
+   class="{% if request.path == '/roadmap/' %}active{% endif %}">
+    Roadmap
+</a>
 
                 </div>
 

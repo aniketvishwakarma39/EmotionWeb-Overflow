@@ -1,0 +1,1025 @@
+{% extends "base.html" %}
+
+{% block title %}How It Works — EmotionWeb{% endblock %}
+
+{% block meta_description %}
+Understand how EmotionWeb transforms a simple Python API call into a personalized web experience using its Django-powered web engine.
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .how-page {
+        min-height: 100vh;
+        padding: 110px 0 90px;
+    }
+
+    .how-container {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+    }
+
+    /* HERO */
+
+    .how-hero {
+        max-width: 850px;
+        margin-bottom: 75px;
+    }
+
+    .how-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 7px 12px;
+        border: 1px solid rgba(15, 23, 42, 0.10);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.72);
+        color: #475569;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        margin-bottom: 22px;
+    }
+
+    .how-eyebrow span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #16a34a;
+        box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.10);
+    }
+
+    .how-hero h1 {
+        margin: 0;
+        font-size: clamp(48px, 7vw, 88px);
+        line-height: 0.98;
+        letter-spacing: -0.065em;
+        color: #0f172a;
+    }
+
+    .how-hero h1 em {
+        font-style: normal;
+        color: #64748b;
+    }
+
+    .how-hero p {
+        max-width: 700px;
+        margin: 26px 0 0;
+        color: #64748b;
+        font-size: 18px;
+        line-height: 1.75;
+    }
+
+    /* FLOW */
+
+    .flow-section {
+        margin-bottom: 80px;
+    }
+
+    .section-label {
+        margin-bottom: 14px;
+        color: #94a3b8;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .section-title {
+        margin: 0 0 35px;
+        color: #0f172a;
+        font-size: clamp(30px, 4vw, 46px);
+        line-height: 1;
+        letter-spacing: -0.05em;
+    }
+
+    .flow-wrapper {
+        position: relative;
+        padding: 34px;
+        border: 1px solid rgba(15, 23, 42, 0.09);
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.70);
+        box-shadow: 0 20px 55px rgba(15, 23, 42, 0.055);
+    }
+
+    .flow-line {
+        position: absolute;
+        left: 50%;
+        top: 65px;
+        bottom: 65px;
+        width: 1px;
+        background: #e2e8f0;
+        transform: translateX(-50%);
+    }
+
+    .flow-step {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 54px 1fr;
+        align-items: center;
+        min-height: 120px;
+    }
+
+    .flow-step-content {
+        max-width: 430px;
+    }
+
+    .flow-step:nth-child(odd) .flow-step-content {
+        grid-column: 1;
+        justify-self: end;
+        text-align: right;
+    }
+
+    .flow-step:nth-child(even) .flow-step-content {
+        grid-column: 3;
+        justify-self: start;
+    }
+
+    .flow-number {
+        grid-column: 2;
+        grid-row: 1;
+        z-index: 2;
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        justify-self: center;
+        border: 1px solid #cbd5e1;
+        border-radius: 50%;
+        background: #fff;
+        color: #475569;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+    .flow-step h3 {
+        margin: 0 0 7px;
+        color: #0f172a;
+        font-size: 21px;
+        letter-spacing: -0.025em;
+    }
+
+    .flow-step p {
+        margin: 0;
+        color: #64748b;
+        font-size: 13px;
+        line-height: 1.65;
+    }
+
+    .flow-code {
+        display: inline-block;
+        margin-bottom: 8px;
+        padding: 5px 8px;
+        border: 1px solid #e2e8f0;
+        border-radius: 7px;
+        background: #f8fafc;
+        color: #475569;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 10px;
+    }
+
+    /* CODE */
+
+    .code-section {
+        margin-bottom: 80px;
+    }
+
+    .code-card {
+        overflow: hidden;
+        border: 1px solid #1e293b;
+        border-radius: 24px;
+        background: #0f172a;
+        box-shadow: 0 25px 60px rgba(15, 23, 42, 0.12);
+    }
+
+    .code-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 13px 17px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .code-dots {
+        display: flex;
+        gap: 6px;
+    }
+
+    .code-dots span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #475569;
+    }
+
+    .code-file {
+        color: #94a3b8;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 10px;
+    }
+
+    .copy-main {
+        border: 1px solid rgba(255,255,255,0.10);
+        border-radius: 7px;
+        padding: 6px 9px;
+        background: rgba(255,255,255,0.05);
+        color: #cbd5e1;
+        font-size: 10px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .copy-main:hover {
+        background: rgba(255,255,255,0.10);
+        color: #fff;
+    }
+
+    .code-card pre {
+        margin: 0;
+        padding: 27px;
+        overflow-x: auto;
+        color: #e2e8f0;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    /* EXPLANATION GRID */
+
+    .explanation-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-bottom: 80px;
+    }
+
+    .explanation-card {
+        padding: 28px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 22px;
+        background: rgba(255,255,255,0.70);
+    }
+
+    .explanation-index {
+        display: block;
+        margin-bottom: 25px;
+        color: #94a3b8;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.10em;
+    }
+
+    .explanation-card h3 {
+        margin: 0 0 10px;
+        color: #0f172a;
+        font-size: 23px;
+        letter-spacing: -0.035em;
+    }
+
+    .explanation-card p {
+        margin: 0;
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .explanation-card code {
+        padding: 2px 5px;
+        border-radius: 5px;
+        background: #f1f5f9;
+        color: #334155;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 11px;
+    }
+
+    /* ENGINE */
+
+    .engine-section {
+        margin-bottom: 80px;
+    }
+
+    .engine-box {
+        position: relative;
+        overflow: hidden;
+        padding: 50px;
+        border-radius: 28px;
+        background: #0f172a;
+        color: #fff;
+    }
+
+    .engine-box::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0.18;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+        background-size: 28px 28px;
+        pointer-events: none;
+    }
+
+    .engine-content {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+    }
+
+    .engine-content h2 {
+        margin: 0 0 18px;
+        font-size: clamp(32px, 5vw, 54px);
+        line-height: 1;
+        letter-spacing: -0.055em;
+    }
+
+    .engine-content p {
+        margin: 0;
+        color: #94a3b8;
+        font-size: 15px;
+        line-height: 1.75;
+    }
+
+    .engine-points {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 32px;
+    }
+
+    .engine-point {
+        padding: 17px;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        background: rgba(255,255,255,0.035);
+    }
+
+    .engine-point strong {
+        display: block;
+        margin-bottom: 5px;
+        color: #e2e8f0;
+        font-size: 12px;
+    }
+
+    .engine-point span {
+        color: #64748b;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    /* FINAL */
+
+    .next-box {
+        padding: 32px;
+        border: 1px solid rgba(15,23,42,0.08);
+        border-radius: 22px;
+        background: rgba(255,255,255,0.72);
+    }
+
+    .next-box small {
+        display: block;
+        margin-bottom: 8px;
+        color: #94a3b8;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .next-box h3 {
+        margin: 0 0 8px;
+        color: #0f172a;
+        font-size: 24px;
+        letter-spacing: -0.035em;
+    }
+
+    .next-box p {
+        margin: 0;
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 850px) {
+
+        .how-page {
+            padding: 85px 0 65px;
+        }
+
+        .how-container {
+            width: min(100% - 28px, 700px);
+        }
+
+        .flow-wrapper {
+            padding: 25px 20px;
+        }
+
+        .flow-line {
+            left: 21px;
+            transform: none;
+        }
+
+        .flow-step {
+            grid-template-columns: 42px 1fr;
+            min-height: 145px;
+        }
+
+        .flow-number {
+            grid-column: 1;
+        }
+
+        .flow-step-content,
+        .flow-step:nth-child(odd) .flow-step-content,
+        .flow-step:nth-child(even) .flow-step-content {
+            grid-column: 2;
+            justify-self: start;
+            text-align: left;
+            padding-left: 12px;
+        }
+
+        .explanation-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .engine-points {
+            grid-template-columns: 1fr;
+        }
+
+        .engine-box {
+            padding: 35px 25px;
+        }
+    }
+
+    @media (max-width: 520px) {
+
+        .how-hero h1 {
+            font-size: 48px;
+        }
+
+        .how-hero p {
+            font-size: 16px;
+        }
+
+        .code-card pre {
+            padding: 20px;
+            font-size: 11px;
+        }
+
+        .flow-wrapper {
+            padding: 20px 14px;
+        }
+
+        .flow-step-content {
+            padding-left: 8px !important;
+        }
+
+        .flow-step h3 {
+            font-size: 18px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            scroll-behavior: auto !important;
+        }
+    }
+</style>
+
+
+<main class="how-page">
+
+    <div class="how-container">
+
+        <!-- HERO -->
+
+        <section class="how-hero">
+
+            <div class="how-eyebrow">
+                <span></span>
+                UNDER THE HOOD
+            </div>
+
+            <h1>
+                From Python<br>
+                <em>to a website.</em>
+            </h1>
+
+            <p>
+                EmotionWeb takes a simple Python API call, prepares your
+                personalized content, and uses its Django-powered web
+                engine to generate the final web experience.
+            </p>
+
+        </section>
+
+
+        <!-- MAIN FLOW -->
+
+        <section class="flow-section">
+
+            <div class="section-label">
+                THE COMPLETE FLOW
+            </div>
+
+            <h2 class="section-title">
+                What happens after <code>generate()</code>?
+            </h2>
+
+            <div class="flow-wrapper">
+
+                <div class="flow-line"></div>
+
+                <div class="flow-step">
+
+                    <div class="flow-number">01</div>
+
+                    <div class="flow-step-content">
+
+                        <span class="flow-code">
+                            Your Python Code
+                        </span>
+
+                        <h3>You create the input</h3>
+
+                        <p>
+                            You import <code>Surprise</code> and provide
+                            the occasion type, name, message, images and
+                            captions.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-number">02</div>
+
+                    <div class="flow-step-content">
+
+                        <span class="flow-code">
+                            Surprise(...)
+                        </span>
+
+                        <h3>EmotionWeb receives your data</h3>
+
+                        <p>
+                            The values supplied to the API become the
+                            content that will be used by the generated
+                            experience.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-number">03</div>
+
+                    <div class="flow-step-content">
+
+                        <span class="flow-code">
+                            type
+                        </span>
+
+                        <h3>The occasion is selected</h3>
+
+                        <p>
+                            The selected type identifies the occasion
+                            experience that should be generated.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-number">04</div>
+
+                    <div class="flow-step-content">
+
+                        <span class="flow-code">
+                            Content + Assets
+                        </span>
+
+                        <h3>Your content is prepared</h3>
+
+                        <p>
+                            Messages, names, captions and supplied images
+                            are prepared for use by the generated website.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-number">05</div>
+
+                    <div class="flow-step-content">
+
+                        <span class="flow-code">
+                            Django
+                        </span>
+
+                        <h3>The web engine takes over</h3>
+
+                        <p>
+                            EmotionWeb uses Django as the web engine behind
+                            the generated experience and its templates.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-number">06</div>
+
+                    <div class="flow-step-content">
+
+                        <span class="flow-code">
+                            Template
+                        </span>
+
+                        <h3>Dynamic content is rendered</h3>
+
+                        <p>
+                            Django templates can consume the supplied
+                            values and produce the corresponding web
+                            content.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-number">07</div>
+
+                    <div class="flow-step-content">
+
+                        <span class="flow-code">
+                            HTML / CSS / JS
+                        </span>
+
+                        <h3>The experience is assembled</h3>
+
+                        <p>
+                            The generated website is composed from the
+                            template and its web assets.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-number">08</div>
+
+                    <div class="flow-step-content">
+
+                        <span class="flow-code">
+                            Browser
+                        </span>
+
+                        <h3>You see the final experience</h3>
+
+                        <p>
+                            The generated web experience can then be opened
+                            and viewed in the browser.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ACTUAL CODE -->
+
+        <section class="code-section">
+
+            <div class="section-label">
+                STARTING POINT
+            </div>
+
+            <h2 class="section-title">
+                It starts with a simple API.
+            </h2>
+
+            <div class="code-card">
+
+                <div class="code-top">
+
+                    <div class="code-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="code-file">
+                        example.py
+                    </div>
+
+                    <button
+                        type="button"
+                        class="copy-main"
+                        id="copyMainCode"
+                    >
+                        Copy
+                    </button>
+
+                </div>
+
+                <pre><code id="mainCode">from emotionweb import Surprise
+
+s = Surprise(
+    type="birthday",
+    name="Aniket Vishwakarma",
+    message="chal aaja ghumne chalte h",
+    images=[
+        r"C:\path\to\img1.jpeg",
+        r"C:\path\to\img2.jpeg",
+        r"C:\path\to\img3.jpeg",
+    ],
+    caption=[
+        "The solo travel that teaches me everything ❤️",
+        "This travel shows a different path ❤️",
+        "Very best view ❤️",
+    ]
+)
+
+s.generate()</code></pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- EXPLANATIONS -->
+
+        <section>
+
+            <div class="section-label">
+                UNDERSTANDING THE COMPONENTS
+            </div>
+
+            <h2 class="section-title">
+                What each part means.
+            </h2>
+
+
+            <div class="explanation-grid">
+
+                <article class="explanation-card">
+
+                    <span class="explanation-index">
+                        01 / IMPORT
+                    </span>
+
+                    <h3>
+                        <code>from emotionweb import Surprise</code>
+                    </h3>
+
+                    <p>
+                        The <code>Surprise</code> class is the public entry
+                        point used to create an EmotionWeb experience.
+                    </p>
+
+                </article>
+
+
+                <article class="explanation-card">
+
+                    <span class="explanation-index">
+                        02 / TYPE
+                    </span>
+
+                    <h3>
+                        Choose the occasion
+                    </h3>
+
+                    <p>
+                        The <code>type</code> value determines which
+                        occasion/template experience is requested.
+                    </p>
+
+                </article>
+
+
+                <article class="explanation-card">
+
+                    <span class="explanation-index">
+                        03 / CONTENT
+                    </span>
+
+                    <h3>
+                        Personalize the experience
+                    </h3>
+
+                    <p>
+                        <code>name</code> and <code>message</code> provide
+                        the main personalized text for the generated
+                        experience.
+                    </p>
+
+                </article>
+
+
+                <article class="explanation-card">
+
+                    <span class="explanation-index">
+                        04 / IMAGES
+                    </span>
+
+                    <h3>
+                        Add your own images
+                    </h3>
+
+                    <p>
+                        Image paths can be supplied through the
+                        <code>images</code> parameter for the generated
+                        experience.
+                    </p>
+
+                </article>
+
+
+                <article class="explanation-card">
+
+                    <span class="explanation-index">
+                        05 / CAPTIONS
+                    </span>
+
+                    <h3>
+                        Describe the memories
+                    </h3>
+
+                    <p>
+                        The <code>caption</code> values provide text that
+                        can accompany the supplied images.
+                    </p>
+
+                </article>
+
+
+                <article class="explanation-card">
+
+                    <span class="explanation-index">
+                        06 / GENERATE
+                    </span>
+
+                    <h3>
+                        <code>s.generate()</code>
+                    </h3>
+
+                    <p>
+                        Calling <code>generate()</code> starts the generation
+                        process for the personalized web experience.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- DJANGO -->
+
+        <section class="engine-section">
+
+            <div class="section-label">
+                WEB ENGINE
+            </div>
+
+            <div class="engine-box">
+
+                <div class="engine-content">
+
+                    <h2>
+                        Why Django is involved.
+                    </h2>
+
+                    <p>
+                        EmotionWeb is not only producing text or a static
+                        page. Its generated experience uses a Django-powered
+                        web engine to work with templates and dynamic
+                        content.
+                    </p>
+
+
+                    <div class="engine-points">
+
+                        <div class="engine-point">
+                            <strong>Templates</strong>
+                            <span>
+                                Django templates provide the structure
+                                for dynamic content.
+                            </span>
+                        </div>
+
+                        <div class="engine-point">
+                            <strong>Dynamic Data</strong>
+                            <span>
+                                Values supplied through the API can be
+                                used while rendering the experience.
+                            </span>
+                        </div>
+
+                        <div class="engine-point">
+                            <strong>Web Output</strong>
+                            <span>
+                                The result is a browser-viewable web
+                                experience.
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NEXT -->
+
+        <section class="next-box">
+
+            <small>
+                Continue learning
+            </small>
+
+            <h3>
+                Want to understand the architecture deeper?
+            </h3>
+
+            <p>
+                The Research and technical architecture sections go
+                deeper into the package, its web engine, template-based
+                generation and the overall system design.
+            </p>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script>
+    const copyButton = document.getElementById("copyMainCode");
+    const mainCode = document.getElementById("mainCode");
+
+    if (copyButton && mainCode) {
+        copyButton.addEventListener("click", async () => {
+
+            try {
+                await navigator.clipboard.writeText(
+                    mainCode.innerText
+                );
+
+                copyButton.textContent = "Copied";
+
+                setTimeout(() => {
+                    copyButton.textContent = "Copy";
+                }, 1400);
+
+            } catch (error) {
+
+                copyButton.textContent = "Failed";
+
+                setTimeout(() => {
+                    copyButton.textContent = "Copy";
+                }, 1400);
+
+            }
+
+        });
+    }
+</script>
+
+{% endblock %}

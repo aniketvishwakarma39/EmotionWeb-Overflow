@@ -1,0 +1,581 @@
+{% extends "base.html" %}
+
+{% block title %}Research — EmotionWeb{% endblock %}
+
+{% block meta_description %}
+Explore the technical research and development behind EmotionWeb.
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .research-page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 75px 24px 100px;
+    }
+
+    /* HERO */
+
+    .research-hero {
+        text-align: center;
+        margin-bottom: 70px;
+    }
+
+    .research-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 13px;
+        border: 1px solid rgba(0,0,0,.10);
+        border-radius: 999px;
+        background: rgba(255,255,255,.7);
+        color: #666;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+
+    .research-badge span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #111;
+    }
+
+    .research-hero h1 {
+        margin: 22px auto 14px;
+        max-width: 850px;
+        font-size: clamp(44px, 7vw, 78px);
+        line-height: .98;
+        letter-spacing: -.06em;
+        font-weight: 800;
+    }
+
+    .research-hero h1 em {
+        font-style: normal;
+        color: #777;
+    }
+
+    .research-hero p {
+        max-width: 600px;
+        margin: auto;
+        color: #666;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    /* PAPER */
+
+    .paper-card {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 30px;
+        align-items: center;
+        padding: 32px;
+        margin-bottom: 70px;
+        border: 1px solid rgba(0,0,0,.09);
+        border-radius: 26px;
+        background: rgba(255,255,255,.68);
+        box-shadow: 0 22px 65px rgba(0,0,0,.06);
+    }
+
+    .paper-label {
+        display: block;
+        margin-bottom: 10px;
+        color: #888;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+    }
+
+    .paper-card h2 {
+        margin: 0 0 10px;
+        font-size: clamp(28px, 4vw, 43px);
+        letter-spacing: -.045em;
+    }
+
+    .paper-card p {
+        margin: 0;
+        max-width: 650px;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .paper-download {
+        min-height: 170px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 22px;
+        border: 1px dashed rgba(0,0,0,.17);
+        border-radius: 18px;
+        text-align: center;
+        background: rgba(0,0,0,.025);
+    }
+
+    .paper-icon {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        background: #111;
+        color: white;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .paper-download strong {
+        font-size: 14px;
+    }
+
+    .paper-download small {
+        margin-top: 5px;
+        color: #888;
+        font-size: 11px;
+    }
+
+    .paper-button {
+        margin-top: 14px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(0,0,0,.12);
+        background: #eee;
+        color: #888;
+        font-size: 11px;
+        font-weight: 800;
+        cursor: not-allowed;
+    }
+
+    /* RESEARCH AREAS */
+
+    .section-heading {
+        margin-bottom: 24px;
+    }
+
+    .section-heading span {
+        display: block;
+        margin-bottom: 8px;
+        color: #888;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+        margin: 0;
+        font-size: clamp(30px, 4vw, 44px);
+        letter-spacing: -.045em;
+    }
+
+    .research-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 70px;
+    }
+
+    .research-card {
+        padding: 24px;
+        min-height: 170px;
+        border: 1px solid rgba(0,0,0,.09);
+        border-radius: 19px;
+        background: rgba(255,255,255,.62);
+        transition: .25s ease;
+    }
+
+    .research-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 45px rgba(0,0,0,.06);
+    }
+
+    .research-number {
+        display: inline-grid;
+        place-items: center;
+        width: 30px;
+        height: 30px;
+        margin-bottom: 20px;
+        border-radius: 9px;
+        background: #f1f1f1;
+        color: #555;
+        font-size: 10px;
+        font-weight: 800;
+    }
+
+    .research-card h3 {
+        margin: 0 0 7px;
+        font-size: 17px;
+    }
+
+    .research-card p {
+        margin: 0;
+        color: #777;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    /* TEAM */
+
+    .team-section {
+        margin-bottom: 70px;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+    }
+
+    .team-card {
+        padding: 21px 16px;
+        min-height: 160px;
+        border: 1px solid rgba(0,0,0,.09);
+        border-radius: 17px;
+        background: rgba(255,255,255,.62);
+        text-align: center;
+    }
+
+    .team-avatar {
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 13px;
+        border-radius: 50%;
+        background: #f0f0f0;
+        color: #777;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .team-card h3 {
+        margin: 0 0 5px;
+        font-size: 13px;
+    }
+
+    .team-card p {
+        margin: 0;
+        color: #888;
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    .team-email {
+        display: block;
+        margin-top: 8px;
+        color: #555;
+        font-size: 9px;
+        text-decoration: none;
+        word-break: break-word;
+    }
+
+    /* CTA */
+
+    .research-cta {
+        padding: 55px 25px;
+        text-align: center;
+        border: 1px solid rgba(0,0,0,.09);
+        border-radius: 27px;
+        background: linear-gradient(
+            135deg,
+            rgba(0,0,0,.035),
+            rgba(255,255,255,.75)
+        );
+    }
+
+    .research-cta h2 {
+        margin: 0 0 10px;
+        font-size: clamp(30px, 4vw, 44px);
+        letter-spacing: -.045em;
+    }
+
+    .research-cta p {
+        margin: 0 auto 23px;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .research-button {
+        display: inline-flex;
+        padding: 12px 18px;
+        border-radius: 11px;
+        background: #111;
+        color: white;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 800;
+        transition: .2s ease;
+    }
+
+    .research-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0,0,0,.15);
+    }
+
+    @media (max-width: 950px) {
+        .team-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 800px) {
+        .research-page {
+            padding: 55px 18px 75px;
+        }
+
+        .paper-card {
+            grid-template-columns: 1fr;
+            padding: 23px;
+        }
+
+        .research-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .team-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 500px) {
+        .research-hero p {
+            font-size: 14px;
+        }
+
+        .team-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .team-card {
+            min-height: auto;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .research-card,
+        .research-button {
+            transition: none;
+        }
+    }
+</style>
+
+
+<main class="research-page">
+
+    <!-- HERO -->
+
+    <section class="research-hero">
+
+        <div class="research-badge">
+            <span></span>
+            Technical Research
+        </div>
+
+        <h1>
+            Research behind
+            <em>EmotionWeb.</em>
+        </h1>
+
+        <p>
+            Exploring the engineering behind personalized,
+            template-driven web experiences.
+        </p>
+
+    </section>
+
+
+    <!-- PAPER -->
+
+    <section class="paper-card">
+
+        <div>
+            <span class="paper-label">Research Paper</span>
+
+            <h2>
+                EmotionWeb:
+                A Technical Study
+            </h2>
+
+            <p>
+                A detailed technical paper covering the system,
+                architecture, methodology and development of EmotionWeb.
+            </p>
+        </div>
+
+        <div class="paper-download">
+
+            <div class="paper-icon">PDF</div>
+
+            <strong>Research Paper</strong>
+
+            <small>Not published yet</small>
+
+            <button
+                class="paper-button"
+                type="button"
+                disabled
+            >
+                Download Unavailable
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- RESEARCH AREAS -->
+
+    <section>
+
+        <div class="section-heading">
+            <span>Focus Areas</span>
+            <h2>What we study.</h2>
+        </div>
+
+        <div class="research-grid">
+
+            <article class="research-card">
+                <div class="research-number">01</div>
+                <h3>Architecture</h3>
+                <p>
+                    How Python, EmotionWeb and Django work together.
+                </p>
+            </article>
+
+            <article class="research-card">
+                <div class="research-number">02</div>
+                <h3>Dynamic Generation</h3>
+                <p>
+                    Turning structured input into personalized
+                    web experiences.
+                </p>
+            </article>
+
+            <article class="research-card">
+                <div class="research-number">03</div>
+                <h3>Template Systems</h3>
+                <p>
+                    Exploring reusable templates for different occasions.
+                </p>
+            </article>
+
+            <article class="research-card">
+                <div class="research-number">04</div>
+                <h3>Developer Experience</h3>
+                <p>
+                    Making personalized website generation simple for developers.
+                </p>
+            </article>
+
+            <article class="research-card">
+                <div class="research-number">05</div>
+                <h3>Web Engineering</h3>
+                <p>
+                    Combining generated content with modern web technologies.
+                </p>
+            </article>
+
+            <article class="research-card">
+                <div class="research-number">06</div>
+                <h3>Future Scope</h3>
+                <p>
+                    Identifying possibilities for richer customization
+                    and experiences.
+                </p>
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- TEAM -->
+
+    <section class="team-section">
+
+        <div class="section-heading">
+            <span>Research Team</span>
+            <h2>People behind the research.</h2>
+        </div>
+
+        <div class="team-grid">
+
+            <article class="team-card">
+                <div class="team-avatar">01</div>
+                <h3>Team Member</h3>
+                <p>Research Role</p>
+                <a class="team-email" href="#">
+                    email@example.com
+                </a>
+            </article>
+
+            <article class="team-card">
+                <div class="team-avatar">02</div>
+                <h3>Team Member</h3>
+                <p>Research Role</p>
+                <a class="team-email" href="#">
+                    email@example.com
+                </a>
+            </article>
+
+            <article class="team-card">
+                <div class="team-avatar">03</div>
+                <h3>Team Member</h3>
+                <p>Research Role</p>
+                <a class="team-email" href="#">
+                    email@example.com
+                </a>
+            </article>
+
+            <article class="team-card">
+                <div class="team-avatar">04</div>
+                <h3>Team Member</h3>
+                <p>Research Role</p>
+                <a class="team-email" href="#">
+                    email@example.com
+                </a>
+            </article>
+
+            <article class="team-card">
+                <div class="team-avatar">05</div>
+                <h3>Team Member</h3>
+                <p>Research Role</p>
+                <a class="team-email" href="#">
+                    email@example.com
+                </a>
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <section class="research-cta">
+
+        <h2>Research in progress.</h2>
+
+        <p>
+            The complete paper will be available here once published.
+        </p>
+
+        <a
+            class="research-button"
+            href="{% url 'documentation' %}"
+        >
+            Explore Documentation →
+        </a>
+
+    </section>
+
+</main>
+
+{% endblock %}

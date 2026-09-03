@@ -1,0 +1,699 @@
+{% extends "base.html" %}
+
+{% block title %}About — EmotionWeb{% endblock %}
+
+{% block meta_description %}
+Learn about EmotionWeb, its creator, and the idea behind turning emotions into personalized web experiences.
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .about-page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 70px 24px 100px;
+    }
+
+    .about-hero {
+        text-align: center;
+        margin-bottom: 70px;
+    }
+
+    .about-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 13px;
+        border: 1px solid rgba(0,0,0,.10);
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: #666;
+        background: rgba(255,255,255,.65);
+        backdrop-filter: blur(10px);
+    }
+
+    .about-label span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #111;
+    }
+
+    .about-hero h1 {
+        margin: 22px auto 14px;
+        max-width: 850px;
+        font-size: clamp(42px, 7vw, 78px);
+        line-height: .98;
+        letter-spacing: -.055em;
+        font-weight: 800;
+    }
+
+    .about-hero h1 em {
+        font-style: normal;
+        color: #777;
+    }
+
+    .about-hero p {
+        max-width: 620px;
+        margin: 0 auto;
+        color: #666;
+        font-size: 17px;
+        line-height: 1.7;
+    }
+
+    /* PROFILE */
+
+    .profile-card {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 42px;
+        align-items: center;
+        padding: 34px;
+        border: 1px solid rgba(0,0,0,.09);
+        border-radius: 28px;
+        background: rgba(255,255,255,.72);
+        box-shadow: 0 25px 70px rgba(0,0,0,.07);
+        backdrop-filter: blur(16px);
+        margin-bottom: 70px;
+    }
+
+    .profile-image-wrap {
+        position: relative;
+        aspect-ratio: 1;
+        overflow: hidden;
+        border-radius: 22px;
+        background: #eee;
+    }
+
+    .profile-image-wrap::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1px solid rgba(255,255,255,.45);
+        border-radius: inherit;
+        pointer-events: none;
+    }
+
+    .profile-image {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .profile-content .eyebrow {
+        margin-bottom: 10px;
+        color: #777;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+    }
+
+    .profile-content h2 {
+        margin: 0;
+        font-size: clamp(32px, 4vw, 48px);
+        letter-spacing: -.045em;
+        line-height: 1;
+    }
+
+    .profile-role {
+        margin: 12px 0 18px;
+        font-size: 15px;
+        color: #555;
+        font-weight: 600;
+    }
+
+    .profile-content p {
+        max-width: 620px;
+        color: #666;
+        line-height: 1.75;
+        margin-bottom: 24px;
+    }
+
+    .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .social-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 15px;
+        border: 1px solid rgba(0,0,0,.10);
+        border-radius: 12px;
+        color: #111;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+        background: rgba(255,255,255,.7);
+        transition: .2s ease;
+    }
+
+    .social-link:hover {
+        transform: translateY(-2px);
+        border-color: rgba(0,0,0,.25);
+        box-shadow: 0 10px 25px rgba(0,0,0,.07);
+    }
+
+    .social-icon {
+        width: 18px;
+        height: 18px;
+        display: grid;
+        place-items: center;
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+    /* PROJECT */
+
+    .section-heading {
+        margin-bottom: 24px;
+    }
+
+    .section-heading span {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+        color: #888;
+    }
+
+    .section-heading h2 {
+        margin: 0;
+        font-size: clamp(30px, 4vw, 46px);
+        letter-spacing: -.045em;
+    }
+
+    .project-grid {
+        display: grid;
+        grid-template-columns: 1.25fr .75fr;
+        gap: 18px;
+        margin-bottom: 70px;
+    }
+
+    .project-card {
+        min-height: 270px;
+        padding: 30px;
+        border: 1px solid rgba(0,0,0,.09);
+        border-radius: 24px;
+        background: rgba(255,255,255,.62);
+        transition: .25s ease;
+    }
+
+    .project-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 50px rgba(0,0,0,.07);
+    }
+
+    .project-card h3 {
+        margin: 0 0 13px;
+        font-size: 25px;
+        letter-spacing: -.03em;
+    }
+
+    .project-card p {
+        color: #666;
+        line-height: 1.7;
+        margin: 0;
+        max-width: 650px;
+    }
+
+    .stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-top: 25px;
+    }
+
+    .stack span {
+        padding: 8px 11px;
+        border-radius: 9px;
+        background: #f3f3f3;
+        color: #333;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .facts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .fact {
+        padding: 15px;
+        border-radius: 14px;
+        background: #f5f5f5;
+    }
+
+    .fact small {
+        display: block;
+        margin-bottom: 5px;
+        color: #888;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+    }
+
+    .fact strong {
+        font-size: 14px;
+    }
+
+    /* VIDEO */
+
+    .watch-section {
+        margin-bottom: 70px;
+    }
+
+    .video-card {
+        position: relative;
+        overflow: hidden;
+        display: block;
+        aspect-ratio: 16 / 7;
+        border-radius: 25px;
+        background:
+            linear-gradient(135deg, rgba(0,0,0,.10), rgba(0,0,0,.35)),
+            #151515;
+        text-decoration: none;
+        box-shadow: 0 25px 70px rgba(0,0,0,.12);
+    }
+
+    .video-thumb {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: .72;
+        transition: transform .5s ease, opacity .3s ease;
+    }
+
+    .video-card:hover .video-thumb {
+        transform: scale(1.04);
+        opacity: .82;
+    }
+
+    .play-button {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: white;
+        color: #111;
+        font-size: 21px;
+        padding-left: 3px;
+        box-shadow: 0 15px 45px rgba(0,0,0,.25);
+        transition: .25s ease;
+    }
+
+    .video-card:hover .play-button {
+        transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    .video-caption {
+        position: absolute;
+        left: 26px;
+        bottom: 23px;
+        color: white;
+        z-index: 2;
+    }
+
+    .video-caption small {
+        display: block;
+        opacity: .7;
+        margin-bottom: 4px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: .1em;
+    }
+
+    .video-caption strong {
+        font-size: 20px;
+    }
+
+    /* CTA */
+
+    .about-cta {
+        text-align: center;
+        padding: 55px 25px;
+        border: 1px solid rgba(0,0,0,.09);
+        border-radius: 28px;
+        background: linear-gradient(
+            135deg,
+            rgba(0,0,0,.035),
+            rgba(255,255,255,.75)
+        );
+    }
+
+    .about-cta h2 {
+        margin: 0 0 10px;
+        font-size: clamp(30px, 4vw, 46px);
+        letter-spacing: -.045em;
+    }
+
+    .about-cta p {
+        margin: 0 auto 24px;
+        color: #666;
+    }
+
+    .cta-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .cta-button {
+        padding: 12px 18px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 800;
+        border: 1px solid #111;
+        color: white;
+        background: #111;
+        transition: .2s ease;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0,0,0,.15);
+    }
+
+    .cta-button.secondary {
+        background: white;
+        color: #111;
+        border-color: rgba(0,0,0,.12);
+    }
+
+    @media (max-width: 800px) {
+        .about-page {
+            padding: 50px 18px 75px;
+        }
+
+        .profile-card {
+            grid-template-columns: 1fr;
+            padding: 22px;
+            gap: 25px;
+        }
+
+        .profile-image-wrap {
+            max-width: 280px;
+            width: 100%;
+            margin: auto;
+        }
+
+        .profile-content {
+            text-align: center;
+        }
+
+        .profile-content p {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .social-links {
+            justify-content: center;
+        }
+
+        .project-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .video-card {
+            aspect-ratio: 16 / 10;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .about-hero {
+            margin-bottom: 45px;
+        }
+
+        .about-hero p {
+            font-size: 15px;
+        }
+
+        .facts {
+            grid-template-columns: 1fr;
+        }
+
+        .project-card {
+            padding: 23px;
+        }
+
+        .video-caption strong {
+            font-size: 16px;
+        }
+
+        .play-button {
+            width: 58px;
+            height: 58px;
+            font-size: 18px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .project-card,
+        .social-link,
+        .video-thumb,
+        .play-button,
+        .cta-button {
+            transition: none;
+        }
+    }
+</style>
+
+
+<main class="about-page">
+
+    <!-- HERO -->
+    <section class="about-hero">
+        <div class="about-label">
+            <span></span>
+            About EmotionWeb
+        </div>
+
+        <h1>
+            Engineering on the surface.
+            <em>Emotion at the core.</em>
+        </h1>
+
+        <p>
+            A Python project built to turn personal moments into
+            interactive web experiences.
+        </p>
+    </section>
+
+
+    <!-- PROFILE -->
+    <section class="profile-card">
+
+        <div class="profile-image-wrap">
+            <img
+                class="profile-image"
+                src="https://github.com/aniketvishwakarma39.png"
+                alt="Aniket Vishwakarma"
+                loading="lazy"
+            >
+        </div>
+
+        <div class="profile-content">
+
+            <div class="eyebrow">Creator & Developer</div>
+
+            <h2>Aniket Vishwakarma</h2>
+
+            <div class="profile-role">
+                Developer · Open Source · EmotionWeb
+            </div>
+
+            <p>
+                Building with Python, web technologies and a simple idea:
+                technology can be useful while still feeling personal.
+            </p>
+
+            <div class="social-links">
+
+                <a
+                    class="social-link"
+                    href="https://github.com/aniketvishwakarma39/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="social-icon">GH</span>
+                    GitHub
+                </a>
+
+                <a
+                    class="social-link"
+                    href="https://lnkd.in/p/dhGgA-cK"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="social-icon">in</span>
+                    LinkedIn
+                </a>
+
+                <a
+                    class="social-link"
+                    href="https://youtu.be/Z5Omm5QG3fc?si=al7OSx6x9tnjC9_S"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="social-icon">▶</span>
+                    YouTube
+                </a>
+
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- PROJECT -->
+    <section>
+
+        <div class="section-heading">
+            <span>The Project</span>
+            <h2>Why EmotionWeb?</h2>
+        </div>
+
+        <div class="project-grid">
+
+            <article class="project-card">
+                <h3>From idea to experience.</h3>
+
+                <p>
+                    EmotionWeb makes it easier to create personalized
+                    websites for birthdays, anniversaries, love letters,
+                    apologies and other meaningful moments.
+                </p>
+
+                <div class="stack">
+                    <span>Python</span>
+                    <span>Django</span>
+                    <span>HTML</span>
+                    <span>CSS</span>
+                    <span>JavaScript</span>
+                    <span>Open Source</span>
+                </div>
+            </article>
+
+
+            <article class="project-card">
+                <h3>Project Snapshot</h3>
+
+                <div class="facts">
+
+                    <div class="fact">
+                        <small>Version</small>
+                        <strong>v{{ package.version }}</strong>
+                    </div>
+
+                    <div class="fact">
+                        <small>License</small>
+                        <strong>MIT</strong>
+                    </div>
+
+                    <div class="fact">
+                        <small>Runtime</small>
+                        <strong>Python 3.10+</strong>
+                    </div>
+
+                    <div class="fact">
+                        <small>Package</small>
+                        <strong>PyPI</strong>
+                    </div>
+
+                </div>
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- VIDEO -->
+    <section class="watch-section">
+
+        <div class="section-heading">
+            <span>Behind the Build</span>
+            <h2>See the story.</h2>
+        </div>
+
+        <a
+            class="video-card"
+            href="https://youtu.be/Z5Omm5QG3fc?si=al7OSx6x9tnjC9_S"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Watch the EmotionWeb video on YouTube"
+        >
+
+            <img
+                class="video-thumb"
+                src="https://img.youtube.com/vi/Z5Omm5QG3fc/maxresdefault.jpg"
+                alt="EmotionWeb YouTube video thumbnail"
+                loading="lazy"
+            >
+
+            <div class="play-button">▶</div>
+
+            <div class="video-caption">
+                <small>Watch on YouTube</small>
+                <strong>I Built My Own Python Library</strong>
+            </div>
+
+        </a>
+
+    </section>
+
+
+    <!-- CTA -->
+    <section class="about-cta">
+
+        <h2>Explore EmotionWeb.</h2>
+
+        <p>
+            Read the docs, explore the source, or follow the journey.
+        </p>
+
+        <div class="cta-links">
+
+            <a
+                class="cta-button"
+                href="https://github.com/aniketvishwakarma39/emotionweb"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                View Source
+            </a>
+
+            <a
+                class="cta-button secondary"
+                href="{% url 'documentation' %}"
+            >
+                Read Documentation
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+{% endblock %}

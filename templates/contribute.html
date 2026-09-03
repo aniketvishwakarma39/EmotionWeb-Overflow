@@ -1,0 +1,484 @@
+{% extends "base.html" %}
+
+{% block title %}Contribute — EmotionWeb{% endblock %}
+
+{% block meta_description %}
+Contribute to EmotionWeb through development, frontend, templates, research, documentation, or design.
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .contribute-page {
+        min-height: 70vh;
+    }
+
+    .contribute-container {
+        width: min(920px, calc(100% - 40px));
+        margin: 0 auto;
+    }
+
+    /* HERO */
+
+    .contribute-hero {
+        padding: 95px 0 65px;
+        text-align: center;
+    }
+
+    .contribute-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        border: 1px solid rgba(0, 0, 0, .1);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .7);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: #777;
+    }
+
+    .contribute-label-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #111;
+    }
+
+    .contribute-hero h1 {
+        max-width: 760px;
+        margin: 22px auto 15px;
+        font-size: clamp(44px, 7vw, 72px);
+        line-height: 1;
+        letter-spacing: -.055em;
+        color: #111;
+    }
+
+    .contribute-hero p {
+        max-width: 610px;
+        margin: 0 auto;
+        font-size: 16px;
+        line-height: 1.7;
+        color: #666;
+    }
+
+
+    /* CARD */
+
+    .contribute-card {
+        margin-bottom: 75px;
+        padding: 32px;
+        border: 1px solid rgba(0, 0, 0, .1);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, .7);
+    }
+
+    .contribute-card h2 {
+        margin: 0 0 9px;
+        font-size: 25px;
+        letter-spacing: -.03em;
+        color: #111;
+    }
+
+    .contribute-card > p {
+        margin: 0 0 25px;
+        font-size: 14px;
+        line-height: 1.7;
+        color: #666;
+    }
+
+
+    /* ROLES */
+
+    .roles {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .role {
+        padding: 17px;
+        border: 1px solid rgba(0, 0, 0, .08);
+        border-radius: 10px;
+        background: #fafafa;
+        transition:
+            transform 180ms ease,
+            border-color 180ms ease,
+            background 180ms ease;
+    }
+
+    .role:hover {
+        transform: translateY(-2px);
+        border-color: rgba(0, 0, 0, .16);
+        background: #fff;
+    }
+
+    .role strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 13px;
+        color: #222;
+    }
+
+    .role span {
+        font-size: 12px;
+        line-height: 1.5;
+        color: #777;
+    }
+
+
+    /* CONTACT FORM */
+
+    .contact-form {
+        margin-top: 25px;
+    }
+
+    .contact-form form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .contact-form h3 {
+        margin: 0 0 7px;
+        font-size: 19px;
+        letter-spacing: -.02em;
+        color: #111;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid rgba(0, 0, 0, .1);
+        border-radius: 9px;
+        padding: 13px 14px;
+        outline: none;
+        background: #fafafa;
+        color: #222;
+        font-family: inherit;
+        font-size: 13px;
+        transition:
+            border-color 150ms ease,
+            background 150ms ease,
+            box-shadow 150ms ease;
+    }
+
+    .contact-form input {
+        height: 46px;
+    }
+
+    .contact-form textarea {
+        min-height: 125px;
+        resize: vertical;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+        color: #999;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+        border-color: #222;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, .045);
+    }
+
+    .contact-form button {
+        align-self: flex-start;
+        min-height: 44px;
+        padding: 0 22px;
+        border: 0;
+        border-radius: 9px;
+        background: #111;
+        color: white;
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 800;
+        cursor: pointer;
+        transition:
+            transform 180ms ease,
+            box-shadow 180ms ease;
+    }
+
+    .contact-form button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(0, 0, 0, .14);
+    }
+
+    .contact-form button:focus-visible {
+        outline: 2px solid #111;
+        outline-offset: 3px;
+    }
+
+
+    /* FORM STATUS */
+
+    .form-note {
+        margin-top: 8px;
+        font-size: 11px;
+        color: #888;
+        line-height: 1.5;
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 650px) {
+
+        .contribute-container {
+            width: min(100% - 28px, 920px);
+        }
+
+        .contribute-hero {
+            padding: 70px 0 50px;
+        }
+
+        .contribute-hero h1 {
+            font-size: clamp(40px, 13vw, 60px);
+        }
+
+        .contribute-hero p {
+            font-size: 14px;
+        }
+
+        .contribute-card {
+            padding: 22px;
+            margin-bottom: 55px;
+        }
+
+        .roles {
+            grid-template-columns: 1fr;
+        }
+
+        .contact-form button {
+            width: 100%;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .role,
+        .contact-form button {
+            transition: none;
+        }
+    }
+</style>
+
+
+<div class="contribute-page">
+
+    <!-- HERO -->
+
+    <section class="contribute-hero">
+
+        <div class="contribute-container">
+
+            <span class="contribute-label">
+                <span class="contribute-label-dot"></span>
+                Open Source
+            </span>
+
+            <h1>
+                Build EmotionWeb with us.
+            </h1>
+
+            <p>
+                Interested in contributing? Choose an area you would like
+                to work on and send us a message.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <div class="contribute-container">
+
+
+        <!-- ROLES -->
+
+        <section class="contribute-card">
+
+            <h2>Ways to contribute</h2>
+
+            <p>
+                You can contribute in any area that matches your skills.
+            </p>
+
+            <div class="roles">
+
+                <div class="role">
+                    <strong>Python / Django</strong>
+                    <span>
+                        Package and web-engine development
+                    </span>
+                </div>
+
+                <div class="role">
+                    <strong>Template Development</strong>
+                    <span>
+                        Create and improve EmotionWeb experiences
+                    </span>
+                </div>
+
+                <div class="role">
+                    <strong>Frontend</strong>
+                    <span>
+                        HTML, CSS, JavaScript and UI improvements
+                    </span>
+                </div>
+
+                <div class="role">
+                    <strong>Research</strong>
+                    <span>
+                        Technical research and research documentation
+                    </span>
+                </div>
+
+                <div class="role">
+                    <strong>Documentation</strong>
+                    <span>
+                        Guides, examples and developer documentation
+                    </span>
+                </div>
+
+                <div class="role">
+                    <strong>Design</strong>
+                    <span>
+                        Visual design and user experience
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTACT -->
+
+        <section class="contribute-card">
+
+            <div class="contact-form">
+
+                <form
+                    action="https://api.web3forms.com/submit"
+                    method="POST"
+                >
+
+                    <h3 id="love">
+                        Contact Us
+                    </h3>
+
+
+                    <!-- Web3Forms Access Key -->
+
+                    <input
+                        type="hidden"
+                        name="access_key"
+                        value="181b355f-c2b5-4aa0-a7b2-8bf727e96e15"
+                    />
+
+
+                    <!-- Subject -->
+
+                    <input
+                        type="hidden"
+                        name="subject"
+                        value="EmotionWeb Contribution Request"
+                    />
+
+
+                    <!-- From Name -->
+
+                    <input
+                        type="hidden"
+                        name="from_name"
+                        value="EmotionWeb Website"
+                    />
+
+
+                    <!-- Name -->
+
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Your Name"
+                        autocomplete="name"
+                        required
+                    />
+
+
+                    <!-- Email -->
+
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="Email ID"
+                        autocomplete="email"
+                        required
+                    />
+
+
+                    <!-- Phone -->
+
+                    <input
+                        type="tel"
+                        name="phone"
+                        id="phone"
+                        placeholder="Phone No. (Optional)"
+                        autocomplete="tel"
+                    />
+
+
+                    <!-- Role -->
+
+                    <input
+                        type="text"
+                        name="role"
+                        id="role"
+                        placeholder="Role / Area you want to contribute in"
+                        required
+                    />
+
+
+                    <!-- Message -->
+
+                    <textarea
+                        name="query"
+                        id="query"
+                        rows="5"
+                        placeholder="Tell us briefly about yourself and what you would like to contribute..."
+                        required
+                    ></textarea>
+
+
+                    <!-- Submit -->
+
+                    <button
+                        id="sub"
+                        type="submit"
+                    >
+                        Send Contribution Request
+                    </button>
+
+                    <div class="form-note">
+                        Your message will be sent directly to the
+                        EmotionWeb project email.
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+{% endblock %}

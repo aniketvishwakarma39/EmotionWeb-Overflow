@@ -1,0 +1,1022 @@
+```html
+{% extends "base.html" %}
+
+{% block title %}Templates — EmotionWeb{% endblock %}
+
+{% block meta_description %}
+Explore EmotionWeb templates and occasion-based website experiences.
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .templates-page {
+        min-height: 100vh;
+        padding: 110px 0 90px;
+    }
+
+    .templates-container {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+    }
+
+    /* HERO */
+
+    .templates-hero {
+        max-width: 850px;
+        margin-bottom: 70px;
+    }
+
+    .templates-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 7px 12px;
+        border: 1px solid rgba(15, 23, 42, 0.10);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.72);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        color: #475569;
+        margin-bottom: 22px;
+    }
+
+    .templates-eyebrow span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #16a34a;
+        box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.10);
+    }
+
+    .templates-hero h1 {
+        margin: 0;
+        max-width: 850px;
+        font-size: clamp(48px, 7vw, 88px);
+        line-height: 0.98;
+        letter-spacing: -0.065em;
+        color: #0f172a;
+    }
+
+    .templates-hero h1 em {
+        font-style: normal;
+        color: #64748b;
+    }
+
+    .templates-hero p {
+        max-width: 700px;
+        margin: 25px 0 0;
+        font-size: 18px;
+        line-height: 1.75;
+        color: #64748b;
+    }
+
+    /* SECTION HEADER */
+
+    .template-section-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 30px;
+        margin-bottom: 25px;
+    }
+
+    .template-section-header h2 {
+        margin: 0;
+        font-size: clamp(28px, 4vw, 42px);
+        line-height: 1;
+        letter-spacing: -0.045em;
+        color: #0f172a;
+    }
+
+    .template-section-header p {
+        max-width: 470px;
+        margin: 8px 0 0;
+        color: #64748b;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    .template-count {
+        white-space: nowrap;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.10em;
+        color: #94a3b8;
+    }
+
+    /* GRID */
+
+    .templates-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .template-card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(15, 23, 42, 0.09);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.78);
+        box-shadow: 0 16px 45px rgba(15, 23, 42, 0.055);
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease,
+            border-color 0.3s ease;
+    }
+
+    .template-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(15, 23, 42, 0.16);
+        box-shadow: 0 25px 60px rgba(15, 23, 42, 0.10);
+    }
+
+    .template-card-top {
+        min-height: 220px;
+        padding: 27px;
+        position: relative;
+        overflow: hidden;
+        background:
+            linear-gradient(
+                135deg,
+                rgba(241, 245, 249, 0.95),
+                rgba(255, 255, 255, 0.95)
+            );
+    }
+
+    .template-number {
+        position: absolute;
+        right: 25px;
+        top: 22px;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        color: #94a3b8;
+    }
+
+    .template-symbol {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(15, 23, 42, 0.10);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.88);
+        font-size: 20px;
+        margin-bottom: 45px;
+    }
+
+    .template-card-top h3 {
+        margin: 0 0 8px;
+        font-size: 28px;
+        letter-spacing: -0.04em;
+        color: #0f172a;
+    }
+
+    .template-type {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 12px;
+        color: #64748b;
+    }
+
+    .template-card-body {
+        padding: 23px 27px 27px;
+    }
+
+    .template-description {
+        margin: 0 0 20px;
+        color: #64748b;
+        line-height: 1.65;
+        font-size: 14px;
+    }
+
+    .template-code {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+        border-radius: 15px;
+        background: #0f172a;
+    }
+
+    .code-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 9px 12px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .code-language {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: #94a3b8;
+        text-transform: uppercase;
+    }
+
+    .copy-code {
+        border: 1px solid rgba(255,255,255,0.10);
+        border-radius: 7px;
+        background: rgba(255,255,255,0.05);
+        color: #cbd5e1;
+        padding: 5px 8px;
+        font-size: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .copy-code:hover {
+        background: rgba(255,255,255,0.10);
+        color: white;
+    }
+
+    .template-code pre {
+        margin: 0;
+        padding: 16px;
+        overflow-x: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 11px;
+        line-height: 1.7;
+        color: #e2e8f0;
+    }
+
+    .template-code code {
+        font-family: inherit;
+    }
+
+    /* FULL WIDTH CARD */
+
+    .template-card.featured {
+        grid-column: span 2;
+    }
+
+    .featured-inner {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        min-height: 100%;
+    }
+
+    .featured-inner .template-card-top {
+        min-height: 100%;
+    }
+
+    /* INFO */
+
+    .template-info {
+        margin-top: 70px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+
+    .info-card {
+        padding: 23px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 19px;
+        background: rgba(255,255,255,0.68);
+    }
+
+    .info-card small {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        color: #94a3b8;
+        text-transform: uppercase;
+    }
+
+    .info-card strong {
+        font-size: 15px;
+        color: #334155;
+    }
+
+    /* MORE THEMES */
+
+    .more-themes {
+        position: relative;
+        overflow: hidden;
+        margin-top: 75px;
+        padding: 50px;
+        border: 1px solid rgba(15, 23, 42, 0.10);
+        border-radius: 28px;
+        background:
+            radial-gradient(
+                circle at 90% 10%,
+                rgba(148, 163, 184, 0.16),
+                transparent 35%
+            ),
+            #0f172a;
+        color: white;
+    }
+
+    .more-themes::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.20;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+        background-size: 28px 28px;
+    }
+
+    .more-themes-content {
+        position: relative;
+        z-index: 1;
+        max-width: 700px;
+    }
+
+    .more-themes-label {
+        display: block;
+        margin-bottom: 15px;
+        color: #94a3b8;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .more-themes h2 {
+        margin: 0;
+        font-size: clamp(32px, 5vw, 52px);
+        line-height: 1;
+        letter-spacing: -0.05em;
+    }
+
+    .more-themes p {
+        max-width: 650px;
+        margin: 20px 0 0;
+        color: #94a3b8;
+        line-height: 1.7;
+        font-size: 15px;
+    }
+
+    .more-themes-note {
+        display: inline-flex;
+        margin-top: 25px;
+        padding: 9px 13px;
+        border: 1px solid rgba(255,255,255,0.10);
+        border-radius: 999px;
+        background: rgba(255,255,255,0.05);
+        color: #cbd5e1;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 850px) {
+        .templates-page {
+            padding: 85px 0 65px;
+        }
+
+        .templates-container {
+            width: min(100% - 28px, 700px);
+        }
+
+        .templates-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .template-card.featured {
+            grid-column: span 1;
+        }
+
+        .featured-inner {
+            grid-template-columns: 1fr;
+        }
+
+        .template-info {
+            grid-template-columns: 1fr;
+        }
+
+        .template-section-header {
+            display: block;
+        }
+
+        .template-count {
+            display: block;
+            margin-top: 15px;
+        }
+
+        .more-themes {
+            padding: 35px 25px;
+        }
+    }
+
+    @media (max-width: 520px) {
+        .templates-hero h1 {
+            font-size: 48px;
+        }
+
+        .templates-hero p {
+            font-size: 16px;
+        }
+
+        .template-card-top {
+            min-height: 190px;
+            padding: 22px;
+        }
+
+        .template-card-body {
+            padding: 20px;
+        }
+
+        .template-card-top h3 {
+            font-size: 24px;
+        }
+
+        .template-symbol {
+            margin-bottom: 30px;
+        }
+
+        .template-code pre {
+            font-size: 10px;
+        }
+
+        .more-themes {
+            margin-top: 55px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .template-card {
+            transition: none;
+        }
+    }
+</style>
+
+
+<main class="templates-page">
+    <div class="templates-container">
+
+        <!-- HERO -->
+
+        <section class="templates-hero">
+            <div class="templates-eyebrow">
+                <span></span>
+                EMOTIONWEB TEMPLATES
+            </div>
+
+            <h1>
+                Experiences built<br>
+                <em>around the moment.</em>
+            </h1>
+
+            <p>
+                EmotionWeb turns a simple Python call into a personalized
+                web experience. Choose an occasion, provide your content,
+                and let the generator create the experience for you.
+            </p>
+        </section>
+
+
+        <!-- CURRENT TEMPLATES -->
+
+        <section>
+            <div class="template-section-header">
+                <div>
+                    <h2>Available templates</h2>
+                    <p>
+                        These are the currently documented occasion types
+                        supported by EmotionWeb. Each one uses the same
+                        simple <code>Surprise(...)</code> API.
+                    </p>
+                </div>
+
+                <div class="template-count">
+                    07 CURRENT TYPES
+                </div>
+            </div>
+
+
+            <div class="templates-grid">
+
+                <!-- BIRTHDAY -->
+
+                <article class="template-card featured">
+                    <div class="featured-inner">
+
+                        <div class="template-card-top">
+                            <div class="template-number">01</div>
+
+                            <div class="template-symbol">01</div>
+
+                            <h3>Birthday</h3>
+
+                            <div class="template-type">
+                                type="birthday"
+                            </div>
+                        </div>
+
+                        <div class="template-card-body">
+
+                            <p class="template-description">
+                                Create a personalized birthday experience
+                                with a name, message, multiple images and
+                                captions.
+                            </p>
+
+                            <div class="template-code">
+
+                                <div class="code-header">
+                                    <span class="code-language">
+                                        Python
+                                    </span>
+
+                                    <button
+                                        class="copy-code"
+                                        type="button"
+                                        data-code="birthday-code"
+                                    >
+                                        Copy
+                                    </button>
+                                </div>
+
+                                <pre><code id="birthday-code">from emotionweb import Surprise
+
+s = Surprise(
+    type="birthday",
+    name="Aniket Vishwakarma",
+    message="chal aaja ghumne chalte h",
+    images=[
+        r"C:\path\to\img1.jpeg",
+        r"C:\path\to\img2.jpeg",
+        r"C:\path\to\img3.jpeg",
+    ],
+    caption=[
+        "The solo travel that teaches me everything ❤️",
+        "This travel shows a different path ❤️",
+        "Very best view ❤️",
+    ]
+)
+
+s.generate()</code></pre>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </article>
+
+
+                <!-- LOVE -->
+
+                <article class="template-card">
+
+                    <div class="template-card-top">
+                        <div class="template-number">02</div>
+
+                        <div class="template-symbol">02</div>
+
+                        <h3>Love</h3>
+
+                        <div class="template-type">
+                            type="love"
+                        </div>
+                    </div>
+
+                    <div class="template-card-body">
+
+                        <p class="template-description">
+                            A personalized experience for expressing a
+                            message through the EmotionWeb generator.
+                        </p>
+
+                        <div class="template-code">
+
+                            <div class="code-header">
+                                <span class="code-language">Python</span>
+
+                                <button
+                                    class="copy-code"
+                                    type="button"
+                                    data-code="love-code"
+                                >
+                                    Copy
+                                </button>
+                            </div>
+
+                            <pre><code id="love-code">from emotionweb import Surprise
+
+s = Surprise(
+    type="love",
+    name="Someone Special",
+    message="A message from the heart.",
+    images=[
+        r"C:\path\to\image1.jpeg",
+        r"C:\path\to\image2.jpeg",
+    ],
+    caption=[
+        "A special memory ❤️",
+        "Another beautiful moment ❤️",
+    ]
+)
+
+s.generate()</code></pre>
+
+                        </div>
+                    </div>
+                </article>
+
+
+                <!-- LOVE LETTER -->
+
+                <article class="template-card">
+
+                    <div class="template-card-top">
+                        <div class="template-number">03</div>
+
+                        <div class="template-symbol">03</div>
+
+                        <h3>Love Letter</h3>
+
+                        <div class="template-type">
+                            type="loveletter"
+                        </div>
+                    </div>
+
+                    <div class="template-card-body">
+
+                        <p class="template-description">
+                            Turn a personal message into a dedicated
+                            digital experience using the love-letter
+                            occasion type.
+                        </p>
+
+                        <div class="template-code">
+
+                            <div class="code-header">
+                                <span class="code-language">Python</span>
+
+                                <button
+                                    class="copy-code"
+                                    type="button"
+                                    data-code="loveletter-code"
+                                >
+                                    Copy
+                                </button>
+                            </div>
+
+                            <pre><code id="loveletter-code">from emotionweb import Surprise
+
+s = Surprise(
+    type="loveletter",
+    name="Someone Special",
+    message="A letter written just for you.",
+    images=[],
+    caption=[
+        "A little memory ❤️",
+        "For you.",
+    ]
+)
+
+s.generate()</code></pre>
+
+                        </div>
+                    </div>
+                </article>
+
+
+                <!-- ANNIVERSARY -->
+
+                <article class="template-card">
+
+                    <div class="template-card-top">
+                        <div class="template-number">04</div>
+
+                        <div class="template-symbol">04</div>
+
+                        <h3>Anniversary</h3>
+
+                        <div class="template-type">
+                            type="anniversary"
+                        </div>
+                    </div>
+
+                    <div class="template-card-body">
+
+                        <p class="template-description">
+                            Build a personalized anniversary experience
+                            around memories, messages, images and captions.
+                        </p>
+
+                        <div class="template-code">
+
+                            <div class="code-header">
+                                <span class="code-language">Python</span>
+
+                                <button
+                                    class="copy-code"
+                                    type="button"
+                                    data-code="anniversary-code"
+                                >
+                                    Copy
+                                </button>
+                            </div>
+
+                            <pre><code id="anniversary-code">from emotionweb import Surprise
+
+s = Surprise(
+    type="anniversary",
+    name="Someone Special",
+    message="Happy anniversary ❤️",
+    images=[
+        r"C:\path\to\memory1.jpeg",
+        r"C:\path\to\memory2.jpeg",
+    ],
+    caption=[
+        "One beautiful memory.",
+        "Another chapter together.",
+    ]
+)
+
+s.generate()</code></pre>
+
+                        </div>
+                    </div>
+                </article>
+
+
+                <!-- APOLOGY -->
+
+                <article class="template-card">
+
+                    <div class="template-card-top">
+                        <div class="template-number">05</div>
+
+                        <div class="template-symbol">05</div>
+
+                        <h3>Apology</h3>
+
+                        <div class="template-type">
+                            type="apology"
+                        </div>
+                    </div>
+
+                    <div class="template-card-body">
+
+                        <p class="template-description">
+                            Create a personalized apology experience
+                            with your own message and optional visual
+                            memories.
+                        </p>
+
+                        <div class="template-code">
+
+                            <div class="code-header">
+                                <span class="code-language">Python</span>
+
+                                <button
+                                    class="copy-code"
+                                    type="button"
+                                    data-code="apology-code"
+                                >
+                                    Copy
+                                </button>
+                            </div>
+
+                            <pre><code id="apology-code">from emotionweb import Surprise
+
+s = Surprise(
+    type="apology",
+    name="Someone Special",
+    message="I'm sorry. I really mean it.",
+    images=[],
+    caption=[
+        "I hope you can forgive me."
+    ]
+)
+
+s.generate()</code></pre>
+
+                        </div>
+                    </div>
+                </article>
+
+
+                <!-- FAREWELL -->
+
+                <article class="template-card">
+
+                    <div class="template-card-top">
+                        <div class="template-number">06</div>
+
+                        <div class="template-symbol">06</div>
+
+                        <h3>Farewell</h3>
+
+                        <div class="template-type">
+                            type="farewell"
+                        </div>
+                    </div>
+
+                    <div class="template-card-body">
+
+                        <p class="template-description">
+                            Build a memorable farewell experience for a
+                            meaningful goodbye, message or shared memory.
+                        </p>
+
+                        <div class="template-code">
+
+                            <div class="code-header">
+                                <span class="code-language">Python</span>
+
+                                <button
+                                    class="copy-code"
+                                    type="button"
+                                    data-code="farewell-code"
+                                >
+                                    Copy
+                                </button>
+                            </div>
+
+                            <pre><code id="farewell-code">from emotionweb import Surprise
+
+s = Surprise(
+    type="farewell",
+    name="A Friend",
+    message="Goodbyes are never easy.",
+    images=[
+        r"C:\path\to\memory.jpeg",
+    ],
+    caption=[
+        "A memory worth keeping."
+    ]
+)
+
+s.generate()</code></pre>
+
+                        </div>
+                    </div>
+                </article>
+
+
+                <!-- TEACHER'S DAY -->
+
+                <article class="template-card">
+
+                    <div class="template-card-top">
+                        <div class="template-number">07</div>
+
+                        <div class="template-symbol">07</div>
+
+                        <h3>Teacher's Day</h3>
+
+                        <div class="template-type">
+                            type=teachers_day
+                        </div>
+                    </div>
+
+                    <div class="template-card-body">
+
+                        <p class="template-description">
+                            Create a personalized appreciation experience
+                            for a teacher using your own message, images
+                            and captions.
+                        </p>
+
+                        <div class="template-code">
+
+                            <div class="code-header">
+                                <span class="code-language">Python</span>
+
+                                <button
+                                    class="copy-code"
+                                    type="button"
+                                    data-code="teachers-day-code"
+                                >
+                                    Copy
+                                </button>
+                            </div>
+
+                            <pre><code id="teachers-day-code">from emotionweb import Surprise
+
+s = Surprise(
+    type="teachers_day",
+    name="My Teacher",
+    message="Thank you for everything.",
+    images=[
+        r"C:\path\to\memory.jpeg",
+    ],
+    caption=[
+        "A lesson I'll always remember."
+    ]
+)
+
+s.generate()</code></pre>
+
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+
+        <!-- API CONSISTENCY -->
+
+        <section class="template-info">
+
+            <div class="info-card">
+                <small>Same API</small>
+                <strong>
+                    Every occasion uses Surprise(...)
+                </strong>
+            </div>
+
+            <div class="info-card">
+                <small>Your content</small>
+                <strong>
+                    Names, messages, images & captions
+                </strong>
+            </div>
+
+            <div class="info-card">
+                <small>Growing collection</small>
+                <strong>
+                    More templates can be added over time
+                </strong>
+            </div>
+
+        </section>
+
+
+        <!-- MORE THEMES -->
+
+        <section class="more-themes">
+
+            <div class="more-themes-content">
+
+                <span class="more-themes-label">
+                    The collection is growing
+                </span>
+
+                <h2>
+                    More themes are coming.
+                </h2>
+
+                <p>
+                    EmotionWeb is designed to grow with new templates and
+                    creative experiences. The themes shown on this page
+                    represent the currently documented collection — they
+                    are not the final limit of what EmotionWeb can become.
+                </p>
+
+                <div class="more-themes-note">
+                    CURRENT COLLECTION · MORE TO COME
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+</main>
+
+
+<script>
+    document.querySelectorAll(".copy-code").forEach(button => {
+
+        button.addEventListener("click", async () => {
+
+            const codeId = button.dataset.code;
+            const codeElement = document.getElementById(codeId);
+
+            if (!codeElement) return;
+
+            try {
+                await navigator.clipboard.writeText(
+                    codeElement.innerText
+                );
+
+                const originalText = button.textContent;
+
+                button.textContent = "Copied";
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 1400);
+
+            } catch (error) {
+                button.textContent = "Failed";
+
+                setTimeout(() => {
+                    button.textContent = "Copy";
+                }, 1400);
+            }
+        });
+
+    });
+</script>
+
+{% endblock %}
+```
