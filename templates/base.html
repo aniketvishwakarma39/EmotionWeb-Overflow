@@ -1,0 +1,1531 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="{% block meta_description %}EmotionWeb — Create personalized and interactive surprise websites with Python and Django.{% endblock %}"
+    >
+
+    <meta
+        name="theme-color"
+        content="#f7f6f3"
+    >
+
+    <meta
+        name="color-scheme"
+        content="light"
+    >
+
+    <title>
+        {% block title %}
+            EmotionWeb — Engineering on the surface. Emotion at the core.
+        {% endblock %}
+    </title>
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="{% static 'images/emotionweb.png' %}"
+    >
+
+    {% block extra_head %}{% endblock %}
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background: #f7f6f3;
+            color: #141218;
+
+            min-height: 100vh;
+
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+
+        /* =====================================================
+           ACCESSIBILITY
+        ===================================================== */
+
+        :focus-visible {
+            outline: 2px solid #141218;
+            outline-offset: 4px;
+        }
+
+
+        /* =====================================================
+           GLOBAL CONTAINER
+        ===================================================== */
+
+        .container {
+            width: min(1180px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           GRID BACKGROUND
+        ===================================================== */
+
+        .site-grid {
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            z-index: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(20, 18, 24, 0.035) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(20, 18, 24, 0.035) 1px,
+                    transparent 1px
+                );
+
+            background-size: 48px 48px;
+        }
+
+        /* Intersection dots */
+
+        .site-grid::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background-image:
+                radial-gradient(
+                    circle at center,
+                    rgba(20, 18, 24, 0.16) 1px,
+                    transparent 1.5px
+                );
+
+            background-size: 48px 48px;
+
+            opacity: .55;
+        }
+
+        /* Very subtle cross detail */
+
+        .site-grid::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(20, 18, 24, 0.055),
+                    rgba(20, 18, 24, 0.055)
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(20, 18, 24, 0.055),
+                    rgba(20, 18, 24, 0.055)
+                );
+
+            background-size:
+                7px 1px,
+                1px 7px;
+
+            background-position:
+                center,
+                center;
+
+            background-repeat:
+                repeat,
+                repeat;
+
+            opacity: .05;
+        }
+
+
+        /* =====================================================
+           PAGE WRAPPER
+        ===================================================== */
+
+        .site-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .site-header {
+            position: sticky;
+            top: 0;
+
+            z-index: 100;
+
+            width: 100%;
+
+            background:
+                rgba(247, 246, 243, 0.84);
+
+            border-bottom:
+                1px solid rgba(20, 18, 24, 0.07);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .nav-inner {
+            min-height: 72px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+
+        /* =====================================================
+           BRAND
+        ===================================================== */
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 11px;
+
+            flex-shrink: 0;
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            flex-shrink: 0;
+        }
+
+        .brand-mark img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-size: 15px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.03em;
+
+            color: #141218;
+        }
+
+
+        /* =====================================================
+           DESKTOP NAV
+        ===================================================== */
+
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+
+            gap: 22px;
+        }
+
+        .desktop-nav a:not(.nav-action) {
+            position: relative;
+
+            color: rgba(20, 18, 24, .56);
+
+            font-size: 12px;
+            font-weight: 650;
+
+            transition:
+                color .2s ease,
+                transform .2s ease;
+        }
+
+        .desktop-nav a:not(.nav-action)::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: -8px;
+
+            height: 1px;
+
+            background: #141218;
+
+            transform:
+                scaleX(0);
+
+            transform-origin: center;
+
+            transition:
+                transform .2s ease;
+        }
+
+        .desktop-nav a:not(.nav-action):hover {
+            color: #141218;
+            transform: translateY(-1px);
+        }
+
+        .desktop-nav a:not(.nav-action):hover::after,
+        .desktop-nav a.active:not(.nav-action)::after {
+            transform: scaleX(1);
+        }
+
+        .desktop-nav a.active:not(.nav-action) {
+            color: #141218;
+        }
+
+
+        /* =====================================================
+           NAV ACTION
+        ===================================================== */
+
+        .nav-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 38px;
+
+            padding: 0 17px;
+
+            border-radius: 9px;
+
+            background: #141218;
+            color: #fff;
+
+            font-size: 11px;
+            font-weight: 750;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .nav-action:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 22px rgba(20, 18, 24, .16);
+        }
+
+
+        /* =====================================================
+           MOBILE MENU BUTTON
+        ===================================================== */
+
+        .mobile-menu-btn {
+            display: none;
+
+            width: 40px;
+            height: 40px;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid rgba(20, 18, 24, .09);
+
+            border-radius: 9px;
+
+            background:
+                rgba(255, 255, 255, .65);
+
+            cursor: pointer;
+
+            transition:
+                background .2s ease,
+                border-color .2s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(255, 255, 255, .95);
+            border-color: rgba(20, 18, 24, .15);
+        }
+
+        .menu-icon {
+            width: 17px;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 4px;
+        }
+
+        .menu-icon span {
+            width: 100%;
+            height: 1.5px;
+
+            background: #141218;
+
+            border-radius: 10px;
+
+            transition:
+                transform .25s ease,
+                opacity .2s ease;
+        }
+
+        .mobile-menu-btn.open .menu-icon span:nth-child(1) {
+            transform: translateY(5.5px) rotate(45deg);
+        }
+
+        .mobile-menu-btn.open .menu-icon span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.open .menu-icon span:nth-child(3) {
+            transform: translateY(-5.5px) rotate(-45deg);
+        }
+
+
+        /* =====================================================
+           MOBILE NAV
+        ===================================================== */
+
+        .mobile-nav {
+            display: none;
+
+            padding: 14px 0 20px;
+
+            border-top:
+                1px solid rgba(20, 18, 24, .06);
+
+            background:
+                rgba(247, 246, 243, .96);
+
+            max-height: calc(100vh - 66px);
+            overflow-y: auto;
+        }
+
+        .mobile-nav.open {
+            display: block;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+
+            gap: 4px;
+        }
+
+        .mobile-nav-links a {
+            padding: 12px 10px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+            font-weight: 650;
+
+            color: rgba(20, 18, 24, .66);
+
+            transition:
+                background .2s ease,
+                color .2s ease;
+        }
+
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            background:
+                rgba(20, 18, 24, .045);
+
+            color: #141218;
+        }
+
+        .mobile-nav-links .mobile-action {
+            margin-top: 7px;
+
+            background: #141218;
+
+            color: #fff;
+
+            text-align: center;
+        }
+
+        .mobile-nav-links .mobile-action:hover {
+            background: #141218;
+            color: #fff;
+        }
+
+
+        /* =====================================================
+           PACKAGE STATS
+        ===================================================== */
+
+        .package-stats-bar {
+            width: 100%;
+
+            background:
+                rgba(255, 255, 255, .72);
+
+            border-bottom:
+                1px solid rgba(20, 18, 24, .07);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .package-stats-inner {
+            min-height: 43px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 27px;
+
+            overflow-x: auto;
+
+            scrollbar-width: none;
+        }
+
+        .package-stats-inner::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        /* STATUS */
+
+        .package-status {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 8px;
+
+            flex-shrink: 0;
+
+            color:
+                rgba(20, 18, 24, .42);
+
+            font-size: 9px;
+            font-weight: 800;
+
+            letter-spacing: .11em;
+
+            white-space: nowrap;
+        }
+
+        .package-status-dot {
+            width: 6px;
+            height: 6px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: #35a56a;
+
+            box-shadow:
+                0 0 0 3px rgba(53, 165, 106, .10),
+                0 0 10px rgba(53, 165, 106, .28);
+        }
+
+
+        /* INDIVIDUAL STAT */
+
+        .package-stat {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 8px;
+
+            flex-shrink: 0;
+
+            white-space: nowrap;
+        }
+
+        .package-stat-label {
+            color:
+                rgba(20, 18, 24, .31);
+
+            font-size: 8px;
+            font-weight: 800;
+
+            letter-spacing: .10em;
+
+            text-transform: uppercase;
+        }
+
+        .package-stat strong {
+            color:
+                rgba(20, 18, 24, .72);
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        #packageDownloads {
+            min-width: 55px;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        main {
+            position: relative;
+            z-index: 1;
+
+            min-height: 40vh;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .site-footer {
+            position: relative;
+            z-index: 1;
+
+            margin-top: 100px;
+
+            background: #141218;
+            color: #fff;
+        }
+
+        .footer-inner {
+            padding: 70px 0 30px;
+        }
+
+        .footer-top {
+            display: grid;
+
+            grid-template-columns:
+                minmax(240px, 1.5fr)
+                repeat(3, 1fr);
+
+            gap: 50px;
+        }
+
+        .footer-brand {
+            max-width: 330px;
+        }
+
+        .footer-brand-row {
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+
+            margin-bottom: 18px;
+        }
+
+        .footer-logo {
+            width: 40px;
+            height: 40px;
+
+            object-fit: contain;
+        }
+
+        .footer-brand-name {
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .footer-description {
+            color: rgba(255, 255, 255, .48);
+
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 16px;
+
+            color: rgba(255, 255, 255, .38);
+
+            font-size: 9px;
+            font-weight: 800;
+
+            letter-spacing: .13em;
+
+            text-transform: uppercase;
+        }
+
+        .footer-column a {
+            display: block;
+
+            width: fit-content;
+
+            margin-bottom: 10px;
+
+            color: rgba(255, 255, 255, .64);
+
+            font-size: 12px;
+
+            transition:
+                color .2s ease,
+                transform .2s ease;
+        }
+
+        .footer-column a:hover {
+            color: #fff;
+            transform: translateX(2px);
+        }
+
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-top: 60px;
+            padding-top: 20px;
+
+            border-top:
+                1px solid rgba(255, 255, 255, .08);
+        }
+
+        .footer-copy {
+            color: rgba(255, 255, 255, .32);
+
+            font-size: 10px;
+        }
+
+        .footer-version {
+            color: rgba(255, 255, 255, .38);
+
+            font-size: 10px;
+        }
+
+        .footer-version strong {
+            color: rgba(255, 255, 255, .65);
+        }
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 1050px) {
+
+            .desktop-nav {
+                gap: 15px;
+            }
+
+            .desktop-nav a:not(.nav-action) {
+                font-size: 11px;
+            }
+
+            .nav-inner {
+                gap: 20px;
+            }
+
+            .footer-top {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .container {
+                width: min(
+                    calc(100% - 32px),
+                    680px
+                );
+            }
+
+            .desktop-nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .nav-inner {
+                min-height: 66px;
+            }
+
+            .brand-mark {
+                width: 36px;
+                height: 36px;
+            }
+
+            .brand-name {
+                font-size: 14px;
+            }
+
+            .package-stats-inner {
+                width: calc(100% - 32px);
+
+                gap: 20px;
+
+                min-height: 40px;
+            }
+
+            .package-status {
+                display: none;
+            }
+
+            .package-stat-label {
+                font-size: 7px;
+            }
+
+            .package-stat strong {
+                font-size: 9px;
+            }
+
+            .footer-inner {
+                padding-top: 55px;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+
+                gap: 35px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+
+                margin-top: 40px;
+            }
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 450px) {
+
+            .container {
+                width: calc(100% - 28px);
+            }
+
+            .package-stats-inner {
+                width: calc(100% - 28px);
+            }
+
+            .brand-mark {
+                width: 34px;
+                height: 34px;
+            }
+
+            .brand-name {
+                font-size: 13px;
+            }
+
+            .mobile-menu-btn {
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+
+        /* =====================================================
+           REDUCED MOTION
+        ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         BACKGROUND GRID
+    ====================================================== -->
+
+    <div class="site-grid"></div>
+
+
+    <div class="site-wrapper">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="site-header">
+
+            <div class="container nav-inner">
+
+
+                <!-- BRAND -->
+
+                <a
+                    href="{% url 'home' %}"
+                    class="brand"
+                    aria-label="EmotionWeb Home"
+                >
+
+                    <span class="brand-mark">
+
+                        <img
+                            src="{% static 'images/emotionweb.png' %}"
+                            alt="EmotionWeb"
+                        >
+
+                    </span>
+
+                    <span class="brand-name">
+                        EmotionWeb
+                    </span>
+
+                </a>
+
+
+                <!-- DESKTOP NAV -->
+
+                <nav
+                    class="desktop-nav"
+                    aria-label="Main navigation"
+                >
+
+                    <a
+                        href="{% url 'home' %}"
+                        class="{% if request.path == '/' %}active{% endif %}"
+                    >
+                        Home
+                    </a>
+
+                    <a
+                        href="{% url 'documentation' %}"
+                        class="{% if request.path == '/docs/' %}active{% endif %}"
+                    >
+                        Documentation
+                    </a>
+
+                    <a
+                        href="{% url 'templates' %}"
+                        class="{% if request.path == '/templates/' %}active{% endif %}"
+                    >
+                        Templates
+                    </a>
+
+                    <a
+                        href="{% url 'how_it_works' %}"
+                        class="{% if request.path == '/how-it-works/' %}active{% endif %}"
+                    >
+                        How It Works
+                    </a>
+
+                    <a
+                        href="{% url 'research' %}"
+                        class="{% if request.path == '/research/' %}active{% endif %}"
+                    >
+                        Research
+                    </a>
+
+                    <a
+                        href="{% url 'contribute' %}"
+                        class="{% if request.path == '/contribute/' %}active{% endif %}"
+                    >
+                        Contribute
+                    </a>
+
+                    <a
+                        href="{% url 'blog' %}"
+                        class="{% if request.path == '/blog/' %}active{% endif %}"
+                    >
+                        Blog
+                    </a>
+
+                    <a
+                        href="{% url 'about' %}"
+                        class="{% if request.path == '/about/' %}active{% endif %}"
+                    >
+                        About
+                    </a>
+
+                    <a
+                        href="{% url 'documentation' %}"
+                        class="nav-action"
+                    >
+                        Get Started
+                    </a>
+
+                </nav>
+
+
+                <!-- MOBILE MENU BUTTON -->
+
+                <button
+                    class="mobile-menu-btn"
+                    id="mobileMenuButton"
+                    type="button"
+                    aria-label="Open navigation"
+                    aria-expanded="false"
+                    aria-controls="mobileNav"
+                >
+
+                    <span class="menu-icon">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 MOBILE NAV
+            ================================================== -->
+
+            <div
+                class="mobile-nav"
+                id="mobileNav"
+            >
+
+                <div class="container mobile-nav-links">
+
+                    <a
+                        href="{% url 'home' %}"
+                        class="{% if request.path == '/' %}active{% endif %}"
+                    >
+                        Home
+                    </a>
+
+                    <a
+                        href="{% url 'documentation' %}"
+                        class="{% if request.path == '/docs/' %}active{% endif %}"
+                    >
+                        Documentation
+                    </a>
+
+                    <a
+                        href="{% url 'templates' %}"
+                        class="{% if request.path == '/templates/' %}active{% endif %}"
+                    >
+                        Templates
+                    </a>
+
+                    <a
+                        href="{% url 'how_it_works' %}"
+                        class="{% if request.path == '/how-it-works/' %}active{% endif %}"
+                    >
+                        How It Works
+                    </a>
+
+                    <a
+                        href="{% url 'research' %}"
+                        class="{% if request.path == '/research/' %}active{% endif %}"
+                    >
+                        Research
+                    </a>
+
+                    <a
+                        href="{% url 'contribute' %}"
+                        class="{% if request.path == '/contribute/' %}active{% endif %}"
+                    >
+                        Contribute
+                    </a>
+
+                    <a
+                        href="{% url 'blog' %}"
+                        class="{% if request.path == '/blog/' %}active{% endif %}"
+                    >
+                        Blog
+                    </a>
+
+                    <a
+                        href="{% url 'about' %}"
+                        class="{% if request.path == '/about/' %}active{% endif %}"
+                    >
+                        About
+                    </a>
+
+                    <a
+                        href="{% url 'documentation' %}"
+                        class="mobile-action"
+                    >
+                        Get Started
+                    </a>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             REAL PYPI PACKAGE DATA
+             Loaded from Django backend
+        ====================================================== -->
+
+        <div class="package-stats-bar">
+
+            <div class="container package-stats-inner">
+
+
+                <!-- STATUS -->
+
+                <div class="package-status">
+
+                    <span class="package-status-dot"></span>
+
+                    <span>
+                        PYPI PACKAGE DATA
+                    </span>
+
+                </div>
+
+
+                <!-- VERSION -->
+
+                <div class="package-stat">
+
+                    <span class="package-stat-label">
+                        Version
+                    </span>
+
+                    <strong id="packageVersion">
+                        {{ package.version }}
+                    </strong>
+
+                </div>
+
+
+                <!-- AUTHOR -->
+
+                <div class="package-stat">
+
+                    <span class="package-stat-label">
+                        Author
+                    </span>
+
+                    <strong id="packageAuthor">
+                        {{ package.author }}
+                    </strong>
+
+                </div>
+
+
+                <!-- OWNER -->
+
+                <div class="package-stat">
+
+                    <span class="package-stat-label">
+                        Owner
+                    </span>
+
+                    <strong id="packageOwner">
+                        {{ package.owner }}
+                    </strong>
+
+                </div>
+
+
+                <!-- PYTHON -->
+
+                <div class="package-stat">
+
+                    <span class="package-stat-label">
+                        Python
+                    </span>
+
+                    <strong id="packagePython">
+                        {{ package.python }}
+                    </strong>
+
+                </div>
+
+
+                <!-- DOWNLOADS -->
+
+                <div class="package-stat">
+
+                    <span class="package-stat-label">
+                        180-Day Downloads
+                    </span>
+
+                    <strong id="packageDownloads">
+                        {{ package.downloads|default:"Unavailable" }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             PAGE CONTENT
+        ====================================================== -->
+
+        <main>
+
+            {% block content %}
+            {% endblock %}
+
+        </main>
+
+
+        <!-- =====================================================
+             FOOTER
+        ====================================================== -->
+
+        <footer class="site-footer">
+
+            <div class="container footer-inner">
+
+
+                <div class="footer-top">
+
+
+                    <!-- BRAND -->
+
+                    <div class="footer-brand">
+
+                        <div class="footer-brand-row">
+
+                            <img
+                                src="{% static 'images/emotionweb.png' %}"
+                                alt="EmotionWeb"
+                                class="footer-logo"
+                            >
+
+                            <span class="footer-brand-name">
+                                EmotionWeb
+                            </span>
+
+                        </div>
+
+                        <p class="footer-description">
+
+                            Engineering on the surface.
+                            Emotion at the core.
+
+                            A Python-powered system for creating
+                            personalized and interactive surprise
+                            websites.
+
+                        </p>
+
+                    </div>
+
+
+                    <!-- PRODUCT -->
+
+                    <div class="footer-column">
+
+                        <h4>
+                            Product
+                        </h4>
+
+                        <a href="{% url 'documentation' %}">
+                            Documentation
+                        </a>
+
+                        <a href="{% url 'templates' %}">
+                            Templates
+                        </a>
+
+                        <a href="{% url 'how_it_works' %}">
+                            How It Works
+                        </a>
+
+                    </div>
+
+
+                    <!-- PROJECT -->
+
+                    <div class="footer-column">
+
+                        <h4>
+                            Project
+                        </h4>
+
+                        <a
+                            href="https://pypi.org/project/emotionweb/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            PyPI
+                        </a>
+
+                        <a
+                            href="https://github.com/aniketvishwakarma39/emotionweb"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            GitHub
+                        </a>
+
+                        <a href="{% url 'research' %}">
+                            Research
+                        </a>
+
+                        <a href="{% url 'contribute' %}">
+                            Contribute
+                        </a>
+
+                    </div>
+
+
+                    <!-- EXPLORE -->
+
+                    <div class="footer-column">
+
+                        <h4>
+                            Explore
+                        </h4>
+
+                        <a href="{% url 'blog' %}">
+                            Blog
+                        </a>
+
+                        <a href="{% url 'about' %}">
+                            About
+                        </a>
+
+                        <a href="{% url 'home' %}">
+                            Home
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- FOOTER BOTTOM -->
+
+                <div class="footer-bottom">
+
+                    <span class="footer-copy">
+                        © 2026 EmotionWeb. Built with Python &amp; Django.
+                    </span>
+
+                    <span class="footer-version">
+
+                        Current PyPI version:
+
+                        <strong id="footerVersion">
+                            {{ package.version }}
+                        </strong>
+
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </footer>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         MOBILE NAVIGATION SCRIPT
+    ====================================================== -->
+
+    <script>
+
+        const mobileMenuButton =
+            document.getElementById("mobileMenuButton");
+
+        const mobileNav =
+            document.getElementById("mobileNav");
+
+
+        function closeMobileMenu() {
+
+            mobileNav.classList.remove("open");
+
+            mobileMenuButton.classList.remove("open");
+
+            mobileMenuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            mobileMenuButton.setAttribute(
+                "aria-label",
+                "Open navigation"
+            );
+
+            document.body.classList.remove("menu-open");
+        }
+
+
+        function openMobileMenu() {
+
+            mobileNav.classList.add("open");
+
+            mobileMenuButton.classList.add("open");
+
+            mobileMenuButton.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+
+            mobileMenuButton.setAttribute(
+                "aria-label",
+                "Close navigation"
+            );
+
+            document.body.classList.add("menu-open");
+        }
+
+
+        mobileMenuButton.addEventListener(
+            "click",
+            function () {
+
+                const isOpen =
+                    mobileNav.classList.contains("open");
+
+                if (isOpen) {
+                    closeMobileMenu();
+                } else {
+                    openMobileMenu();
+                }
+
+            }
+        );
+
+
+        /* Close after clicking a navigation link */
+
+        mobileNav
+            .querySelectorAll("a")
+            .forEach(function (link) {
+
+                link.addEventListener(
+                    "click",
+                    closeMobileMenu
+                );
+
+            });
+
+
+        /* Close with Escape */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape" &&
+                    mobileNav.classList.contains("open")
+                ) {
+                    closeMobileMenu();
+                }
+
+            }
+        );
+
+
+        /* Reset mobile menu when resizing to desktop */
+
+        window.addEventListener(
+            "resize",
+            function () {
+
+                if (window.innerWidth > 800) {
+                    closeMobileMenu();
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+</html>

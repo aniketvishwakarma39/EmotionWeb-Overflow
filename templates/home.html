@@ -1,0 +1,2091 @@
+{% extends "base.html" %}
+
+{% block title %}
+    EmotionWeb — Engineering on the surface. Emotion at the core.
+{% endblock %}
+
+{% block content %}
+
+<style>
+    /* =========================================================
+       HOME PAGE
+       ========================================================= */
+
+    .home-page {
+        width: 100%;
+        overflow: hidden;
+        color: #151419;
+    }
+
+    .home-page * {
+        box-sizing: border-box;
+    }
+
+    .home-container {
+        width: min(1180px, calc(100% - 48px));
+        margin: 0 auto;
+    }
+
+
+    /* =========================================================
+       SUBTLE GRID
+       ========================================================= */
+
+    .ew-hero,
+    .ew-section,
+    .ew-final-cta {
+        position: relative;
+    }
+
+    .ew-hero::before,
+    .ew-section::before,
+    .ew-final-cta::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+
+        pointer-events: none;
+
+        opacity: .45;
+
+        background-image:
+            linear-gradient(
+                rgba(21, 20, 25, .035) 1px,
+                transparent 1px
+            ),
+            linear-gradient(
+                90deg,
+                rgba(21, 20, 25, .035) 1px,
+                transparent 1px
+            ),
+            radial-gradient(
+                circle,
+                rgba(141, 85, 247, .12) 1px,
+                transparent 1.5px
+            );
+
+        background-size:
+            72px 72px,
+            72px 72px,
+            72px 72px;
+
+        mask-image: linear-gradient(
+            to bottom,
+            black,
+            rgba(0,0,0,.25)
+        );
+    }
+
+    .ew-hero > *,
+    .ew-section > *,
+    .ew-final-cta > * {
+        position: relative;
+        z-index: 1;
+    }
+
+
+    /* =========================================================
+       HERO
+       ========================================================= */
+
+    .ew-hero {
+        min-height: calc(100vh - 72px);
+
+        display: flex;
+        align-items: center;
+
+        padding: 90px 0 100px;
+    }
+
+    .ew-hero-grid {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(380px, .82fr);
+
+        align-items: center;
+
+        gap: 70px;
+    }
+
+
+    /* =========================================================
+       HERO LEFT
+       ========================================================= */
+
+    .ew-hero-content {
+        animation: ewHeroContent .8s ease both;
+    }
+
+    .ew-eyebrow {
+        display: inline-flex;
+        align-items: center;
+
+        gap: 9px;
+
+        margin-bottom: 25px;
+
+        color: rgba(21, 20, 25, .52);
+
+        font-size: 11px;
+        font-weight: 700;
+
+        letter-spacing: .13em;
+        text-transform: uppercase;
+    }
+
+    .ew-eyebrow-dot {
+        width: 7px;
+        height: 7px;
+
+        flex: 0 0 auto;
+
+        border-radius: 50%;
+
+        background: #8d55f7;
+
+        box-shadow:
+            0 0 0 4px rgba(141, 85, 247, .10),
+            0 0 15px rgba(141, 85, 247, .35);
+    }
+
+
+    .ew-hero-title {
+        margin: 0;
+
+        max-width: 760px;
+
+        color: #111015;
+
+        font-size: clamp(52px, 6.7vw, 88px);
+
+        font-weight: 700;
+
+        line-height: .98;
+
+        letter-spacing: -.065em;
+    }
+
+    .ew-hero-title-accent {
+        display: block;
+
+        color: #a96df4;
+    }
+
+
+    .ew-hero-description {
+        max-width: 620px;
+
+        margin: 30px 0 0;
+
+        color: rgba(21, 20, 25, .58);
+
+        font-size: 17px;
+
+        line-height: 1.75;
+    }
+
+
+    /* =========================================================
+       HERO BUTTONS
+       ========================================================= */
+
+    .ew-hero-actions {
+        display: flex;
+        align-items: center;
+
+        gap: 11px;
+
+        margin-top: 34px;
+
+        flex-wrap: wrap;
+    }
+
+
+    .ew-button {
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        min-height: 48px;
+
+        padding: 0 20px;
+
+        border-radius: 9px;
+
+        text-decoration: none;
+
+        font-size: 13px;
+        font-weight: 700;
+
+        transition:
+            transform .2s ease,
+            box-shadow .2s ease,
+            background .2s ease,
+            border-color .2s ease;
+    }
+
+    .ew-button:hover {
+        transform: translateY(-2px);
+    }
+
+
+    .ew-button-primary {
+        color: #ffffff;
+
+        background: #151419;
+
+        box-shadow:
+            0 10px 25px rgba(0,0,0,.12);
+    }
+
+    .ew-button-primary:hover {
+        background: #29272e;
+
+        box-shadow:
+            0 14px 30px rgba(0,0,0,.16);
+    }
+
+
+    .ew-button-secondary {
+        color: #1b1920;
+
+        border: 1px solid rgba(21,20,25,.13);
+
+        background: rgba(255,255,255,.65);
+    }
+
+    .ew-button-secondary:hover {
+        border-color: rgba(21,20,25,.25);
+
+        background: rgba(255,255,255,.9);
+    }
+
+
+    /* =========================================================
+       HERO META
+       ========================================================= */
+
+    .ew-hero-meta {
+        display: flex;
+        align-items: center;
+
+        flex-wrap: wrap;
+
+        gap: 13px;
+
+        margin-top: 30px;
+
+        color: rgba(21,20,25,.42);
+
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .ew-meta-item {
+        display: inline-flex;
+        align-items: center;
+
+        gap: 7px;
+    }
+
+    .ew-meta-separator {
+        width: 3px;
+        height: 3px;
+
+        border-radius: 50%;
+
+        background: rgba(21,20,25,.25);
+    }
+
+
+    /* =========================================================
+       HERO PREVIEW
+       ========================================================= */
+
+    .ew-preview-wrapper {
+        position: relative;
+
+        width: 100%;
+
+        animation: ewHeroPreview .9s .1s ease both;
+    }
+
+
+    .ew-preview-glow {
+        position: absolute;
+
+        width: 260px;
+        height: 260px;
+
+        top: 5%;
+        right: 5%;
+
+        border-radius: 50%;
+
+        background: rgba(174, 113, 244, .18);
+
+        filter: blur(75px);
+
+        pointer-events: none;
+    }
+
+
+    .ew-browser {
+        position: relative;
+
+        overflow: hidden;
+
+        border: 1px solid rgba(21,20,25,.13);
+
+        border-radius: 18px;
+
+        background: #17131b;
+
+        box-shadow:
+            0 35px 80px rgba(25,18,35,.20),
+            0 8px 20px rgba(0,0,0,.06);
+
+        transform: rotate(1.2deg);
+
+        transition:
+            transform .45s ease,
+            box-shadow .45s ease;
+    }
+
+    .ew-browser:hover {
+        transform: rotate(0deg) translateY(-5px);
+
+        box-shadow:
+            0 42px 90px rgba(25,18,35,.24),
+            0 10px 25px rgba(0,0,0,.08);
+    }
+
+
+    /* =========================================================
+       BROWSER TOP BAR
+       ========================================================= */
+
+    .ew-browser-bar {
+        height: 43px;
+
+        display: flex;
+        align-items: center;
+
+        padding: 0 14px;
+
+        border-bottom: 1px solid rgba(255,255,255,.08);
+
+        background: rgba(255,255,255,.055);
+    }
+
+
+    .ew-browser-dots {
+        display: flex;
+
+        gap: 6px;
+    }
+
+    .ew-browser-dots span {
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: rgba(255,255,255,.22);
+    }
+
+
+    .ew-browser-address {
+        position: absolute;
+
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        color: rgba(255,255,255,.28);
+
+        font-family: monospace;
+
+        font-size: 9px;
+
+        white-space: nowrap;
+    }
+
+
+    /* =========================================================
+       GENERATED WEBSITE
+       ========================================================= */
+
+    .ew-generated-site {
+        position: relative;
+
+        min-height: 475px;
+
+        padding: 48px 32px;
+
+        background:
+            radial-gradient(
+                circle at 85% 12%,
+                rgba(182,117,244,.25),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 15% 85%,
+                rgba(117,75,170,.12),
+                transparent 28%
+            ),
+            linear-gradient(
+                145deg,
+                #211b28,
+                #0e0c11
+            );
+    }
+
+
+    .ew-generated-kicker {
+        color: rgba(255,255,255,.43);
+
+        font-size: 9px;
+        font-weight: 700;
+
+        letter-spacing: .17em;
+
+        text-transform: uppercase;
+    }
+
+
+    .ew-generated-title {
+        max-width: 350px;
+
+        margin: 20px 0 0;
+
+        color: #f5f0eb;
+
+        font-size: 42px;
+
+        font-weight: 700;
+
+        line-height: 1.02;
+
+        letter-spacing: -.055em;
+    }
+
+
+    .ew-generated-description {
+        max-width: 330px;
+
+        margin-top: 19px;
+
+        color: rgba(255,255,255,.50);
+
+        font-size: 12px;
+
+        line-height: 1.7;
+    }
+
+
+    .ew-generated-image {
+        position: relative;
+
+        height: 145px;
+
+        margin-top: 30px;
+
+        overflow: hidden;
+
+        border: 1px solid rgba(255,255,255,.09);
+
+        border-radius: 13px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(181,124,244,.23),
+                rgba(255,255,255,.035)
+            );
+    }
+
+
+    .ew-generated-image::before {
+        content: "";
+
+        position: absolute;
+
+        width: 160px;
+        height: 160px;
+
+        top: -70px;
+        right: -30px;
+
+        border-radius: 50%;
+
+        border: 1px solid rgba(255,255,255,.10);
+    }
+
+    .ew-generated-image::after {
+        content: "";
+
+        position: absolute;
+
+        width: 80px;
+        height: 80px;
+
+        bottom: -45px;
+        left: 18%;
+
+        border-radius: 50%;
+
+        border: 1px solid rgba(255,255,255,.07);
+    }
+
+
+    .ew-generated-image-label {
+        position: absolute;
+
+        left: 17px;
+        bottom: 16px;
+
+        color: rgba(255,255,255,.45);
+
+        font-size: 9px;
+
+        letter-spacing: .11em;
+
+        text-transform: uppercase;
+    }
+
+
+    .ew-generated-line {
+        width: 100%;
+        height: 1px;
+
+        margin-top: 25px;
+
+        background: rgba(255,255,255,.09);
+    }
+
+
+    /* =========================================================
+       INSTALL
+       ========================================================= */
+
+    .ew-install-section {
+        padding-bottom: 95px;
+    }
+
+
+    .ew-install-card {
+        display: grid;
+
+        grid-template-columns: auto 1fr auto;
+
+        align-items: center;
+
+        gap: 20px;
+
+        padding: 18px 20px;
+
+        border: 1px solid rgba(21,20,25,.09);
+
+        border-radius: 12px;
+
+        background: rgba(255,255,255,.62);
+
+        box-shadow:
+            0 8px 30px rgba(0,0,0,.025);
+
+        transition:
+            border-color .25s ease,
+            box-shadow .25s ease;
+    }
+
+    .ew-install-card:hover {
+        border-color: rgba(141,85,247,.18);
+
+        box-shadow:
+            0 12px 35px rgba(0,0,0,.045);
+    }
+
+
+    .ew-install-label {
+        color: rgba(21,20,25,.42);
+
+        font-size: 10px;
+        font-weight: 700;
+
+        letter-spacing: .12em;
+
+        text-transform: uppercase;
+    }
+
+
+    .ew-install-command {
+        overflow-x: auto;
+
+        color: #29242f;
+
+        font-family:
+            "SFMono-Regular",
+            Consolas,
+            monospace;
+
+        font-size: 13px;
+
+        white-space: nowrap;
+    }
+
+
+    .ew-copy-button {
+        padding: 8px 12px;
+
+        border: 1px solid rgba(21,20,25,.11);
+
+        border-radius: 7px;
+
+        background: #ffffff;
+
+        color: #242129;
+
+        cursor: pointer;
+
+        font-size: 10px;
+        font-weight: 700;
+
+        transition:
+            background .2s ease,
+            transform .2s ease;
+    }
+
+    .ew-copy-button:hover {
+        background: #f3f1f4;
+
+        transform: translateY(-1px);
+    }
+
+
+    /* =========================================================
+       COMMON SECTIONS
+       ========================================================= */
+
+    .ew-section {
+        padding: 120px 0;
+
+        border-top: 1px solid rgba(21,20,25,.075);
+    }
+
+
+    .ew-section-kicker {
+        color: #9154e8;
+
+        font-size: 10px;
+        font-weight: 800;
+
+        letter-spacing: .15em;
+
+        text-transform: uppercase;
+    }
+
+
+    .ew-section-title {
+        max-width: 800px;
+
+        margin: 17px 0 0;
+
+        color: #141218;
+
+        font-size: clamp(38px, 5vw, 62px);
+
+        font-weight: 700;
+
+        line-height: 1.03;
+
+        letter-spacing: -.055em;
+    }
+
+
+    .ew-section-description {
+        max-width: 680px;
+
+        margin-top: 23px;
+
+        color: rgba(21,20,25,.54);
+
+        font-size: 15px;
+
+        line-height: 1.8;
+    }
+
+
+    /* =========================================================
+       FLOW
+       ========================================================= */
+
+    .ew-flow-grid {
+        display: grid;
+
+        grid-template-columns: repeat(5, 1fr);
+
+        gap: 1px;
+
+        margin-top: 52px;
+
+        overflow: hidden;
+
+        border: 1px solid rgba(21,20,25,.09);
+
+        border-radius: 12px;
+
+        background: rgba(21,20,25,.09);
+    }
+
+
+    .ew-flow-item {
+        min-height: 190px;
+
+        padding: 23px;
+
+        background: rgba(255,255,255,.75);
+
+        transition:
+            background .25s ease,
+            transform .25s ease;
+    }
+
+    .ew-flow-item:hover {
+        background: rgba(255,255,255,.95);
+
+        transform: translateY(-2px);
+    }
+
+
+    .ew-flow-number {
+        color: rgba(21,20,25,.28);
+
+        font-family: monospace;
+
+        font-size: 10px;
+    }
+
+
+    .ew-flow-title {
+        margin-top: 48px;
+
+        color: #18161c;
+
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+
+    .ew-flow-text {
+        margin-top: 8px;
+
+        color: rgba(21,20,25,.43);
+
+        font-size: 11px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================================================
+       OCCASIONS
+       ========================================================= */
+
+    .ew-occasion-grid {
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        gap: 12px;
+
+        margin-top: 52px;
+    }
+
+
+    .ew-occasion-card {
+        min-height: 145px;
+
+        padding: 20px;
+
+        border: 1px solid rgba(21,20,25,.08);
+
+        border-radius: 12px;
+
+        background: rgba(255,255,255,.55);
+
+        transition:
+            transform .25s ease,
+            border-color .25s ease,
+            box-shadow .25s ease,
+            background .25s ease;
+    }
+
+
+    .ew-occasion-card:hover {
+        transform: translateY(-4px);
+
+        border-color: rgba(145,84,232,.25);
+
+        background: rgba(255,255,255,.82);
+
+        box-shadow:
+            0 15px 35px rgba(40,25,60,.07);
+    }
+
+
+    .ew-occasion-number {
+        color: rgba(21,20,25,.25);
+
+        font-family: monospace;
+
+        font-size: 10px;
+    }
+
+
+    .ew-occasion-name {
+        margin-top: 38px;
+
+        color: #19171d;
+
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+
+    .ew-occasion-description {
+        margin-top: 7px;
+
+        color: rgba(21,20,25,.40);
+
+        font-size: 11px;
+
+        line-height: 1.5;
+    }
+
+
+    /* =========================================================
+       API
+       ========================================================= */
+
+    .ew-api-layout {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, .9fr)
+            minmax(0, 1.1fr);
+
+        align-items: center;
+
+        gap: 60px;
+
+        margin-top: 55px;
+    }
+
+
+    .ew-code-window {
+        overflow: hidden;
+
+        border: 1px solid rgba(21,20,25,.12);
+
+        border-radius: 13px;
+
+        background: #111015;
+
+        box-shadow:
+            0 25px 60px rgba(0,0,0,.13);
+
+        transition:
+            transform .3s ease,
+            box-shadow .3s ease;
+    }
+
+    .ew-code-window:hover {
+        transform: translateY(-3px);
+
+        box-shadow:
+            0 30px 65px rgba(0,0,0,.17);
+    }
+
+
+    .ew-code-header {
+        display: flex;
+
+        justify-content: space-between;
+
+        padding: 11px 15px;
+
+        border-bottom: 1px solid rgba(255,255,255,.07);
+
+        color: rgba(255,255,255,.35);
+
+        font-family: monospace;
+
+        font-size: 9px;
+    }
+
+
+    .ew-code-window pre {
+        margin: 0;
+
+        padding: 25px;
+
+        overflow-x: auto;
+
+        color: #e5ddec;
+
+        font-family:
+            "SFMono-Regular",
+            Consolas,
+            monospace;
+
+        font-size: 12px;
+
+        line-height: 1.8;
+    }
+
+
+    .ew-api-points {
+        display: grid;
+
+        gap: 22px;
+    }
+
+
+    .ew-api-point {
+        padding-bottom: 22px;
+
+        border-bottom: 1px solid rgba(21,20,25,.08);
+    }
+
+
+    .ew-api-point:last-child {
+        padding-bottom: 0;
+
+        border-bottom: 0;
+    }
+
+
+    .ew-api-point-title {
+        color: #18161c;
+
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+
+    .ew-api-point-text {
+        margin-top: 7px;
+
+        color: rgba(21,20,25,.45);
+
+        font-size: 12px;
+
+        line-height: 1.7;
+    }
+
+
+    /* =========================================================
+       FINAL CTA
+       ========================================================= */
+
+    .ew-final-cta {
+        padding: 135px 0;
+
+        border-top: 1px solid rgba(21,20,25,.075);
+
+        text-align: center;
+    }
+
+
+    .ew-final-title {
+        max-width: 800px;
+
+        margin: 0 auto;
+
+        color: #141218;
+
+        font-size: clamp(42px, 6vw, 70px);
+
+        font-weight: 700;
+
+        line-height: 1;
+
+        letter-spacing: -.06em;
+    }
+
+
+    .ew-final-description {
+        max-width: 570px;
+
+        margin: 23px auto 0;
+
+        color: rgba(21,20,25,.48);
+
+        font-size: 14px;
+
+        line-height: 1.75;
+    }
+
+
+    .ew-final-actions {
+        justify-content: center;
+
+        margin-top: 31px;
+    }
+
+
+    /* =========================================================
+       ANIMATIONS
+       ========================================================= */
+
+    @keyframes ewHeroContent {
+
+        from {
+            opacity: 0;
+
+            transform: translateY(18px);
+        }
+
+        to {
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+    }
+
+
+    @keyframes ewHeroPreview {
+
+        from {
+            opacity: 0;
+
+            transform:
+                translateY(22px)
+                rotate(1.2deg);
+        }
+
+        to {
+            opacity: 1;
+
+            transform:
+                translateY(0)
+                rotate(1.2deg);
+        }
+
+    }
+
+
+    /* =========================================================
+       TABLET
+       ========================================================= */
+
+    @media (max-width: 1050px) {
+
+        .ew-hero-grid {
+            grid-template-columns: 1fr;
+
+            gap: 65px;
+        }
+
+        .ew-hero-content {
+            max-width: 800px;
+        }
+
+        .ew-preview-wrapper {
+            max-width: 650px;
+
+            margin: 0 auto;
+        }
+
+        .ew-flow-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .ew-occasion-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .ew-api-layout {
+            grid-template-columns: 1fr;
+
+            gap: 45px;
+        }
+
+    }
+
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 650px) {
+
+        .home-container {
+            width: calc(100% - 28px);
+        }
+
+
+        .ew-hero {
+            min-height: auto;
+
+            padding: 65px 0 70px;
+        }
+
+
+        .ew-hero-grid {
+            gap: 50px;
+        }
+
+
+        .ew-hero-title {
+            font-size: clamp(44px, 13vw, 64px);
+
+            letter-spacing: -.06em;
+        }
+
+
+        .ew-hero-description {
+            margin-top: 23px;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        .ew-hero-actions {
+            flex-direction: column;
+
+            align-items: stretch;
+        }
+
+
+        .ew-button {
+            width: 100%;
+        }
+
+
+        .ew-hero-meta {
+            gap: 10px 13px;
+
+            line-height: 1.5;
+        }
+
+
+        .ew-browser {
+            transform: none;
+
+            border-radius: 14px;
+        }
+
+
+        .ew-browser:hover {
+            transform: none;
+        }
+
+
+        .ew-browser-address {
+            display: none;
+        }
+
+
+        .ew-generated-site {
+            min-height: 390px;
+
+            padding: 31px 22px;
+        }
+
+
+        .ew-generated-title {
+            font-size: 34px;
+        }
+
+
+        .ew-install-section {
+            padding-bottom: 75px;
+        }
+
+
+        .ew-install-card {
+            grid-template-columns: 1fr;
+
+            align-items: stretch;
+
+            gap: 12px;
+        }
+
+
+        .ew-install-command {
+            width: 100%;
+
+            padding: 3px 0 7px;
+        }
+
+
+        .ew-copy-button {
+            width: 100%;
+        }
+
+
+        .ew-section {
+            padding: 80px 0;
+        }
+
+
+        .ew-section-title {
+            font-size: 39px;
+        }
+
+
+        .ew-section-description {
+            font-size: 14px;
+        }
+
+
+        .ew-flow-grid {
+            grid-template-columns: 1fr;
+
+            margin-top: 38px;
+        }
+
+
+        .ew-flow-item {
+            min-height: 145px;
+        }
+
+
+        .ew-flow-title {
+            margin-top: 27px;
+        }
+
+
+        .ew-occasion-grid {
+            grid-template-columns: 1fr;
+
+            margin-top: 38px;
+        }
+
+
+        .ew-occasion-card {
+            min-height: 125px;
+        }
+
+
+        .ew-occasion-name {
+            margin-top: 27px;
+        }
+
+
+        .ew-code-window pre {
+            padding: 19px;
+
+            font-size: 10px;
+        }
+
+
+        .ew-final-cta {
+            padding: 90px 0;
+        }
+
+
+        .ew-final-title {
+            font-size: 42px;
+        }
+
+    }
+
+
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .ew-hero-content,
+        .ew-preview-wrapper {
+            animation: none;
+        }
+
+        .ew-button,
+        .ew-browser,
+        .ew-flow-item,
+        .ew-occasion-card,
+        .ew-code-window,
+        .ew-install-card {
+            transition: none;
+        }
+
+    }
+
+</style>
+
+
+<main class="home-page">
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="ew-hero">
+
+        <div class="home-container ew-hero-grid">
+
+
+            <!-- LEFT -->
+
+            <div class="ew-hero-content">
+
+                <div class="ew-eyebrow">
+
+                    <span class="ew-eyebrow-dot"></span>
+
+                    Python Package · v{{ package.version }}
+
+                </div>
+
+
+                <h1 class="ew-hero-title">
+
+                    Engineering on the surface.
+
+                    <span class="ew-hero-title-accent">
+                        Emotion at the core.
+                    </span>
+
+                </h1>
+
+
+                <p class="ew-hero-description">
+
+                    EmotionWeb is a Python package for generating
+                    personalized surprise websites using Python,
+                    Django templates and dynamic content.
+
+                </p>
+
+
+                <div class="ew-hero-actions">
+
+                    <a
+                        href="{% url 'documentation' %}"
+                        class="ew-button ew-button-primary"
+                    >
+                        Read the Documentation
+                    </a>
+
+
+                    <a
+                        href="https://pypi.org/project/emotionweb/"
+                        class="ew-button ew-button-secondary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        View on PyPI ↗
+                    </a>
+
+
+                    <a
+                        href="https://github.com/aniketvishwakarma39/emotionweb"
+                        class="ew-button ew-button-secondary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        GitHub ↗
+                    </a>
+
+                </div>
+
+
+                <div class="ew-hero-meta">
+
+                    <span class="ew-meta-item">
+
+                        <span class="ew-eyebrow-dot"></span>
+
+                        Open Source
+
+                    </span>
+
+
+                    <span class="ew-meta-separator"></span>
+
+
+                    <span class="ew-meta-item">
+                        Python + Django
+                    </span>
+
+
+                    <span class="ew-meta-separator"></span>
+
+
+                    <span class="ew-meta-item">
+                        v{{ package.version }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT -->
+
+            <div class="ew-preview-wrapper">
+
+                <div class="ew-preview-glow"></div>
+
+
+                <div class="ew-browser">
+
+
+                    <div class="ew-browser-bar">
+
+                        <div class="ew-browser-dots">
+
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+
+                        <div class="ew-browser-address">
+                            generated emotion website
+                        </div>
+
+                    </div>
+
+
+                    <div class="ew-generated-site">
+
+
+                        <div class="ew-generated-kicker">
+                            A little something for you
+                        </div>
+
+
+                        <h2 class="ew-generated-title">
+
+                            Built with code.
+                            Made with feeling.
+
+                        </h2>
+
+
+                        <p class="ew-generated-description">
+
+                            Personalized content, images and captions
+                            transformed into a complete web experience.
+
+                        </p>
+
+
+                        <div class="ew-generated-image">
+
+                            <div class="ew-generated-image-label">
+                                EmotionWeb generated experience
+                            </div>
+
+                        </div>
+
+
+                        <div class="ew-generated-line"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         INSTALL
+    ====================================================== -->
+
+    <section class="ew-install-section">
+
+        <div class="home-container">
+
+            <div class="ew-install-card">
+
+
+                <div class="ew-install-label">
+                    Install
+                </div>
+
+
+                <div
+                    class="ew-install-command"
+                    id="ewInstallCommand"
+                >
+                    pip install emotionweb
+                </div>
+
+
+                <button
+                    type="button"
+                    class="ew-copy-button"
+                    id="ewCopyInstall"
+                >
+                    Copy
+                </button>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         WHAT IS EMOTIONWEB
+    ====================================================== -->
+
+    <section class="ew-section">
+
+        <div class="home-container">
+
+
+            <div class="ew-section-kicker">
+                01 · The idea
+            </div>
+
+
+            <h2 class="ew-section-title">
+                Turn a few lines of Python into a personal web experience.
+            </h2>
+
+
+            <p class="ew-section-description">
+
+                EmotionWeb brings together Python, Django and
+                template-based generation to create personalized
+                websites for meaningful occasions.
+
+                Instead of manually building every page,
+                developers provide structured data and let the
+                generator assemble the experience.
+
+            </p>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         HOW IT WORKS
+    ====================================================== -->
+
+    <section class="ew-section">
+
+        <div class="home-container">
+
+
+            <div class="ew-section-kicker">
+                02 · How it works
+            </div>
+
+
+            <h2 class="ew-section-title">
+                From Python input to a generated website.
+            </h2>
+
+
+            <div class="ew-flow-grid">
+
+
+                <div class="ew-flow-item">
+
+                    <div class="ew-flow-number">
+                        01
+                    </div>
+
+                    <div class="ew-flow-title">
+                        Python
+                    </div>
+
+                    <div class="ew-flow-text">
+                        Your program provides the required information.
+                    </div>
+
+                </div>
+
+
+                <div class="ew-flow-item">
+
+                    <div class="ew-flow-number">
+                        02
+                    </div>
+
+                    <div class="ew-flow-title">
+                        EmotionWeb
+                    </div>
+
+                    <div class="ew-flow-text">
+                        The package receives and prepares the data.
+                    </div>
+
+                </div>
+
+
+                <div class="ew-flow-item">
+
+                    <div class="ew-flow-number">
+                        03
+                    </div>
+
+                    <div class="ew-flow-title">
+                        Generator
+                    </div>
+
+                    <div class="ew-flow-text">
+                        The selected experience is assembled.
+                    </div>
+
+                </div>
+
+
+                <div class="ew-flow-item">
+
+                    <div class="ew-flow-number">
+                        04
+                    </div>
+
+                    <div class="ew-flow-title">
+                        Django
+                    </div>
+
+                    <div class="ew-flow-text">
+                        Templates process the dynamic content.
+                    </div>
+
+                </div>
+
+
+                <div class="ew-flow-item">
+
+                    <div class="ew-flow-number">
+                        05
+                    </div>
+
+                    <div class="ew-flow-title">
+                        Website
+                    </div>
+
+                    <div class="ew-flow-text">
+                        A personalized web experience is generated.
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         OCCASIONS
+    ====================================================== -->
+
+    <section class="ew-section">
+
+        <div class="home-container">
+
+
+            <div class="ew-section-kicker">
+                03 · Templates
+            </div>
+
+
+            <h2 class="ew-section-title">
+                Experiences designed around the moment.
+            </h2>
+
+
+            <p class="ew-section-description">
+
+                EmotionWeb currently provides occasion-specific
+                templates that can be selected through the
+                generator API.
+
+            </p>
+
+
+            <div class="ew-occasion-grid">
+
+
+                <div class="ew-occasion-card">
+
+                    <div class="ew-occasion-number">
+                        01
+                    </div>
+
+                    <div class="ew-occasion-name">
+                        Birthday
+                    </div>
+
+                    <div class="ew-occasion-description">
+                        A personalized birthday experience.
+                    </div>
+
+                </div>
+
+
+                <div class="ew-occasion-card">
+
+                    <div class="ew-occasion-number">
+                        02
+                    </div>
+
+                    <div class="ew-occasion-name">
+                        Love
+                    </div>
+
+                    <div class="ew-occasion-description">
+                        A personal experience built around affection.
+                    </div>
+
+                </div>
+
+
+                <div class="ew-occasion-card">
+
+                    <div class="ew-occasion-number">
+                        03
+                    </div>
+
+                    <div class="ew-occasion-name">
+                        Love Letter
+                    </div>
+
+                    <div class="ew-occasion-description">
+                        A digital expression in letter form.
+                    </div>
+
+                </div>
+
+
+                <div class="ew-occasion-card">
+
+                    <div class="ew-occasion-number">
+                        04
+                    </div>
+
+                    <div class="ew-occasion-name">
+                        Anniversary
+                    </div>
+
+                    <div class="ew-occasion-description">
+                        A personalized anniversary experience.
+                    </div>
+
+                </div>
+
+
+                <div class="ew-occasion-card">
+
+                    <div class="ew-occasion-number">
+                        05
+                    </div>
+
+                    <div class="ew-occasion-name">
+                        Apology
+                    </div>
+
+                    <div class="ew-occasion-description">
+                        A thoughtful personalized message.
+                    </div>
+
+                </div>
+
+
+                <div class="ew-occasion-card">
+
+                    <div class="ew-occasion-number">
+                        06
+                    </div>
+
+                    <div class="ew-occasion-name">
+                        Farewell
+                    </div>
+
+                    <div class="ew-occasion-description">
+                        A digital experience for goodbye moments.
+                    </div>
+
+                </div>
+
+
+                <div class="ew-occasion-card">
+
+                    <div class="ew-occasion-number">
+                        07
+                    </div>
+
+                    <div class="ew-occasion-name">
+                        Teacher's Day
+                    </div>
+
+                    <div class="ew-occasion-description">
+                        A personalized appreciation experience.
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         API
+    ====================================================== -->
+
+    <section class="ew-section">
+
+        <div class="home-container">
+
+
+            <div class="ew-section-kicker">
+                04 · Developer experience
+            </div>
+
+
+            <h2 class="ew-section-title">
+                A small API for a surprisingly personal result.
+            </h2>
+
+
+            <div class="ew-api-layout">
+
+
+                <div class="ew-code-window">
+
+
+                    <div class="ew-code-header">
+
+                        <span>
+                            Python
+                        </span>
+
+                        <span>
+                            emotionweb
+                        </span>
+
+                    </div>
+
+
+                    <pre><code>from emotionweb.generator import Surprise
+
+Surprise(
+    type,
+    name,
+    message,
+    images,
+    caption
+).generate()</code></pre>
+
+
+                </div>
+
+
+
+                <div class="ew-api-points">
+
+
+                    <div class="ew-api-point">
+
+                        <div class="ew-api-point-title">
+                            Simple input
+                        </div>
+
+                        <div class="ew-api-point-text">
+
+                            Provide the occasion type and personalized
+                            content through the public generator API.
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ew-api-point">
+
+                        <div class="ew-api-point-title">
+                            Dynamic content
+                        </div>
+
+                        <div class="ew-api-point-text">
+
+                            Names, messages, images and captions can
+                            be passed into the generation process.
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ew-api-point">
+
+                        <div class="ew-api-point-title">
+                            Template driven
+                        </div>
+
+                        <div class="ew-api-point-text">
+
+                            Django templates provide the structure while
+                            supplied data personalizes the result.
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FINAL CTA
+    ====================================================== -->
+
+    <section class="ew-final-cta">
+
+        <div class="home-container">
+
+
+            <h2 class="ew-final-title">
+
+                Start with code.
+                Finish with something meaningful.
+
+            </h2>
+
+
+            <p class="ew-final-description">
+
+                Explore the documentation, understand the architecture,
+                and build your first EmotionWeb experience.
+
+            </p>
+
+
+            <div class="ew-hero-actions ew-final-actions">
+
+
+                <a
+                    href="{% url 'documentation' %}"
+                    class="ew-button ew-button-primary"
+                >
+                    Get Started
+                </a>
+
+
+                <a
+                    href="{% url 'templates' %}"
+                    class="ew-button ew-button-secondary"
+                >
+                    Explore Templates
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<script>
+
+    /* =========================================================
+       COPY INSTALL COMMAND
+       ========================================================= */
+
+    const ewCopyButton =
+        document.getElementById("ewCopyInstall");
+
+    const ewInstallCommand =
+        document.getElementById("ewInstallCommand");
+
+
+    if (ewCopyButton && ewInstallCommand) {
+
+        ewCopyButton.addEventListener(
+            "click",
+            async function () {
+
+                try {
+
+                    await navigator.clipboard.writeText(
+                        ewInstallCommand.textContent.trim()
+                    );
+
+                    ewCopyButton.textContent = "Copied";
+
+                    setTimeout(
+                        function () {
+
+                            ewCopyButton.textContent = "Copy";
+
+                        },
+                        1600
+                    );
+
+                } catch (error) {
+
+                    ewCopyButton.textContent = "Failed";
+
+                    setTimeout(
+                        function () {
+
+                            ewCopyButton.textContent = "Copy";
+
+                        },
+                        1600
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+</script>
+
+{% endblock %}

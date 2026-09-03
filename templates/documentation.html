@@ -1,0 +1,3254 @@
+{% extends "base.html" %}
+
+{% block title %}
+EmotionWeb Documentation — Python Website Generation
+{% endblock %}
+
+{% block extra_head %}
+<meta
+    name="description"
+    content="Complete EmotionWeb documentation — installation, Quick Start, Surprise API, templates, images, captions, architecture and advanced usage."
+>
+{% endblock %}
+
+{% block content %}
+
+<style>
+/* =========================================================
+   DOCUMENTATION PAGE
+========================================================= */
+
+.docs-page {
+    padding: 54px 0 90px;
+}
+
+.docs-layout {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr) 190px;
+    gap: 48px;
+    align-items: start;
+}
+
+
+/* =========================================================
+   LEFT SIDEBAR
+========================================================= */
+
+.docs-sidebar {
+    position: sticky;
+    top: 105px;
+}
+
+.docs-sidebar-label {
+    margin-bottom: 14px;
+
+    color: rgba(20, 18, 24, .35);
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+
+.docs-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.docs-nav a {
+    position: relative;
+
+    display: block;
+
+    padding: 8px 11px;
+
+    border-radius: 7px;
+
+    color: rgba(20, 18, 24, .55);
+
+    font-size: 11px;
+    font-weight: 650;
+
+    transition:
+        color .2s ease,
+        background .2s ease,
+        transform .2s ease;
+}
+
+.docs-nav a:hover {
+    color: #141218;
+    background: rgba(20, 18, 24, .045);
+}
+
+.docs-nav a.active {
+    color: #141218;
+    background: rgba(20, 18, 24, .065);
+}
+
+.docs-nav a.active::before {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    top: 50%;
+
+    width: 2px;
+    height: 15px;
+
+    border-radius: 10px;
+
+    background: #141218;
+
+    transform: translateY(-50%);
+}
+
+
+/* =========================================================
+   MOBILE SECTION SELECTOR
+========================================================= */
+
+.docs-mobile-select {
+    display: none;
+
+    width: 100%;
+
+    margin-bottom: 25px;
+
+    padding: 12px 14px;
+
+    border: 1px solid rgba(20, 18, 24, .10);
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, .75);
+    color: #141218;
+
+    font-size: 12px;
+    font-weight: 650;
+
+    outline: none;
+}
+
+
+/* =========================================================
+   MAIN DOCUMENT
+========================================================= */
+
+.docs-main {
+    min-width: 0;
+}
+
+.docs-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 20px;
+
+    color: rgba(20, 18, 24, .38);
+
+    font-size: 10px;
+    font-weight: 650;
+}
+
+.docs-breadcrumb span:last-child {
+    color: rgba(20, 18, 24, .72);
+}
+
+.docs-hero {
+    padding-bottom: 42px;
+
+    border-bottom: 1px solid rgba(20, 18, 24, .08);
+}
+
+.docs-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-bottom: 17px;
+
+    color: rgba(20, 18, 24, .42);
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.docs-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #35a56a;
+    box-shadow: 0 0 0 3px rgba(53, 165, 106, .10);
+}
+
+.docs-hero h1 {
+    max-width: 850px;
+
+    color: #141218;
+
+    font-size: clamp(42px, 6vw, 74px);
+    line-height: .98;
+    letter-spacing: -.065em;
+
+    margin-bottom: 22px;
+}
+
+.docs-hero p {
+    max-width: 720px;
+
+    color: rgba(20, 18, 24, .57);
+
+    font-size: 15px;
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   DOC SECTIONS
+========================================================= */
+
+.docs-section {
+    padding: 58px 0;
+
+    border-bottom: 1px solid rgba(20, 18, 24, .08);
+
+    scroll-margin-top: 110px;
+}
+
+.docs-section:last-child {
+    border-bottom: 0;
+}
+
+.docs-section-number {
+    margin-bottom: 10px;
+
+    color: rgba(20, 18, 24, .28);
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .12em;
+}
+
+.docs-section h2 {
+    margin-bottom: 18px;
+
+    color: #141218;
+
+    font-size: clamp(27px, 3vw, 40px);
+    line-height: 1.08;
+    letter-spacing: -.045em;
+}
+
+.docs-section h3 {
+    margin: 35px 0 12px;
+
+    color: #141218;
+
+    font-size: 19px;
+    line-height: 1.2;
+    letter-spacing: -.025em;
+}
+
+.docs-section h4 {
+    margin: 25px 0 9px;
+
+    color: #141218;
+
+    font-size: 14px;
+}
+
+.docs-section p {
+    max-width: 760px;
+
+    margin-bottom: 16px;
+
+    color: rgba(20, 18, 24, .62);
+
+    font-size: 13px;
+    line-height: 1.85;
+}
+
+.docs-section ul,
+.docs-section ol {
+    max-width: 760px;
+
+    margin: 15px 0 22px;
+    padding-left: 21px;
+
+    color: rgba(20, 18, 24, .62);
+
+    font-size: 13px;
+    line-height: 1.85;
+}
+
+.docs-section li {
+    margin-bottom: 7px;
+}
+
+.docs-section strong {
+    color: #141218;
+}
+
+.docs-section code:not(pre code) {
+    padding: 2px 6px;
+
+    border: 1px solid rgba(20, 18, 24, .08);
+    border-radius: 5px;
+
+    background: rgba(20, 18, 24, .045);
+
+    color: #141218;
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        monospace;
+
+    font-size: .88em;
+}
+
+
+/* =========================================================
+   CALLOUT
+========================================================= */
+
+.docs-callout {
+    max-width: 780px;
+
+    margin: 25px 0;
+
+    padding: 18px 19px;
+
+    border: 1px solid rgba(20, 18, 24, .09);
+    border-left: 2px solid #141218;
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, .56);
+}
+
+.docs-callout-label {
+    margin-bottom: 7px;
+
+    color: rgba(20, 18, 24, .42);
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+}
+
+.docs-callout p {
+    margin: 0;
+
+    color: rgba(20, 18, 24, .64);
+
+    font-size: 12px;
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   CODE BLOCK
+========================================================= */
+
+.code-card {
+    max-width: 850px;
+
+    margin: 22px 0 28px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(20, 18, 24, .10);
+    border-radius: 11px;
+
+    background: #17151b;
+
+    box-shadow:
+        0 16px 40px rgba(20, 18, 24, .07);
+}
+
+.code-header {
+    min-height: 39px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 13px;
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+
+    background: rgba(255,255,255,.025);
+}
+
+.code-language {
+    color: rgba(255,255,255,.42);
+
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.copy-code {
+    border: 0;
+
+    padding: 5px 8px;
+
+    border-radius: 5px;
+
+    background: rgba(255,255,255,.07);
+    color: rgba(255,255,255,.62);
+
+    cursor: pointer;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    transition:
+        background .2s ease,
+        color .2s ease;
+}
+
+.copy-code:hover {
+    background: rgba(255,255,255,.13);
+    color: #fff;
+}
+
+.code-card pre {
+    margin: 0;
+
+    padding: 20px;
+
+    overflow-x: auto;
+
+    color: rgba(255,255,255,.84);
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        monospace;
+
+    font-size: 11px;
+    line-height: 1.8;
+
+    scrollbar-width: thin;
+}
+
+.code-card pre::-webkit-scrollbar {
+    height: 6px;
+}
+
+.code-card pre::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.15);
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   API SIGNATURE
+========================================================= */
+
+.api-signature {
+    margin: 20px 0;
+
+    padding: 17px;
+
+    border: 1px solid rgba(20,18,24,.09);
+    border-radius: 9px;
+
+    background: rgba(20,18,24,.035);
+
+    overflow-x: auto;
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+
+    color: #141218;
+}
+
+
+/* =========================================================
+   PARAMETER TABLE
+========================================================= */
+
+.docs-table-wrap {
+    width: 100%;
+
+    margin: 25px 0;
+
+    overflow-x: auto;
+
+    border: 1px solid rgba(20,18,24,.09);
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.48);
+}
+
+.docs-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 620px;
+}
+
+.docs-table th,
+.docs-table td {
+    padding: 13px 14px;
+
+    text-align: left;
+
+    border-bottom: 1px solid rgba(20,18,24,.07);
+
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.docs-table th {
+    color: rgba(20,18,24,.42);
+
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .10em;
+    text-transform: uppercase;
+}
+
+.docs-table td {
+    color: rgba(20,18,24,.62);
+}
+
+.docs-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.docs-table td:first-child {
+    color: #141218;
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   FLOW / ARCHITECTURE
+========================================================= */
+
+.architecture-flow {
+    max-width: 780px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 28px 0;
+}
+
+.flow-node {
+    width: min(100%, 500px);
+
+    padding: 15px 18px;
+
+    border: 1px solid rgba(20,18,24,.09);
+    border-radius: 9px;
+
+    background: rgba(255,255,255,.56);
+
+    text-align: center;
+
+    color: #141218;
+
+    font-size: 12px;
+    font-weight: 750;
+
+    box-shadow:
+        0 8px 25px rgba(20,18,24,.025);
+}
+
+.flow-arrow {
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+
+    color: rgba(20,18,24,.28);
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   FEATURE GRID
+========================================================= */
+
+.docs-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+
+    gap: 10px;
+
+    max-width: 820px;
+
+    margin-top: 25px;
+}
+
+.docs-feature-card {
+    min-height: 135px;
+
+    padding: 20px;
+
+    border: 1px solid rgba(20,18,24,.08);
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.48);
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.docs-feature-card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(20,18,24,.16);
+
+    box-shadow:
+        0 14px 32px rgba(20,18,24,.06);
+}
+
+.docs-feature-card span {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: rgba(20,18,24,.28);
+
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.docs-feature-card h4 {
+    margin: 0 0 8px;
+
+    font-size: 14px;
+}
+
+.docs-feature-card p {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   OCCASION CARDS
+========================================================= */
+
+.occasion-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+
+    gap: 10px;
+
+    max-width: 820px;
+
+    margin-top: 24px;
+}
+
+.occasion-card {
+    padding: 19px;
+
+    border: 1px solid rgba(20,18,24,.08);
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.70),
+            rgba(255,255,255,.32)
+        );
+}
+
+.occasion-card .occasion-type {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    padding: 4px 7px;
+
+    border-radius: 5px;
+
+    background: rgba(20,18,24,.055);
+
+    color: rgba(20,18,24,.48);
+
+    font-family: monospace;
+
+    font-size: 9px;
+}
+
+.occasion-card h4 {
+    margin: 0 0 7px;
+
+    font-size: 15px;
+}
+
+.occasion-card p {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   NEXT / PREVIOUS
+========================================================= */
+
+.docs-pagination {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 48px;
+}
+
+.docs-page-link {
+    display: block;
+
+    padding: 17px;
+
+    border: 1px solid rgba(20,18,24,.09);
+    border-radius: 9px;
+
+    background: rgba(255,255,255,.48);
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease;
+}
+
+.docs-page-link:hover {
+    transform: translateY(-2px);
+
+    border-color: rgba(20,18,24,.18);
+}
+
+.docs-page-link.next {
+    text-align: right;
+}
+
+.docs-page-link-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: rgba(20,18,24,.31);
+
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.docs-page-link-title {
+    color: #141218;
+
+    font-size: 12px;
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   RIGHT TOC
+========================================================= */
+
+.docs-toc {
+    position: sticky;
+    top: 105px;
+}
+
+.docs-toc-title {
+    margin-bottom: 13px;
+
+    color: rgba(20,18,24,.35);
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.docs-toc-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.docs-toc-links a {
+    padding-left: 9px;
+
+    border-left: 1px solid rgba(20,18,24,.07);
+
+    color: rgba(20,18,24,.42);
+
+    font-size: 9px;
+    line-height: 1.5;
+
+    transition:
+        color .2s ease,
+        border-color .2s ease;
+}
+
+.docs-toc-links a:hover,
+.docs-toc-links a.active {
+    color: #141218;
+
+    border-left-color: #141218;
+}
+
+
+/* =========================================================
+   RESPONSIVE — LARGE TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .docs-layout {
+        grid-template-columns: 205px minmax(0,1fr);
+
+        gap: 35px;
+    }
+
+    .docs-toc {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .docs-page {
+        padding-top: 35px;
+    }
+
+    .docs-layout {
+        display: block;
+    }
+
+    .docs-sidebar {
+        display: none;
+    }
+
+    .docs-mobile-select {
+        display: block;
+    }
+
+    .docs-hero {
+        padding-bottom: 34px;
+    }
+
+    .docs-hero h1 {
+        font-size: clamp(39px, 11vw, 60px);
+    }
+
+    .docs-section {
+        padding: 45px 0;
+    }
+
+    .docs-feature-grid,
+    .occasion-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 550px) {
+
+    .docs-page {
+        padding: 27px 0 65px;
+    }
+
+    .docs-breadcrumb {
+        font-size: 9px;
+    }
+
+    .docs-hero h1 {
+        font-size: 40px;
+
+        letter-spacing: -.055em;
+    }
+
+    .docs-hero p {
+        font-size: 13px;
+    }
+
+    .docs-section h2 {
+        font-size: 29px;
+    }
+
+    .docs-section p,
+    .docs-section li {
+        font-size: 12px;
+    }
+
+    .code-card pre {
+        padding: 16px;
+
+        font-size: 10px;
+    }
+
+    .docs-pagination {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-page-link.next {
+        text-align: left;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+</style>
+
+
+<div class="docs-page">
+
+    <div class="container">
+
+        <div class="docs-layout">
+
+
+            <!-- =================================================
+                 LEFT SIDEBAR
+            ================================================== -->
+
+            <aside class="docs-sidebar">
+
+                <div class="docs-sidebar-label">
+                    Documentation
+                </div>
+
+                <nav class="docs-nav" id="docsSidebar">
+
+                    <a href="#introduction" data-section="introduction">
+                        Introduction
+                    </a>
+
+                    <a href="#what-is-emotionweb" data-section="what-is-emotionweb">
+                        What is EmotionWeb?
+                    </a>
+
+                    <a href="#features" data-section="features">
+                        Features
+                    </a>
+
+                    <a href="#installation" data-section="installation">
+                        Installation
+                    </a>
+
+                    <a href="#quick-start" data-section="quick-start">
+                        Quick Start
+                    </a>
+
+                    <a href="#api" data-section="api">
+                        API
+                    </a>
+
+                    <a href="#supported-occasions" data-section="supported-occasions">
+                        Supported Occasions
+                    </a>
+
+                    <a href="#images-captions" data-section="images-captions">
+                        Images & Captions
+                    </a>
+
+                    <a href="#how-it-works" data-section="how-it-works">
+                        How It Works
+                    </a>
+
+                    <a href="#project-structure" data-section="project-structure">
+                        Project Structure
+                    </a>
+
+                    <a href="#templates" data-section="templates">
+                        Templates
+                    </a>
+
+                    <a href="#customization" data-section="customization">
+                        Customization
+                    </a>
+
+                    <a href="#advanced-usage" data-section="advanced-usage">
+                        Advanced Usage
+                    </a>
+
+                    <a href="#troubleshooting" data-section="troubleshooting">
+                        Troubleshooting
+                    </a>
+
+                    <a href="#faq" data-section="faq">
+                        FAQ
+                    </a>
+
+                </nav>
+
+            </aside>
+
+
+            <!-- =================================================
+                 MOBILE SECTION SELECTOR
+            ================================================== -->
+
+            <select
+                class="docs-mobile-select"
+                id="docsMobileSelect"
+                aria-label="Documentation section"
+            >
+                <option value="#introduction">
+                    Introduction
+                </option>
+
+                <option value="#what-is-emotionweb">
+                    What is EmotionWeb?
+                </option>
+
+                <option value="#features">
+                    Features
+                </option>
+
+                <option value="#installation">
+                    Installation
+                </option>
+
+                <option value="#quick-start">
+                    Quick Start
+                </option>
+
+                <option value="#api">
+                    API
+                </option>
+
+                <option value="#supported-occasions">
+                    Supported Occasions
+                </option>
+
+                <option value="#images-captions">
+                    Images & Captions
+                </option>
+
+                <option value="#how-it-works">
+                    How It Works
+                </option>
+
+                <option value="#project-structure">
+                    Project Structure
+                </option>
+
+                <option value="#templates">
+                    Templates
+                </option>
+
+                <option value="#customization">
+                    Customization
+                </option>
+
+                <option value="#advanced-usage">
+                    Advanced Usage
+                </option>
+
+                <option value="#troubleshooting">
+                    Troubleshooting
+                </option>
+
+                <option value="#faq">
+                    FAQ
+                </option>
+
+            </select>
+
+
+            <!-- =================================================
+                 MAIN CONTENT
+            ================================================== -->
+
+            <main class="docs-main">
+
+
+                <!-- BREADCRUMB -->
+
+                <div class="docs-breadcrumb">
+                    <span>EmotionWeb</span>
+                    <span>/</span>
+                    <span>Documentation</span>
+                </div>
+
+
+                <!-- =================================================
+                     HERO
+                ================================================== -->
+
+                <header class="docs-hero">
+
+                    <div class="docs-eyebrow">
+                        <span class="docs-eyebrow-dot"></span>
+                        Developer Documentation
+                    </div>
+
+                    <h1>
+                        Build personal websites with Python.
+                    </h1>
+
+                    <p>
+                        EmotionWeb is a Python package for generating
+                        personalized surprise websites from reusable
+                        templates. Provide the occasion, recipient,
+                        message, images and captions — then let the
+                        generator create the website.
+                    </p>
+
+                </header>
+
+
+                <!-- =================================================
+                     01 INTRODUCTION
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="introduction"
+                >
+
+                    <div class="docs-section-number">
+                        01 / INTRODUCTION
+                    </div>
+
+                    <h2>
+                        Welcome to EmotionWeb.
+                    </h2>
+
+                    <p>
+                        EmotionWeb brings together software development
+                        and personalized digital experiences.
+                    </p>
+
+                    <p>
+                        Instead of manually rebuilding a similar
+                        website every time you want to create a
+                        personalized experience, you can provide the
+                        required information to EmotionWeb and generate
+                        a website from a reusable template.
+                    </p>
+
+                    <div class="docs-callout">
+
+                        <div class="docs-callout-label">
+                            Philosophy
+                        </div>
+
+                        <p>
+                            Engineering on the surface.
+                            Emotion at the core.
+                        </p>
+
+                    </div>
+
+                    <p>
+                        This documentation explains the package from
+                        installation and first use to the public API,
+                        template system and internal generation flow.
+                    </p>
+
+                </section>
+
+
+                <!-- =================================================
+                     02 WHAT IS EMOTIONWEB
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="what-is-emotionweb"
+                >
+
+                    <div class="docs-section-number">
+                        02 / CONCEPT
+                    </div>
+
+                    <h2>
+                        What is EmotionWeb?
+                    </h2>
+
+                    <p>
+                        EmotionWeb is an open-source Python library
+                        designed to automate the generation of
+                        personalized event and surprise websites.
+                    </p>
+
+                    <p>
+                        The developer supplies information such as a
+                        recipient name, message, occasion type, images
+                        and captions. EmotionWeb processes that data
+                        through its website-generation system and
+                        applies the selected template.
+                    </p>
+
+                    <h3>
+                        Why does it exist?
+                    </h3>
+
+                    <p>
+                        Personalized websites often contain the same
+                        basic development work repeatedly:
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            HTML structure
+                        </li>
+
+                        <li>
+                            CSS styling
+                        </li>
+
+                        <li>
+                            JavaScript behaviour
+                        </li>
+
+                        <li>
+                            image and static-resource handling
+                        </li>
+
+                        <li>
+                            personalized content placement
+                        </li>
+
+                    </ul>
+
+                    <p>
+                        EmotionWeb attempts to make this repetitive
+                        process reusable through templates and
+                        programmatic generation.
+                    </p>
+
+                </section>
+
+
+                <!-- =================================================
+                     03 FEATURES
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="features"
+                >
+
+                    <div class="docs-section-number">
+                        03 / FEATURES
+                    </div>
+
+                    <h2>
+                        What EmotionWeb provides.
+                    </h2>
+
+                    <div class="docs-feature-grid">
+
+                        <article class="docs-feature-card">
+
+                            <span>01</span>
+
+                            <h4>
+                                Template-based generation
+                            </h4>
+
+                            <p>
+                                Generate different personalized
+                                experiences using reusable website
+                                templates.
+                            </p>
+
+                        </article>
+
+
+                        <article class="docs-feature-card">
+
+                            <span>02</span>
+
+                            <h4>
+                                Dynamic content
+                            </h4>
+
+                            <p>
+                                Personal information such as names
+                                and messages can be supplied through
+                                the Python API.
+                            </p>
+
+                        </article>
+
+
+                        <article class="docs-feature-card">
+
+                            <span>03</span>
+
+                            <h4>
+                                Image support
+                            </h4>
+
+                            <p>
+                                Multiple image paths can be supplied
+                                to a generated website.
+                            </p>
+
+                        </article>
+
+
+                        <article class="docs-feature-card">
+
+                            <span>04</span>
+
+                            <h4>
+                                Captions
+                            </h4>
+
+                            <p>
+                                Captions can accompany the supplied
+                                image collection.
+                            </p>
+
+                        </article>
+
+
+                        <article class="docs-feature-card">
+
+                            <span>05</span>
+
+                            <h4>
+                                Python integration
+                            </h4>
+
+                            <p>
+                                The package can be used directly from
+                                a Python program through the
+                                <code>Surprise</code> API.
+                            </p>
+
+                        </article>
+
+
+                        <article class="docs-feature-card">
+
+                            <span>06</span>
+
+                            <h4>
+                                Django-powered generation
+                            </h4>
+
+                            <p>
+                                The website generation engine uses
+                                Django's template system as part of
+                                the generated web application.
+                            </p>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     04 INSTALLATION
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="installation"
+                >
+
+                    <div class="docs-section-number">
+                        04 / INSTALLATION
+                    </div>
+
+                    <h2>
+                        Installation.
+                    </h2>
+
+                    <p>
+                        EmotionWeb is distributed as a Python package.
+                        Install it using pip.
+                    </p>
+
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Terminal
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy="pip install emotionweb"
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+                        <pre><code>pip install emotionweb</code></pre>
+
+                    </div>
+
+
+                    <h3>
+                        Verify the installation
+                    </h3>
+
+                    <p>
+                        After installation, Python can import the
+                        package and expose the <code>Surprise</code>
+                        class.
+                    </p>
+
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Python
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy="from emotionweb import Surprise"
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+                        <pre><code>from emotionweb import Surprise</code></pre>
+
+                    </div>
+
+
+                    <div class="docs-callout">
+
+                        <div class="docs-callout-label">
+                            Environment
+                        </div>
+
+                        <p>
+                            The package currently requires Python
+                            3.10 or newer.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     05 QUICK START
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="quick-start"
+                >
+
+                    <div class="docs-section-number">
+                        05 / QUICK START
+                    </div>
+
+                    <h2>
+                        Your first EmotionWeb website.
+                    </h2>
+
+                    <p>
+                        The basic workflow is simple: import
+                        <code>Surprise</code>, provide the required
+                        information, then call <code>generate()</code>.
+                    </p>
+
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Python
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy='from emotionweb import Surprise
+
+s = Surprise(
+    type="birthday",
+    name="Aniket Vishwakarma",
+    message="chal aaja ghumne chalte h",
+    images=[
+        r"C:\Users\DELL\Desktop\EmotionWeb\webengine\static\uploads\img7.jpeg",
+        r"C:\Users\DELL\Desktop\EmotionWeb\webengine\static\uploads\img8.jpeg",
+        r"C:\Users\DELL\Desktop\EmotionWeb\webengine\static\uploads\img6.jpeg",
+        r"C:\Users\DELL\Desktop\EmotionWeb\webengine\static\uploads\img5.jpeg",
+    ],
+    caption=[
+        "The solo travel that teaches me everything ❤️",
+        "This travel shows a different path of Bihar ❤️",
+        "And this one is closest to heart because its my Varanasi yaar ❤️",
+        "Very best view ❤️",
+    ]
+)
+
+s.generate()'
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+<pre><code>from emotionweb import Surprise
+
+s = Surprise(
+    type="birthday",
+    name="Aniket Vishwakarma",
+    message="chal aaja ghumne chalte h",
+    images=[
+        r"C:\Users\DELL\Desktop\EmotionWeb\webengine\static\uploads\img7.jpeg",
+        r"C:\Users\DELL\Desktop\EmotionWeb\webengine\static\uploads\img8.jpeg",
+        r"C:\Users\DELL\Desktop\EmotionWeb\webengine\static\uploads\img6.jpeg",
+        r"C:\Users\DELL\Desktop\EmotionWeb\webengine\static\u uploads\img5.jpeg",
+    ],
+    caption=[
+        "The solo travel that teaches me everything ❤️",
+        "This travel shows a different path of Bihar ❤️",
+        "And this one is closest to heart because its my Varanasi yaar ❤️",
+        "Very best view ❤️",
+    ]
+)
+
+s.generate()</code></pre>
+
+                    </div>
+
+
+                    <h3>
+                        What happened here?
+                    </h3>
+
+                    <ol>
+
+                        <li>
+                            Python imports <code>Surprise</code> from
+                            EmotionWeb.
+                        </li>
+
+                        <li>
+                            A <code>Surprise</code> object is created
+                            with the personalized data.
+                        </li>
+
+                        <li>
+                            The selected <code>type</code> determines
+                            the occasion/template path used by the
+                            package.
+                        </li>
+
+                        <li>
+                            Images and captions are supplied as
+                            collections.
+                        </li>
+
+                        <li>
+                            <code>generate()</code> starts the website
+                            generation process.
+                        </li>
+
+                    </ol>
+
+                </section>
+
+
+                <!-- =================================================
+                     06 API
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="api"
+                >
+
+                    <div class="docs-section-number">
+                        06 / API
+                    </div>
+
+                    <h2>
+                        Surprise API.
+                    </h2>
+
+                    <p>
+                        The primary public interface is the
+                        <code>Surprise</code> class.
+                    </p>
+
+
+                    <div class="api-signature">
+                        Surprise(type, name, message, images, caption)
+                    </div>
+
+
+                    <div class="docs-table-wrap">
+
+                        <table class="docs-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Expected value</th>
+                                    <th>Purpose</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>type</td>
+
+                                    <td>
+                                        string
+                                    </td>
+
+                                    <td>
+                                        Selects the occasion/template
+                                        type.
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>name</td>
+
+                                    <td>
+                                        string
+                                    </td>
+
+                                    <td>
+                                        Name or recipient information
+                                        used by the generated website.
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>message</td>
+
+                                    <td>
+                                        string
+                                    </td>
+
+                                    <td>
+                                        Personalized message supplied
+                                        to the selected template.
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>images</td>
+
+                                    <td>
+                                        list
+                                    </td>
+
+                                    <td>
+                                        Image paths supplied to the
+                                        generator.
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>caption</td>
+
+                                    <td>
+                                        list
+                                    </td>
+
+                                    <td>
+                                        Captions supplied alongside
+                                        the image collection.
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <h3>
+                        type
+                    </h3>
+
+                    <p>
+                        The <code>type</code> value selects the
+                        occasion/template used for generation.
+                    </p>
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Python
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy='type="birthday"'
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+                        <pre><code>type="birthday"</code></pre>
+
+                    </div>
+
+
+                    <h3>
+                        name
+                    </h3>
+
+                    <p>
+                        The <code>name</code> parameter contains the
+                        recipient or primary personalized name.
+                    </p>
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Python
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy='name="Aniket Vishwakarma"'
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+                        <pre><code>name="Aniket Vishwakarma"</code></pre>
+
+                    </div>
+
+
+                    <h3>
+                        message
+                    </h3>
+
+                    <p>
+                        The <code>message</code> contains the
+                        personalized text that is passed to the
+                        selected template.
+                    </p>
+
+
+                    <h3>
+                        images
+                    </h3>
+
+                    <p>
+                        Images are provided as a Python list containing
+                        file paths.
+                    </p>
+
+
+                    <h3>
+                        caption
+                    </h3>
+
+                    <p>
+                        Captions are also supplied as a list. The
+                        selected template can use these values while
+                        rendering the generated website.
+                    </p>
+
+
+                    <div class="docs-callout">
+
+                        <div class="docs-callout-label">
+                            Important
+                        </div>
+
+                        <p>
+                            Keep image and caption collections
+                            logically aligned when a template expects
+                            one caption for each image.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     07 OCCASIONS
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="supported-occasions"
+                >
+
+                    <div class="docs-section-number">
+                        07 / OCCASIONS
+                    </div>
+
+                    <h2>
+                        Supported occasions.
+                    </h2>
+
+                    <p>
+                        EmotionWeb is built around reusable occasion
+                        templates. The currently documented occasion
+                        types are:
+                    </p>
+
+
+                    <div class="occasion-grid">
+
+                        <article class="occasion-card">
+
+                            <span class="occasion-type">
+                                birthday
+                            </span>
+
+                            <h4>
+                                Birthday
+                            </h4>
+
+                            <p>
+                                A personalized birthday experience
+                                driven by the supplied recipient data,
+                                message, images and captions.
+                            </p>
+
+                        </article>
+
+
+                        <article class="occasion-card">
+
+                            <span class="occasion-type">
+                                love
+                            </span>
+
+                            <h4>
+                                Love
+                            </h4>
+
+                            <p>
+                                A romantic personalized experience
+                                using the same generation interface.
+                            </p>
+
+                        </article>
+
+
+                        <article class="occasion-card">
+
+                            <span class="occasion-type">
+                                loveletter
+                            </span>
+
+                            <h4>
+                                Love Letter
+                            </h4>
+
+                            <p>
+                                A letter-oriented personalized
+                                experience.
+                            </p>
+
+                        </article>
+
+
+                        <article class="occasion-card">
+
+                            <span class="occasion-type">
+                                anniversary
+                            </span>
+
+                            <h4>
+                                Anniversary
+                            </h4>
+
+                            <p>
+                                An anniversary-focused personalized
+                                website generated from supplied data.
+                            </p>
+
+                        </article>
+
+
+                        <article class="occasion-card">
+
+                            <span class="occasion-type">
+                                apology
+                            </span>
+
+                            <h4>
+                                Apology
+                            </h4>
+
+                            <p>
+                                A personalized apology-oriented
+                                experience.
+                            </p>
+
+                        </article>
+
+
+                        <article class="occasion-card">
+
+                            <span class="occasion-type">
+                                farewell
+                            </span>
+
+                            <h4>
+                                Farewell
+                            </h4>
+
+                            <p>
+                                A farewell-focused personalized
+                                website.
+                            </p>
+
+                        </article>
+
+
+                        <article class="occasion-card">
+
+                            <span class="occasion-type">
+                                teachers_day
+                            </span>
+
+                            <h4>
+                                Teacher's Day
+                            </h4>
+
+                            <p>
+                                A Teacher's Day experience using
+                                personalized content.
+                            </p>
+
+                        </article>
+
+
+                        <article class="occasion-card">
+
+                            <span class="occasion-type">
+                                extensible
+                            </span>
+
+                            <h4>
+                                More themes
+                            </h4>
+
+                            <p>
+                                EmotionWeb is designed to accommodate
+                                additional themes and templates as the
+                                package evolves.
+                            </p>
+
+                        </article>
+
+                    </div>
+
+
+                    <div class="docs-callout">
+
+                        <div class="docs-callout-label">
+                            Documentation rule
+                        </div>
+
+                        <p>
+                            This list represents the currently
+                            documented types. New EmotionWeb themes
+                            should be added here when they become
+                            part of the actual package.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     08 IMAGES & CAPTIONS
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="images-captions"
+                >
+
+                    <div class="docs-section-number">
+                        08 / MEDIA
+                    </div>
+
+                    <h2>
+                        Images & captions.
+                    </h2>
+
+                    <p>
+                        EmotionWeb accepts image paths through the
+                        <code>images</code> parameter.
+                    </p>
+
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Python
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy='images=[
+    r"C:\path\to\photo1.jpeg",
+    r"C:\path\to\photo2.jpeg",
+    r"C:\path\to\photo3.jpeg",
+]'
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+<pre><code>images=[
+    r"C:\path\to\photo1.jpeg",
+    r"C:\path\to\photo2.jpeg",
+    r"C:\path\to\photo3.jpeg",
+]</code></pre>
+
+                    </div>
+
+
+                    <h3>
+                        Captions
+                    </h3>
+
+                    <p>
+                        Captions are provided through the
+                        <code>caption</code> list.
+                    </p>
+
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Python
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy='caption=[
+    "First memory ❤️",
+    "One of my favourite moments ❤️",
+    "A day I will always remember ❤️",
+]'
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+<pre><code>caption=[
+    "First memory ❤️",
+    "One of my favourite moments ❤️",
+    "A day I will always remember ❤️",
+]</code></pre>
+
+                    </div>
+
+
+                    <h3>
+                        Windows paths
+                    </h3>
+
+                    <p>
+                        When using Windows paths in Python, raw strings
+                        such as <code>r"C:\path\file.jpg"</code> are
+                        useful because backslashes do not need to be
+                        escaped individually.
+                    </p>
+
+                </section>
+
+
+                <!-- =================================================
+                     09 HOW IT WORKS
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="how-it-works"
+                >
+
+                    <div class="docs-section-number">
+                        09 / INTERNAL FLOW
+                    </div>
+
+                    <h2>
+                        How EmotionWeb works.
+                    </h2>
+
+                    <p>
+                        At a high level, the package takes developer
+                        input, prepares the information required by
+                        the website, selects a template and generates
+                        the resulting web project.
+                    </p>
+
+
+                    <div class="architecture-flow">
+
+                        <div class="flow-node">
+                            Python code
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            EmotionWeb
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            Surprise
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            User data preparation
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            Template / web engine
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            HTML + CSS + JavaScript
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            Generated website
+                        </div>
+
+                        <div class="flow-arrow">
+                            ↓
+                        </div>
+
+                        <div class="flow-node">
+                            Browser
+                        </div>
+
+                    </div>
+
+
+                    <h3>
+                        The role of the generator
+                    </h3>
+
+                    <p>
+                        The package's generator layer acts as the
+                        central processing point for the website
+                        generation workflow. It receives the supplied
+                        information and coordinates the generation
+                        process.
+                    </p>
+
+
+                    <h3>
+                        Django
+                    </h3>
+
+                    <p>
+                        Django is part of the web engine used by
+                        EmotionWeb. Its template system provides the
+                        mechanism for inserting dynamic values into
+                        HTML templates.
+                    </p>
+
+
+                    <h3>
+                        Template rendering
+                    </h3>
+
+                    <p>
+                        A template can contain dynamic Django
+                        expressions such as <code>{{ name }}</code>
+                        and can iterate over collections such as
+                        images or captions.
+                    </p>
+
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Django Template
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy="{{ name }}"
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+                        <pre><code>{{ name }}</code></pre>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     10 PROJECT STRUCTURE
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="project-structure"
+                >
+
+                    <div class="docs-section-number">
+                        10 / STRUCTURE
+                    </div>
+
+                    <h2>
+                        Project structure.
+                    </h2>
+
+                    <p>
+                        EmotionWeb uses a package and web-engine
+                        structure to keep Python generation logic
+                        separate from website resources.
+                    </p>
+
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Structure
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy='emotionweb/
+├── generator.py
+├── webengine/
+│   ├── ...
+│   └── static/
+│       └── uploads/
+└── ...'
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+<pre><code>emotionweb/
+├── generator.py
+├── webengine/
+│   ├── ...
+│   └── static/
+│       └── uploads/
+└── ...</code></pre>
+
+                    </div>
+
+
+                    <div class="docs-callout">
+
+                        <div class="docs-callout-label">
+                            Source of truth
+                        </div>
+
+                        <p>
+                            The exact repository structure can evolve
+                            between package versions. The repository
+                            should therefore be treated as the final
+                            authority when documenting individual
+                            internal files.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     11 TEMPLATES
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="templates"
+                >
+
+                    <div class="docs-section-number">
+                        11 / TEMPLATES
+                    </div>
+
+                    <h2>
+                        Template system.
+                    </h2>
+
+                    <p>
+                        Templates define the visual and structural
+                        experience produced for an occasion.
+                    </p>
+
+                    <p>
+                        The important distinction is that the
+                        <strong>content is dynamic</strong>, while the
+                        template provides the website structure and
+                        presentation.
+                    </p>
+
+
+                    <h3>
+                        Dynamic name
+                    </h3>
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Django
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy="{{ name }}"
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+                        <pre><code>{{ name }}</code></pre>
+
+                    </div>
+
+
+                    <h3>
+                        Dynamic message
+                    </h3>
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Django
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy="{{ message }}"
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+                        <pre><code>{{ message }}</code></pre>
+
+                    </div>
+
+
+                    <h3>
+                        Image collection
+                    </h3>
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Django
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy='{% for image in images %}
+    {{ image }}
+{% endfor %}'
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+<pre><code>{% for image in images %}
+    {{ image }}
+{% endfor %}</code></pre>
+
+                    </div>
+
+
+                    <h3>
+                        Caption collection
+                    </h3>
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Django
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy='{% for caption in caption %}
+    {{ caption }}
+{% endfor %}'
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+<pre><code>{% for caption in caption %}
+    {{ caption }}
+{% endfor %}</code></pre>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     12 CUSTOMIZATION
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="customization"
+                >
+
+                    <div class="docs-section-number">
+                        12 / CUSTOMIZATION
+                    </div>
+
+                    <h2>
+                        Customization.
+                    </h2>
+
+                    <p>
+                        EmotionWeb separates personalized data from
+                        the website template so that the same
+                        generation interface can be used with
+                        different content.
+                    </p>
+
+                    <h3>
+                        Change the recipient
+                    </h3>
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Python
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy='name="Your Name"'
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+                        <pre><code>name="Your Name"</code></pre>
+
+                    </div>
+
+
+                    <h3>
+                        Change the message
+                    </h3>
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Python
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy='message="Your personalized message"'
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+                        <pre><code>message="Your personalized message"</code></pre>
+
+                    </div>
+
+
+                    <h3>
+                        Change the occasion
+                    </h3>
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Python
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy='type="birthday"'
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+                        <pre><code>type="birthday"</code></pre>
+
+                    </div>
+
+                    <p>
+                        Images and captions can similarly be replaced
+                        with your own collections.
+                    </p>
+
+                </section>
+
+
+                <!-- =================================================
+                     13 ADVANCED USAGE
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="advanced-usage"
+                >
+
+                    <div class="docs-section-number">
+                        13 / ADVANCED
+                    </div>
+
+                    <h2>
+                        Advanced usage.
+                    </h2>
+
+                    <p>
+                        Advanced users can work with the package's
+                        template and web-engine architecture to
+                        understand or extend generated experiences.
+                    </p>
+
+                    <h3>
+                        Template-driven development
+                    </h3>
+
+                    <p>
+                        A developer who wants to introduce a new
+                        website experience needs to understand the
+                        relationship between the occasion type,
+                        generator logic and Django template.
+                    </p>
+
+                    <h3>
+                        Extending the template collection
+                    </h3>
+
+                    <p>
+                        A new template generally requires more than
+                        simply creating an HTML file. The generator
+                        needs a way to recognize the corresponding
+                        occasion type and route the data to the
+                        intended template.
+                    </p>
+
+                    <div class="docs-callout">
+
+                        <div class="docs-callout-label">
+                            Before extending
+                        </div>
+
+                        <p>
+                            Inspect the current package source before
+                            modifying internal routing or template
+                            selection. Internal filenames and paths
+                            can change between releases.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     14 TROUBLESHOOTING
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="troubleshooting"
+                >
+
+                    <div class="docs-section-number">
+                        14 / TROUBLESHOOTING
+                    </div>
+
+                    <h2>
+                        Troubleshooting.
+                    </h2>
+
+                    <h3>
+                        ImportError
+                    </h3>
+
+                    <p>
+                        If Python cannot import EmotionWeb, verify that
+                        the package is installed in the Python
+                        environment being used to execute the program.
+                    </p>
+
+
+                    <h3>
+                        pip installation problems
+                    </h3>
+
+                    <p>
+                        Check the Python and pip installation being
+                        used by your terminal and ensure the package
+                        installation completes successfully.
+                    </p>
+
+
+                    <h3>
+                        Images are not appearing
+                    </h3>
+
+                    <p>
+                        Check that every supplied image path points to
+                        the intended file and that the file exists.
+                    </p>
+
+
+                    <h3>
+                        Captions are not displayed correctly
+                    </h3>
+
+                    <p>
+                        Verify that captions are supplied as a list
+                        and that the selected template actually uses
+                        the caption data.
+                    </p>
+
+
+                    <h3>
+                        Template selection
+                    </h3>
+
+                    <p>
+                        Check the exact value supplied to
+                        <code>type</code>. It must correspond to a
+                        supported template type in the installed
+                        EmotionWeb version.
+                    </p>
+
+
+                    <div class="docs-callout">
+
+                        <div class="docs-callout-label">
+                            Debugging principle
+                        </div>
+
+                        <p>
+                            When troubleshooting, first verify the
+                            Python input, then the selected type, then
+                            the generated project and finally the
+                            browser output.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     15 FAQ
+                ================================================== -->
+
+                <section
+                    class="docs-section"
+                    id="faq"
+                >
+
+                    <div class="docs-section-number">
+                        15 / FAQ
+                    </div>
+
+                    <h2>
+                        Frequently asked questions.
+                    </h2>
+
+
+                    <h3>
+                        Do I need to know Django?
+                    </h3>
+
+                    <p>
+                        No for basic usage. The main public interface
+                        is the Python <code>Surprise</code> class.
+                        Django becomes more relevant when working with
+                        the underlying generated web engine or
+                        templates.
+                    </p>
+
+
+                    <h3>
+                        Can I provide multiple images?
+                    </h3>
+
+                    <p>
+                        Yes. The <code>images</code> parameter accepts
+                        a list of image paths.
+                    </p>
+
+
+                    <h3>
+                        Can I provide multiple captions?
+                    </h3>
+
+                    <p>
+                        Yes. Captions are supplied through the
+                        <code>caption</code> list.
+                    </p>
+
+
+                    <h3>
+                        Can I create another theme?
+                    </h3>
+
+                    <p>
+                        The architecture is intended to be extensible,
+                        and additional templates can be introduced as
+                        the project evolves.
+                    </p>
+
+
+                    <h3>
+                        Does EmotionWeb generate the website from
+                        Python?
+                    </h3>
+
+                    <p>
+                        Yes. The package is designed to receive
+                        information through Python and generate the
+                        corresponding personalized website.
+                    </p>
+
+
+                    <h3>
+                        What is the simplest possible example?
+                    </h3>
+
+                    <div class="code-card">
+
+                        <div class="code-header">
+
+                            <span class="code-language">
+                                Python
+                            </span>
+
+                            <button
+                                class="copy-code"
+                                type="button"
+                                data-copy='from emotionweb import Surprise
+
+s = Surprise(
+    type="birthday",
+    name="Aniket Vishwakarma",
+    message="chal aaja ghumne chalte h",
+    images=[],
+    caption=[]
+)
+
+s.generate()'
+                            >
+                                Copy
+                            </button>
+
+                        </div>
+
+<pre><code>from emotionweb import Surprise
+
+s = Surprise(
+    type="birthday",
+    name="Aniket Vishwakarma",
+    message="chal aaja ghumne chalte h",
+    images=[],
+    caption=[]
+)
+
+s.generate()</code></pre>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     PAGINATION
+                ================================================== -->
+
+                <div class="docs-pagination">
+
+                    <a
+                        href="{% url 'home' %}"
+                        class="docs-page-link"
+                    >
+
+                        <span class="docs-page-link-label">
+                            Previous
+                        </span>
+
+                        <span class="docs-page-link-title">
+                            ← Home
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="{% url 'templates' %}"
+                        class="docs-page-link next"
+                    >
+
+                        <span class="docs-page-link-label">
+                            Next
+                        </span>
+
+                        <span class="docs-page-link-title">
+                            Templates →
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+            </main>
+
+
+            <!-- =================================================
+                 RIGHT TOC
+            ================================================== -->
+
+            <aside class="docs-toc">
+
+                <div class="docs-toc-title">
+                    On this page
+                </div>
+
+                <nav class="docs-toc-links">
+
+                    <a href="#introduction">
+                        Introduction
+                    </a>
+
+                    <a href="#what-is-emotionweb">
+                        What is EmotionWeb?
+                    </a>
+
+                    <a href="#features">
+                        Features
+                    </a>
+
+                    <a href="#installation">
+                        Installation
+                    </a>
+
+                    <a href="#quick-start">
+                        Quick Start
+                    </a>
+
+                    <a href="#api">
+                        API
+                    </a>
+
+                    <a href="#supported-occasions">
+                        Occasions
+                    </a>
+
+                    <a href="#images-captions">
+                        Images & Captions
+                    </a>
+
+                    <a href="#how-it-works">
+                        How It Works
+                    </a>
+
+                    <a href="#project-structure">
+                        Project Structure
+                    </a>
+
+                    <a href="#templates">
+                        Templates
+                    </a>
+
+                    <a href="#customization">
+                        Customization
+                    </a>
+
+                    <a href="#advanced-usage">
+                        Advanced Usage
+                    </a>
+
+                    <a href="#troubleshooting">
+                        Troubleshooting
+                    </a>
+
+                    <a href="#faq">
+                        FAQ
+                    </a>
+
+                </nav>
+
+            </aside>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+/* =========================================================
+   COPY BUTTONS
+========================================================= */
+
+document.querySelectorAll(".copy-code").forEach(button => {
+
+    button.addEventListener("click", async () => {
+
+        const text = button.getAttribute("data-copy");
+
+        if (!text) {
+            return;
+        }
+
+        try {
+
+            await navigator.clipboard.writeText(text);
+
+            const original = button.textContent;
+
+            button.textContent = "Copied";
+
+            setTimeout(() => {
+                button.textContent = original;
+            }, 1200);
+
+        } catch (error) {
+
+            button.textContent = "Failed";
+
+            setTimeout(() => {
+                button.textContent = "Copy";
+            }, 1200);
+
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   SIDEBAR ACTIVE STATE
+========================================================= */
+
+const documentationSections =
+    document.querySelectorAll(".docs-section");
+
+const documentationLinks =
+    document.querySelectorAll(".docs-nav a");
+
+const tocLinks =
+    document.querySelectorAll(".docs-toc-links a");
+
+
+function setActiveDocumentationSection(id) {
+
+    documentationLinks.forEach(link => {
+
+        link.classList.toggle(
+            "active",
+            link.dataset.section === id
+        );
+
+    });
+
+    tocLinks.forEach(link => {
+
+        link.classList.toggle(
+            "active",
+            link.getAttribute("href") === "#" + id
+        );
+
+    });
+
+    const mobileSelect =
+        document.getElementById("docsMobileSelect");
+
+    if (mobileSelect) {
+        mobileSelect.value = "#" + id;
+    }
+
+}
+
+
+/* =========================================================
+   INTERSECTION OBSERVER
+========================================================= */
+
+if ("IntersectionObserver" in window) {
+
+    const observer =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        setActiveDocumentationSection(
+                            entry.target.id
+                        );
+
+                    }
+
+                });
+
+            },
+            {
+                rootMargin: "-18% 0px -70% 0px",
+                threshold: 0
+            }
+        );
+
+    documentationSections.forEach(section => {
+        observer.observe(section);
+    });
+
+}
+
+
+/* =========================================================
+   MOBILE SELECTOR
+========================================================= */
+
+const mobileDocumentationSelect =
+    document.getElementById("docsMobileSelect");
+
+if (mobileDocumentationSelect) {
+
+    mobileDocumentationSelect.addEventListener(
+        "change",
+        event => {
+
+            const target =
+                document.querySelector(
+                    event.target.value
+                );
+
+            if (!target) {
+                return;
+            }
+
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SMOOTH INTERNAL LINKS
+========================================================= */
+
+document.querySelectorAll(
+    '.docs-nav a, .docs-toc-links a'
+).forEach(link => {
+
+    link.addEventListener("click", event => {
+
+        const href =
+            link.getAttribute("href");
+
+        if (!href || !href.startsWith("#")) {
+            return;
+        }
+
+        const target =
+            document.querySelector(href);
+
+        if (!target) {
+            return;
+        }
+
+        event.preventDefault();
+
+        target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+        history.replaceState(
+            null,
+            "",
+            href
+        );
+
+    });
+
+});
+</script>
+
+{% endblock %}
