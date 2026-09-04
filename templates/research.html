@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 EmotionWeb Research — Architecture, Templates & Web Engineering
@@ -23,6 +24,7 @@ EmotionWeb Research — Engineering Behind the Project
 {% block twitter_description %}
 Explore the technical research areas behind EmotionWeb.
 {% endblock %}
+
 {% block content %}
 
 <style>
@@ -31,6 +33,7 @@ Explore the technical research areas behind EmotionWeb.
         margin: 0 auto;
         padding: 75px 24px 100px;
     }
+
 
     /* HERO */
 
@@ -82,6 +85,7 @@ Explore the technical research areas behind EmotionWeb.
         font-size: 16px;
         line-height: 1.7;
     }
+
 
     /* PAPER */
 
@@ -170,6 +174,7 @@ Explore the technical research areas behind EmotionWeb.
         cursor: not-allowed;
     }
 
+
     /* RESEARCH AREAS */
 
     .section-heading {
@@ -238,6 +243,7 @@ Explore the technical research areas behind EmotionWeb.
         line-height: 1.6;
     }
 
+
     /* TEAM */
 
     .team-section {
@@ -266,10 +272,18 @@ Explore the technical research areas behind EmotionWeb.
         place-items: center;
         margin: 0 auto 13px;
         border-radius: 50%;
+        overflow: hidden;
         background: #f0f0f0;
         color: #777;
         font-size: 13px;
         font-weight: 800;
+    }
+
+    .team-avatar img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
     }
 
     .team-card h3 {
@@ -292,6 +306,7 @@ Explore the technical research areas behind EmotionWeb.
         text-decoration: none;
         word-break: break-word;
     }
+
 
     /* CTA */
 
@@ -335,6 +350,7 @@ Explore the technical research areas behind EmotionWeb.
         transform: translateY(-2px);
         box-shadow: 0 10px 25px rgba(0,0,0,.15);
     }
+
 
     @media (max-width: 950px) {
         .team-grid {
@@ -525,48 +541,102 @@ Explore the technical research areas behind EmotionWeb.
         <div class="team-grid">
 
             <article class="team-card">
-                <div class="team-avatar">01</div>
+
+                <div class="team-avatar">
+                    <img
+                        src="{% static 'images/zeenat.png' %}"
+                        alt="ZEENAT PRAWEEN"
+                    >
+                </div>
+
                 <h3>ZEENAT PRAWEEN</h3>
+
                 <p>Research Role</p>
+
                 <a class="team-email" href="#">
                     email@example.com
                 </a>
+
             </article>
 
+
             <article class="team-card">
-                <div class="team-avatar">02</div>
+
+                <div class="team-avatar">
+                    <img
+                        src="{% static 'images/suhani.png' %}"
+                        alt="SUHANI PRIYA"
+                    >
+                </div>
+
                 <h3>SUHANI PRIYA</h3>
+
                 <p>Research Role</p>
+
                 <a class="team-email" href="#">
                     email@example.com
                 </a>
+
             </article>
 
+
             <article class="team-card">
-                <div class="team-avatar">03</div>
+
+                <div class="team-avatar">
+                    <img
+                        src="{% static 'images/isha.png' %}"
+                        alt="ISHA KUMARI"
+                    >
+                </div>
+
                 <h3>ISHA KUMARI</h3>
+
                 <p>Research Role</p>
+
                 <a class="team-email" href="#">
                     email@example.com
                 </a>
+
             </article>
 
+
             <article class="team-card">
-                <div class="team-avatar">04</div>
+
+                <div class="team-avatar">
+                    <img
+                        src="{% static 'images/manoraj.png' %}"
+                        alt="MANORAJ BABU"
+                    >
+                </div>
+
                 <h3>MANORAJ BABU</h3>
+
                 <p>Research Role</p>
+
                 <a class="team-email" href="#">
                     email@example.com
                 </a>
+
             </article>
 
+
             <article class="team-card">
-                <div class="team-avatar">05</div>
+
+                <div class="team-avatar">
+                    <img
+                        src="{% static 'images/aniket.png' %}"
+                        alt="ANIKET VISHWAKARMA"
+                    >
+                </div>
+
                 <h3>ANIKET Vishwakarma</h3>
+
                 <p>Research Role</p>
+
                 <a class="team-email" href="#">
                     email@example.com
                 </a>
+
             </article>
 
         </div>
