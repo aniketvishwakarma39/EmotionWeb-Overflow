@@ -109,7 +109,24 @@
         name="twitter:image"
         content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/emotionweb.png' %}"
     >
-
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "EmotionWeb",
+    "description": "Create personalized and interactive surprise websites with Python and Django.",
+    "programmingLanguage": "Python",
+    "runtimePlatform": "Django",
+    "license": "https://opensource.org/licenses/MIT",
+    "codeRepository": "https://github.com/aniketvishwakarma39/emotionweb",
+    "url": "https://emotionweb-omega.vercel.app/",
+    "author": {
+        "@type": "Person",
+        "name": "Aniket Vishwakarma",
+        "url": "https://github.com/aniketvishwakarma39/"
+    }
+}
+</script>
 
     {% block extra_head %}{% endblock %}
     <style>
