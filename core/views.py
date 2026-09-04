@@ -57,7 +57,7 @@ def get_package_stats():
     package_data = {
         "version": "0.2.3",
         "author": "Aniket Vishwakarma",
-        "owner": "aniketvishwa39",
+        "owner": "EW R&D",
         "python": ">=3.10",
         "downloads": "Unavailable",
     }
