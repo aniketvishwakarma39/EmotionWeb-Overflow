@@ -1,3 +1,4 @@
+{% load static %}
 {% extends "base.html" %}
 
 {% block title %}
@@ -283,6 +284,156 @@ Learn about EmotionWeb, its creator, technology, and open-source vision.
 
     .fact strong {
         font-size: 14px;
+    }
+
+
+    /* EW R&D TEAM */
+
+    .team-section {
+        margin-bottom: 70px;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .team-card {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 22px;
+        align-items: center;
+        padding: 22px;
+        min-height: 170px;
+        border: 1px solid rgba(0,0,0,.09);
+        border-radius: 22px;
+        background: rgba(255,255,255,.62);
+        transition: .25s ease;
+    }
+
+    .team-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 50px rgba(0,0,0,.07);
+    }
+
+    .team-avatar-wrap {
+        width: 120px;
+        height: 120px;
+        overflow: hidden;
+        border-radius: 18px;
+        background: #eee;
+    }
+
+    .team-avatar {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .team-content .eyebrow {
+        margin-bottom: 7px;
+        color: #888;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+    }
+
+    .team-content h3 {
+        margin: 0 0 7px;
+        font-size: 21px;
+        letter-spacing: -.03em;
+    }
+
+    .team-role {
+        margin-bottom: 12px;
+        color: #555;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.5;
+    }
+
+    .team-email {
+        color: #777;
+        font-size: 12px;
+        text-decoration: none;
+    }
+
+    .team-email:hover {
+        color: #111;
+    }
+
+    .team-card-aniket {
+        grid-column: 1 / -1;
+        max-width: 430px;
+        width: 100%;
+        justify-self: center;
+        grid-template-columns: 88px 1fr;
+    }
+
+    .team-card-aniket .team-avatar-wrap {
+        width: 88px;
+        height: 88px;
+        border-radius: 16px;
+    }
+
+    @media (max-width: 800px) {
+        .team-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .team-card {
+            grid-template-columns: 105px 1fr;
+        }
+
+        .team-avatar-wrap {
+            width: 105px;
+            height: 105px;
+        }
+
+        .team-card-aniket {
+            grid-column: auto;
+            max-width: none;
+            grid-template-columns: 88px 1fr;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .team-card {
+            grid-template-columns: 82px 1fr;
+            gap: 15px;
+            padding: 17px;
+        }
+
+        .team-avatar-wrap {
+            width: 82px;
+            height: 82px;
+        }
+
+        .team-content h3 {
+            font-size: 17px;
+        }
+
+        .team-role {
+            font-size: 12px;
+        }
+
+        .team-card-aniket {
+            grid-template-columns: 72px 1fr;
+        }
+
+        .team-card-aniket .team-avatar-wrap {
+            width: 72px;
+            height: 72px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .team-card {
+            transition: none;
+        }
     }
 
     /* VIDEO */
@@ -579,6 +730,103 @@ Learn about EmotionWeb, its creator, technology, and open-source vision.
             </div>
         </div>
 
+    </section>
+
+
+
+    <!-- EW R&D TEAM -->
+    <section class="team-section">
+
+        <div class="section-heading">
+            <span>Research Team</span>
+            <h2>EW R&amp;D</h2>
+        </div>
+
+        <div class="team-grid">
+
+            <article class="team-card">
+                <div class="team-avatar-wrap">
+                    <img class="team-avatar"
+                         src="{% static 'images/zeenat.png' %}"
+                         alt="ZEENAT PRAWEEN"
+                         loading="lazy">
+                </div>
+                <div class="team-content">
+                    <div class="eyebrow">Research Member</div>
+                    <h3>ZEENAT PRAWEEN</h3>
+                    <div class="team-role">Research Role · EW R&amp;D</div>
+                    <a class="team-email" href="mailto:email@example.com">email@example.com</a>
+                </div>
+            </article>
+
+            <article class="team-card">
+                <div class="team-avatar-wrap">
+                    <img class="team-avatar"
+                         src="{% static 'images/suhani.png' %}"
+                         alt="SUHANI PRIYA"
+                         loading="lazy">
+                </div>
+                <div class="team-content">
+                    <div class="eyebrow">Research Member</div>
+                    <h3>SUHANI PRIYA</h3>
+                    <div class="team-role">Research Role · EW R&amp;D</div>
+                    <a class="team-email" href="mailto:email@example.com">email@example.com</a>
+                </div>
+            </article>
+
+            <article class="team-card">
+                <div class="team-avatar-wrap">
+                    <img class="team-avatar"
+                         src="{% static 'images/isha.png' %}"
+                         alt="ISHA KUMARI"
+                         loading="lazy">
+                </div>
+                <div class="team-content">
+                    <div class="eyebrow">Research Member</div>
+                    <h3>ISHA KUMARI</h3>
+                    <div class="team-role">Research Role · EW R&amp;D</div>
+                    <a class="team-email" href="mailto:email@example.com">email@example.com</a>
+                </div>
+            </article>
+
+            <article class="team-card">
+                <div class="team-avatar-wrap">
+                    <img class="team-avatar"
+                         src="{% static 'images/manoraj.png' %}"
+                         alt="MANORAJ BABU"
+                         loading="lazy">
+                </div>
+                <div class="team-content">
+                    <div class="eyebrow">Research Member</div>
+                    <h3>MANORAJ BABU</h3>
+                    <div class="team-role">Research Role · EW R&amp;D</div>
+                    <a class="team-email" href="mailto:email@example.com">email@example.com</a>
+                </div>
+            </article>
+
+            <article class="team-card team-card-aniket">
+                <div class="team-avatar-wrap">
+                    <img class="team-avatar"
+                         src="{% static 'images/aniket.png' %}"
+                         alt="Aniket Vishwakarma"
+                         loading="lazy">
+                </div>
+                <div class="team-content">
+                    <div class="eyebrow">Creator &amp; Developer</div>
+                    <h3>Aniket Vishwakarma</h3>
+                    <div class="team-role">
+                        Developer · Open Source · EmotionWeb · EW R&amp;D
+                    </div>
+                    <a class="team-email"
+                       href="https://github.com/aniketvishwakarma39/"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        GitHub Profile →
+                    </a>
+                </div>
+            </article>
+
+        </div>
     </section>
 
 
