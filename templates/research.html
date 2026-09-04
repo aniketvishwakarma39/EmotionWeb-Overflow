@@ -28,6 +28,7 @@ Explore the technical research areas behind EmotionWeb.
 {% block content %}
 
 <style>
+
     .research-page {
         max-width: 1180px;
         margin: 0 auto;
@@ -35,7 +36,9 @@ Explore the technical research areas behind EmotionWeb.
     }
 
 
-    /* HERO */
+    /* =========================
+       HERO
+    ========================= */
 
     .research-hero {
         text-align: center;
@@ -87,7 +90,9 @@ Explore the technical research areas behind EmotionWeb.
     }
 
 
-    /* PAPER */
+    /* =========================
+       RESEARCH PAPER
+    ========================= */
 
     .paper-card {
         display: grid;
@@ -175,7 +180,9 @@ Explore the technical research areas behind EmotionWeb.
     }
 
 
-    /* RESEARCH AREAS */
+    /* =========================
+       SECTION HEADING
+    ========================= */
 
     .section-heading {
         margin-bottom: 24px;
@@ -196,6 +203,11 @@ Explore the technical research areas behind EmotionWeb.
         font-size: clamp(30px, 4vw, 44px);
         letter-spacing: -.045em;
     }
+
+
+    /* =========================
+       RESEARCH AREAS
+    ========================= */
 
     .research-grid {
         display: grid;
@@ -244,7 +256,9 @@ Explore the technical research areas behind EmotionWeb.
     }
 
 
-    /* TEAM */
+    /* =========================
+       RESEARCH TEAM
+    ========================= */
 
     .team-section {
         margin-bottom: 70px;
@@ -263,32 +277,94 @@ Explore the technical research areas behind EmotionWeb.
         border-radius: 17px;
         background: rgba(255,255,255,.62);
         text-align: center;
+        transition: .25s ease;
     }
+
+    .team-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(0,0,0,.05);
+    }
+
+
+    /* =========================
+       TEAM AVATAR
+    ========================= */
 
     .team-avatar {
         width: 52px;
         height: 52px;
+
         display: grid;
         place-items: center;
+
         margin: 0 auto 13px;
+
         border-radius: 50%;
         overflow: hidden;
+
         background: #f0f0f0;
         color: #777;
+
         font-size: 13px;
         font-weight: 800;
+
+        flex-shrink: 0;
     }
 
     .team-avatar img {
         width: 100%;
         height: 100%;
+
         display: block;
+
         object-fit: cover;
+        border-radius: 50%;
     }
+
+
+    /* =========================
+       WHATSAPP STYLE
+       INITIALS FALLBACK
+    ========================= */
+
+    .team-avatar .team-initials {
+        display: none;
+
+        width: 100%;
+        height: 100%;
+
+        place-items: center;
+
+        border-radius: 50%;
+
+        background: #f0f0f0;
+        color: #777;
+
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    /* Hide broken/missing image */
+
+    .team-avatar img.no-image {
+        display: none;
+    }
+
+    /* Show initials when image fails */
+
+    .team-avatar img.no-image + .team-initials {
+        display: grid;
+    }
+
+
+    /* =========================
+       TEAM TEXT
+    ========================= */
 
     .team-card h3 {
         margin: 0 0 5px;
         font-size: 13px;
+        line-height: 1.35;
     }
 
     .team-card p {
@@ -307,14 +383,22 @@ Explore the technical research areas behind EmotionWeb.
         word-break: break-word;
     }
 
+    .team-email:hover {
+        color: #111;
+    }
 
-    /* CTA */
+
+    /* =========================
+       CTA
+    ========================= */
 
     .research-cta {
         padding: 55px 25px;
         text-align: center;
+
         border: 1px solid rgba(0,0,0,.09);
         border-radius: 27px;
+
         background: linear-gradient(
             135deg,
             rgba(0,0,0,.035),
@@ -337,12 +421,17 @@ Explore the technical research areas behind EmotionWeb.
     .research-button {
         display: inline-flex;
         padding: 12px 18px;
+
         border-radius: 11px;
+
         background: #111;
         color: white;
+
         text-decoration: none;
+
         font-size: 12px;
         font-weight: 800;
+
         transition: .2s ease;
     }
 
@@ -352,34 +441,97 @@ Explore the technical research areas behind EmotionWeb.
     }
 
 
+    /* =========================
+       TABLET
+    ========================= */
+
     @media (max-width: 950px) {
+
         .team-grid {
             grid-template-columns: repeat(3, 1fr);
         }
+
     }
 
+
+    /* =========================
+       MOBILE
+    ========================= */
+
     @media (max-width: 800px) {
+
         .research-page {
             padding: 55px 18px 75px;
+        }
+
+        .research-hero {
+            margin-bottom: 50px;
         }
 
         .paper-card {
             grid-template-columns: 1fr;
             padding: 23px;
+            margin-bottom: 55px;
+        }
+
+        .paper-download {
+            min-height: 150px;
         }
 
         .research-grid {
             grid-template-columns: 1fr;
+            margin-bottom: 55px;
+        }
+
+        .research-card {
+            min-height: auto;
         }
 
         .team-grid {
             grid-template-columns: repeat(2, 1fr);
         }
+
+        .team-section {
+            margin-bottom: 55px;
+        }
+
     }
 
+
+    /* =========================
+       SMALL MOBILE
+    ========================= */
+
     @media (max-width: 500px) {
+
+        .research-page {
+            padding: 45px 15px 60px;
+        }
+
         .research-hero p {
             font-size: 14px;
+        }
+
+        .research-badge {
+            font-size: 9px;
+            padding: 6px 11px;
+        }
+
+        .paper-card {
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        .paper-download {
+            padding: 18px;
+        }
+
+        .research-grid {
+            gap: 10px;
+        }
+
+        .research-card {
+            padding: 20px;
         }
 
         .team-grid {
@@ -388,15 +540,42 @@ Explore the technical research areas behind EmotionWeb.
 
         .team-card {
             min-height: auto;
+            padding: 22px 18px;
         }
+
+        .team-avatar {
+            width: 54px;
+            height: 54px;
+        }
+
+        .research-cta {
+            padding: 42px 20px;
+            border-radius: 21px;
+        }
+
     }
 
+
+    /* =========================
+       REDUCED MOTION
+    ========================= */
+
     @media (prefers-reduced-motion: reduce) {
+
         .research-card,
+        .team-card,
         .research-button {
             transition: none;
         }
+
+        .research-card:hover,
+        .team-card:hover,
+        .research-button:hover {
+            transform: none;
+        }
+
     }
+
 </style>
 
 
@@ -531,117 +710,127 @@ Explore the technical research areas behind EmotionWeb.
 
     <!-- TEAM -->
 
-    <section class="team-section">
+<section class="team-section">
 
-        <div class="section-heading">
-            <span>Research Team</span>
-            <h2>People behind the research:- TEAM EW-R&D</h2>
-        </div>
+    <div class="section-heading">
+        <span>Research Team</span>
+        <h2>People behind the research:- TEAM EW-R&amp;D</h2>
+    </div>
 
-        <div class="team-grid">
+    <div class="team-grid">
 
-            <article class="team-card">
+        <article class="team-card">
 
-                <div class="team-avatar">
-                    <img
-                        src="{% static 'images/zeenat.png' %}"
-                        alt="ZEENAT PRAWEEN"
-                    >
-                </div>
+            <div class="team-avatar">
+                <img
+                    src="{% static 'images/zeenat.png' %}"
+                    alt="ZEENAT PRAWEEN"
+                    onerror="this.classList.add('no-image')"
+                >
+                <div class="team-initials" aria-hidden="true">ZP</div>
+            </div>
 
-                <h3>ZEENAT PRAWEEN</h3>
+            <h3>ZEENAT PRAWEEN</h3>
 
-                <p>Research Role</p>
+            <p>Research Role</p>
 
-                <a class="team-email" href="#">
-                    email@example.com
-                </a>
+            <a class="team-email" href="#">
+                email@example.com
+            </a>
 
-            </article>
-
-
-            <article class="team-card">
-
-                <div class="team-avatar">
-                    <img
-                        src="{% static 'images/suhani.png' %}"
-                        alt="SUHANI PRIYA"
-                    >
-                </div>
-
-                <h3>SUHANI PRIYA</h3>
-
-                <p>Research Role</p>
-
-                <a class="team-email" href="#">
-                    email@example.com
-                </a>
-
-            </article>
+        </article>
 
 
-            <article class="team-card">
+        <article class="team-card">
 
-                <div class="team-avatar">
-                    <img
-                        src="{% static 'images/isha.png' %}"
-                        alt="ISHA KUMARI"
-                    >
-                </div>
+            <div class="team-avatar">
+                <img
+                    src="{% static 'images/suhani.png' %}"
+                    alt="SUHANI PRIYA"
+                    onerror="this.classList.add('no-image')"
+                >
+                <div class="team-initials" aria-hidden="true">SP</div>
+            </div>
 
-                <h3>ISHA KUMARI</h3>
+            <h3>SUHANI PRIYA</h3>
 
-                <p>Research Role</p>
+            <p>Research Role</p>
 
-                <a class="team-email" href="#">
-                    email@example.com
-                </a>
+            <a class="team-email" href="#">
+                email@example.com
+            </a>
 
-            </article>
-
-
-            <article class="team-card">
-
-                <div class="team-avatar">
-                    <img
-                        src="{% static 'images/manoraj.png' %}"
-                        alt="MANORAJ BABU"
-                    >
-                </div>
-
-                <h3>MANORAJ BABU</h3>
-
-                <p>Research Role</p>
-
-                <a class="team-email" href="#">
-                    email@example.com
-                </a>
-
-            </article>
+        </article>
 
 
-            <article class="team-card">
+        <article class="team-card">
 
-                <div class="team-avatar">
-                    <img
-                        src="{% static 'images/aniket.png' %}"
-                        alt="ANIKET VISHWAKARMA"
-                    >
-                </div>
+            <div class="team-avatar">
+                <img
+                    src="{% static 'images/isha.png' %}"
+                    alt="ISHA KUMARI"
+                    onerror="this.classList.add('no-image')"
+                >
+                <div class="team-initials" aria-hidden="true">IK</div>
+            </div>
 
-                <h3>ANIKET Vishwakarma</h3>
+            <h3>ISHA KUMARI</h3>
 
-                <p>Research Role</p>
+            <p>Research Role</p>
 
-                <a class="team-email" href="#">
-                    email@example.com
-                </a>
+            <a class="team-email" href="#">
+                email@example.com
+            </a>
 
-            </article>
+        </article>
 
-        </div>
 
-    </section>
+        <article class="team-card">
+
+            <div class="team-avatar">
+                <img
+                    src="{% static 'images/manoraj.png' %}"
+                    alt="MANORAJ BABU"
+                    onerror="this.classList.add('no-image')"
+                >
+                <div class="team-initials" aria-hidden="true">MB</div>
+            </div>
+
+            <h3>MANORAJ BABU</h3>
+
+            <p>Research Role</p>
+
+            <a class="team-email" href="#">
+                email@example.com
+            </a>
+
+        </article>
+
+
+        <article class="team-card">
+
+            <div class="team-avatar">
+                <img
+                    src="{% static 'images/aniket.png' %}"
+                    alt="ANIKET VISHWAKARMA"
+                    onerror="this.classList.add('no-image')"
+                >
+                <div class="team-initials" aria-hidden="true">AV</div>
+            </div>
+
+            <h3>ANIKET Vishwakarma</h3>
+
+            <p>Research Role</p>
+
+            <a class="team-email" href="#">
+                email@example.com
+            </a>
+
+        </article>
+
+    </div>
+
+</section>
 
 
     <!-- CTA -->
