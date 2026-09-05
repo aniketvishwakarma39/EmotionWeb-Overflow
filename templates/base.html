@@ -1107,7 +1107,12 @@
                         About
                     </a>
 
-                    
+                    <a
+                        href="{% url 'blog' %}"
+                        class="{% if request.path == '/blog/' %}active{% endif %}"
+                    >
+                        About
+                    </a>
                     <a href="{% url 'roadmap' %}"
    class="{% if request.path == '/roadmap/' %}active{% endif %}">
     Roadmap
@@ -1199,6 +1204,12 @@
                     <a
                         href="{% url 'about' %}"
                         class="{% if request.path == '/about/' %}active{% endif %}"
+                    >
+                        About
+                    </a>
+                    <a
+                        href="{% url 'blog' %}"
+                        class="{% if request.path == '/blog/' %}active{% endif %}"
                     >
                         About
                     </a>
