@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import BlogPost
-
+from .models import BlogPost, ContributorProfile, Certificate
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
@@ -96,4 +95,52 @@ class BlogPostAdmin(admin.ModelAdmin):
                 "classes": ("collapse",),
             },
         ),
+    )
+
+@admin.register(ContributorProfile)
+class ContributorProfileAdmin(admin.ModelAdmin):
+    list_display = (
+        "user",
+        "role",
+        "created_at",
+    )
+
+    search_fields = (
+        "user__username",
+        "user__first_name",
+        "user__last_name",
+    )
+
+    list_filter = (
+        "role",
+    )
+
+
+@admin.register(Certificate)
+class CertificateAdmin(admin.ModelAdmin):
+    list_display = (
+        "certificate_id",
+        "contributor",
+        "role",
+        "issue_date",
+        "status",
+    )
+
+    list_filter = (
+        "status",
+        "role",
+        "issue_date",
+    )
+
+    search_fields = (
+        "certificate_id",
+        "contributor__user__username",
+        "contributor__user__first_name",
+        "contributor__user__last_name",
+        "contribution",
+    )
+
+    readonly_fields = (
+        "certificate_id",
+        "created_at",
     )

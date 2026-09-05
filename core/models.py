@@ -76,3 +76,77 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return self.title
+
+import uuid
+
+from django.conf import settings
+from django.db import models
+
+
+class ContributorProfile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="contributor_profile",
+    )
+
+    role = models.CharField(
+        max_length=100,
+        default="Contributor",
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    def __str__(self):
+        return self.user.get_full_name() or self.user.username
+    
+class Certificate(models.Model):
+    STATUS_CHOICES = [
+        ("issued", "Issued"),
+        ("revoked", "Revoked"),
+    ]
+
+    certificate_id = models.CharField(
+        max_length=50,
+        unique=True,
+        editable=False,
+    )
+
+    contributor = models.ForeignKey(
+        ContributorProfile,
+        on_delete=models.CASCADE,
+        related_name="certificates",
+    )
+
+    contribution = models.TextField()
+
+    role = models.CharField(
+        max_length=100,
+        default="Contributor",
+    )
+
+    issue_date = models.DateField()
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="issued",
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.certificate_id:
+            self.certificate_id = (
+                f"EW-{self.issue_date.year}-"
+                f"{uuid.uuid4().hex[:8].upper()}"
+            )
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.certificate_id
